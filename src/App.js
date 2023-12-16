@@ -8,6 +8,11 @@ import Movie_Food from "./components/pages/movies/movie-food/index.js";
 import Movie_Checkout from "./components/pages/movies/movie-checkout/index.js";
 import Blog from "./components/pages/blog/index.js";
 import Blog_Details from "./components/pages/blog/blog-details/index.js";
+import Contact from "./components/pages/contact/index.js";
+import About_Us from "./components/pages/about/index.js";
+import Login from "./components/pages/auth/login.js";
+import Register from "./components/pages/auth/register.js";
+import Forgot_Password from "./components/pages/auth/forgot-password.js";
 function App() {
     return (
         <div className="App">
@@ -26,6 +31,15 @@ function App() {
                 {/* Blog */}
                 <Route path="/blog-list" element={<Blog />} />
                 <Route path="/blog-details" element={<Blog_Details />} />
+
+                {/* About and Contact Us */}
+                <Route path="/about-us" element={<About_Us />} />
+                <Route path="/contact-us" element={<Contact />} />
+
+                {/* Auth */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<Forgot_Password />} />
             </Routes>
         </div>
     );
