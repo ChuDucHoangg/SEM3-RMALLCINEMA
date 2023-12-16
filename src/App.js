@@ -6,6 +6,8 @@ import Movie_Ticket from "./components/pages/movies/movie-ticket/index.js";
 import Movie_Seat from "./components/pages/movies/movie-seat/index.js";
 import Movie_Food from "./components/pages/movies/movie-food/index.js";
 import Movie_Checkout from "./components/pages/movies/movie-checkout/index.js";
+import Blog from "./components/pages/blog/index.js";
+import Blog_Details from "./components/pages/blog/blog-details/index.js";
 function App() {
     return (
         <div className="App">
@@ -20,6 +22,10 @@ function App() {
                 <Route path="/movie-seat" element={<Movie_Seat />} />
                 <Route path="/movie-food" element={<Movie_Food />} />
                 <Route path="/movie-checkout" element={<Movie_Checkout />} />
+
+                {/* Blog */}
+                <Route path="/blog-list" element={<Blog />} />
+                <Route path="/blog-details" element={<Blog_Details />} />
             </Routes>
         </div>
     );
