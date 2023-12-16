@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 function Header() {
     return (
         <>
@@ -5,78 +7,26 @@ function Header() {
                 <div className="container">
                     <div className="header-wrapper">
                         <div className="logo">
-                            <a href="index.html">
+                            <NavLink to="/">
                                 <img src="assets/img/logo/logo.png" alt="logo" />
-                            </a>
+                            </NavLink>
                         </div>
                         <ul className="menu">
                             <li>
-                                <a href="#" className="active">
-                                    Home
-                                </a>
-                                <ul className="submenu">
-                                    <li>
-                                        <a href="index.html" className="active">
-                                            {" "}
-                                            <i className="fal fa-long-arrow-alt-right"></i> Home Demo 01
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index-2.html">
-                                            {" "}
-                                            <i className="fal fa-long-arrow-alt-right"></i> Home Demo 02
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index-3.html">
-                                            {" "}
-                                            <i className="fal fa-long-arrow-alt-right"></i> Home Demo 03
-                                        </a>
-                                    </li>
-                                </ul>
+                                <NavLink to="/">Home</NavLink>
                             </li>
                             <li>
-                                <a href="#">movies</a>
+                                <NavLink to="/movie-list">movies</NavLink>
                                 <ul className="submenu">
                                     <li>
-                                        <a href="movie-grid.html">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie Grid
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="movie-list.html">
+                                        <NavLink to="/movie-list">
                                             <i className="fal fa-long-arrow-alt-right"></i>Movie List
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="movie-details.html">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie Details
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="movie-details-2.html">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie Details 02
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="movie-ticket-plan.html">
+                                        <NavLink to="/movie-ticket">
                                             <i className="fal fa-long-arrow-alt-right"></i>Movie Ticket Plan
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="movie-seat-plan.html">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie Seat Plan
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="movie-checkout.html">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie Checkout
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="movie-food.html">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie Food
-                                        </a>
+                                        </NavLink>
                                     </li>
                                 </ul>
                             </li>
