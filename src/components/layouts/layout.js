@@ -193,27 +193,6 @@ function Layout({ children }) {
                     .fadeIn(10);
                 g.preventDefault();
             });
-            //Odometer
-            $(".counter-item").each(function () {
-                $(this).isInViewport(function (status) {
-                    if (status === "entered") {
-                        for (var i = 0; i < document.querySelectorAll(".odometer").length; i++) {
-                            var el = document.querySelectorAll(".odometer")[i];
-                            el.innerHTML = el.getAttribute("data-odometer-final");
-                        }
-                    }
-                });
-            });
-            $(".social-icons li a").on("mouseover", function (e) {
-                var social = $(this).parent("li");
-                if (social.children("a").hasClass("active")) {
-                    social.siblings("li").children("a").removeClass("active");
-                    $(this).addClass("active");
-                } else {
-                    social.siblings("li").children("a").removeClass("active");
-                    $(this).addClass("active");
-                }
-            });
 
             $(".tab-slider").owlCarousel({
                 loop: true,
