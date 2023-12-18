@@ -13,6 +13,11 @@ import About_Us from "./components/pages/about/index.js";
 import Login from "./components/pages/auth/login.js";
 import Register from "./components/pages/auth/register.js";
 import Forgot_Password from "./components/pages/auth/forgot-password.js";
+import Profile from "./components/pages/profile/index.js";
+import MyBooking from "./components/pages/profile/my-booking.js";
+import Favorite from "./components/pages/profile/favorite.js";
+import ChangePassword from "./components/pages/auth/change-password.js";
+
 function App() {
     return (
         <div className="App">
@@ -40,6 +45,12 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<Forgot_Password />} />
+                <Route path="/change-password" element={<ChangePassword />} />
+
+                {/* Profile */}
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/my-booking" element={<MyBooking />} />
+                <Route path="/favorite" element={<Favorite />} />
             </Routes>
         </div>
     );
