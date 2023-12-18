@@ -16,7 +16,7 @@ function Blog() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="blog-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/blog/blog-1.jpg" alt="blog" />
                                                 </a>
                                                 <div className="event-date">
@@ -36,7 +36,7 @@ function Blog() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="blog-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/blog/blog-2.jpg" alt="blog" />
                                                 </a>
                                                 <div className="event-date">
@@ -56,7 +56,7 @@ function Blog() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="blog-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/blog/blog-3.jpg" alt="blog" />
                                                 </a>
                                                 <div className="event-date">

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
 import { NavLink } from "react-router-dom";
-function Movie_Details() {
+function MovieDetails() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -36,12 +36,12 @@ function Movie_Details() {
                             <div className="details-banner-content offset-lg-4">
                                 <h3 className="title">Irregular</h3>
                                 <div className="tags">
-                                    <a href="#">English</a>
-                                    <a href="#">France</a>
-                                    <a href="#">Italy</a>
-                                    <a href="#">Germany</a>
+                                    <a href="#!">English</a>
+                                    <a href="#!">France</a>
+                                    <a href="#!">Italy</a>
+                                    <a href="#!">Germany</a>
                                 </div>
-                                <a href="#" className="button">
+                                <a href="#!" className="button">
                                     horror
                                 </a>
                                 <div className="social-and-duration">
@@ -57,27 +57,27 @@ function Movie_Details() {
                                     </div>
                                     <ul className="social-share">
                                         <li>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-facebook-f"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-twitter"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-pinterest-p"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-linkedin-in"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-google-plus-g"></i>
                                             </a>
                                         </li>
@@ -209,16 +209,16 @@ function Movie_Details() {
                                                         <p>Tags :</p>
                                                         <ul>
                                                             <li>
-                                                                <a href="#">2D</a>
+                                                                <a href="#!">2D</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#">3D</a>
+                                                                <a href="#!">3D</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#">MOVIE</a>
+                                                                <a href="#!">MOVIE</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#">2023</a>
+                                                                <a href="#!">2023</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -238,13 +238,13 @@ function Movie_Details() {
                                                     <div className="casting-slider owl-carousel">
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-1.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">Thoma Michels</a>
+                                                                    <a href="#!">Thoma Michels</a>
                                                                 </h6>
                                                                 <span className="cate">actress</span>
                                                                 <p>As Position Name</p>
@@ -252,13 +252,13 @@ function Movie_Details() {
                                                         </div>
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-2.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">Wayne Gould</a>
+                                                                    <a href="#!">Wayne Gould</a>
                                                                 </h6>
                                                                 <span className="cate">actor</span>
                                                                 <p>As Position Name</p>
@@ -266,13 +266,13 @@ function Movie_Details() {
                                                         </div>
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-3.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">Theodore Trotman</a>
+                                                                    <a href="#!">Theodore Trotman</a>
                                                                 </h6>
                                                                 <span className="cate">actress</span>
                                                                 <p>As Position Name</p>
@@ -280,13 +280,13 @@ function Movie_Details() {
                                                         </div>
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-4.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">Julie Martinez</a>
+                                                                    <a href="#!">Julie Martinez</a>
                                                                 </h6>
                                                                 <span className="cate">actor</span>
                                                                 <p>As Position Name</p>
@@ -309,52 +309,52 @@ function Movie_Details() {
                                                     <div className="casting-slider-two owl-carousel">
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-5.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">Jessica Hatcher</a>
+                                                                    <a href="#!">Jessica Hatcher</a>
                                                                 </h6>
                                                                 <span className="cate">actor</span>
                                                             </div>
                                                         </div>
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-6.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">George Reyer</a>
+                                                                    <a href="#!">George Reyer</a>
                                                                 </h6>
                                                                 <span className="cate">Director</span>
                                                             </div>
                                                         </div>
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-7.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">Jonathan Douglas</a>
+                                                                    <a href="#!">Jonathan Douglas</a>
                                                                 </h6>
                                                                 <span className="cate">producer</span>
                                                             </div>
                                                         </div>
                                                         <div className="cast-item">
                                                             <div className="cast-thumb">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <img src="assets/img/cast/cast-8.jpg" alt="cast" />
                                                                 </a>
                                                             </div>
                                                             <div className="cast-content">
                                                                 <h6 className="cast-title">
-                                                                    <a href="#">Virginia Ellis</a>
+                                                                    <a href="#!">Virginia Ellis</a>
                                                                 </h6>
                                                                 <span className="cate">producer</span>
                                                             </div>
@@ -366,7 +366,7 @@ function Movie_Details() {
                                                 <div className="movie-review-item">
                                                     <div className="author">
                                                         <div className="thumb">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 <img src="assets/img/cast/cast-2.jpg" alt="cast" />
                                                             </a>
                                                         </div>
@@ -374,7 +374,7 @@ function Movie_Details() {
                                                     <div className="movie-review-content">
                                                         <div className="movie-review-info">
                                                             <h6 className="subtitle">
-                                                                <a href="#">Thomas E Criswell</a>
+                                                                <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
                                                                 <i className="fal fa-clock"></i> 1 hour ago{" "}
@@ -389,17 +389,17 @@ function Movie_Details() {
                                                         </div>
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
                                                                 <span>10</span>{" "}
                                                             </a>
-                                                            <a href="#" className="dislike">
+                                                            <a href="#!" className="dislike">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
                                                                 <span>02</span>{" "}
                                                             </a>
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
                                                             </a>
@@ -409,7 +409,7 @@ function Movie_Details() {
                                                 <div className="movie-review-item">
                                                     <div className="author">
                                                         <div className="thumb">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 <img src="assets/img/cast/cast-1.jpg" alt="cast" />
                                                             </a>
                                                         </div>
@@ -417,7 +417,7 @@ function Movie_Details() {
                                                     <div className="movie-review-content">
                                                         <div className="movie-review-info">
                                                             <h6 className="subtitle">
-                                                                <a href="#">Thomas E Criswell</a>
+                                                                <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
                                                                 <i className="fal fa-clock"></i> 1 hour ago{" "}
@@ -432,17 +432,17 @@ function Movie_Details() {
                                                         </div>
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
                                                                 <span>10</span>{" "}
                                                             </a>
-                                                            <a href="#" className="dislike">
+                                                            <a href="#!" className="dislike">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
                                                                 <span>02</span>{" "}
                                                             </a>
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
                                                             </a>
@@ -452,7 +452,7 @@ function Movie_Details() {
                                                 <div className="movie-review-item">
                                                     <div className="author">
                                                         <div className="thumb">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 <img src="assets/img/cast/cast-2.jpg" alt="cast" />
                                                             </a>
                                                         </div>
@@ -460,7 +460,7 @@ function Movie_Details() {
                                                     <div className="movie-review-content">
                                                         <div className="movie-review-info">
                                                             <h6 className="subtitle">
-                                                                <a href="#">Thomas E Criswell</a>
+                                                                <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
                                                                 <i className="fal fa-clock"></i> 1 hour ago{" "}
@@ -475,17 +475,17 @@ function Movie_Details() {
                                                         </div>
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
                                                                 <span>10</span>{" "}
                                                             </a>
-                                                            <a href="#" className="dislike">
+                                                            <a href="#!" className="dislike">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
                                                                 <span>02</span>{" "}
                                                             </a>
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
                                                             </a>
@@ -495,7 +495,7 @@ function Movie_Details() {
                                                 <div className="movie-review-item">
                                                     <div className="author">
                                                         <div className="thumb">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 <img src="assets/img/cast/cast-3.jpg" alt="cast" />
                                                             </a>
                                                         </div>
@@ -503,7 +503,7 @@ function Movie_Details() {
                                                     <div className="movie-review-content">
                                                         <div className="movie-review-info">
                                                             <h6 className="subtitle">
-                                                                <a href="#">Thomas E Criswell</a>
+                                                                <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
                                                                 <i className="fal fa-clock"></i> 1 hour ago{" "}
@@ -518,17 +518,17 @@ function Movie_Details() {
                                                         </div>
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
                                                                 <span>10</span>{" "}
                                                             </a>
-                                                            <a href="#" className="dislike">
+                                                            <a href="#!" className="dislike">
                                                                 {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
                                                                 <span>02</span>{" "}
                                                             </a>
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 {" "}
                                                                 <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
                                                             </a>
@@ -536,7 +536,7 @@ function Movie_Details() {
                                                     </div>
                                                 </div>
                                                 <div className="load-more text-center">
-                                                    <a href="#" className="custom-button transparent">
+                                                    <a href="#!" className="custom-button transparent">
                                                         load more
                                                     </a>
                                                 </div>
@@ -555,7 +555,7 @@ function Movie_Details() {
                                             </div>
                                             <div className="content">
                                                 <h6>
-                                                    <a href="#">Brand Card Cashback Offer</a>
+                                                    <a href="#!">Brand Card Cashback Offer</a>
                                                 </h6>
                                                 <p>It is a long established fact that a reader will be distracted</p>
                                             </div>
@@ -566,7 +566,7 @@ function Movie_Details() {
                                             </div>
                                             <div className="content">
                                                 <h6>
-                                                    <a href="#">Online Payment Offer</a>
+                                                    <a href="#!">Online Payment Offer</a>
                                                 </h6>
                                                 <p>It is a long established fact that a reader will be distracted</p>
                                             </div>
@@ -577,7 +577,7 @@ function Movie_Details() {
                                             </div>
                                             <div className="content">
                                                 <h6>
-                                                    <a href="#">Bank Payment Cashback</a>
+                                                    <a href="#!">Bank Payment Cashback</a>
                                                 </h6>
                                                 <p>It is a long established fact that a reader will be distracted</p>
                                             </div>
@@ -586,7 +586,7 @@ function Movie_Details() {
                                 </div>
                                 <div className="widget-1 widget-banner">
                                     <div className="widget-1-body">
-                                        <a href="#">
+                                        <a href="#!">
                                             <img src="assets/img/sidebar/banner/banner-1.jpg" alt="banner" />
                                         </a>
                                     </div>
@@ -599,4 +599,4 @@ function Movie_Details() {
         </>
     );
 }
-export default Movie_Details;
+export default MovieDetails;

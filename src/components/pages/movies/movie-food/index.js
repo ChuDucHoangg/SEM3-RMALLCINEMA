@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
 import { NavLink } from "react-router-dom";
-function Movie_Food() {
+function MovieFood() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -30,9 +30,9 @@ function Movie_Food() {
                             <div className="details-banner-content style-two">
                                 <h3 className="title">Irregular</h3>
                                 <div className="tags">
-                                    <a href="#">MOVIE</a>
-                                    <a href="#">2D</a>
-                                    <a href="#">3D</a>
+                                    <a href="#!">MOVIE</a>
+                                    <a href="#!">2D</a>
+                                    <a href="#!">3D</a>
                                 </div>
                             </div>
                         </div>
@@ -263,4 +263,4 @@ function Movie_Food() {
         </>
     );
 }
-export default Movie_Food;
+export default MovieFood;

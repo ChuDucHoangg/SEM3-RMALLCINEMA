@@ -1,7 +1,7 @@
 import Loading from "../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import Search_Ticket from "../../views/home/search-ticket";
+import SearchTicket from "../../views/home/search-ticket";
 import Layout from "../../layouts/layout";
 import Movies from "../../views/home/movies";
 import Events from "../../views/home/events";
@@ -216,7 +216,7 @@ function Home() {
                         </div>
                     </div>
                 </section>
-                <Search_Ticket />
+                <SearchTicket />
                 <Movies />
                 <Events />
                 <Blog />

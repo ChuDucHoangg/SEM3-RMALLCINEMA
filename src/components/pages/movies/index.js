@@ -2,8 +2,8 @@ import Loading from "../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../layouts/layout";
-import Search_Ticket from "../../views/movies/search-ticket";
-import Movies_List from "../../views/movies/movies-list";
+import SearchTicket from "../../views/movies/search-ticket";
+import MoviesList from "../../views/movies/movies-list";
 function Movie() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -36,8 +36,8 @@ function Movie() {
                         </div>
                     </div>
                 </section>
-                <Search_Ticket />
-                <Movies_List />
+                <SearchTicket />
+                <MoviesList />
             </Layout>
         </>
     );

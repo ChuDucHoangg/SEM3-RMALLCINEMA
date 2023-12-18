@@ -1,18 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/pages/home";
 import Movie from "./components/pages/movies";
-import Movie_Details from "./components/pages/movies/movie-details/index.js";
-import Movie_Ticket from "./components/pages/movies/movie-ticket/index.js";
-import Movie_Seat from "./components/pages/movies/movie-seat/index.js";
-import Movie_Food from "./components/pages/movies/movie-food/index.js";
-import Movie_Checkout from "./components/pages/movies/movie-checkout/index.js";
+import MovieDetails from "./components/pages/movies/movie-details/index.js";
+import MovieTicket from "./components/pages/movies/movie-ticket/index.js";
+import MovieSeat from "./components/pages/movies/movie-seat/index.js";
+import MovieFood from "./components/pages/movies/movie-food/index.js";
+import MovieCheckout from "./components/pages/movies/movie-checkout/index.js";
 import Blog from "./components/pages/blog/index.js";
-import Blog_Details from "./components/pages/blog/blog-details/index.js";
+import BlogDetails from "./components/pages/blog/blog-details/index.js";
 import Contact from "./components/pages/contact/index.js";
-import About_Us from "./components/pages/about/index.js";
+import AboutUs from "./components/pages/about/index.js";
 import Login from "./components/pages/auth/login.js";
 import Register from "./components/pages/auth/register.js";
-import Forgot_Password from "./components/pages/auth/forgot-password.js";
+import ForgotPassword from "./components/pages/auth/forgot-password.js";
 import Profile from "./components/pages/profile/index.js";
 import MyBooking from "./components/pages/profile/my-booking.js";
 import Favorite from "./components/pages/profile/favorite.js";
@@ -27,24 +27,24 @@ function App() {
 
                 {/* Movie */}
                 <Route path="/movie-list" element={<Movie />} />
-                <Route path="/movie-details" element={<Movie_Details />} />
-                <Route path="/movie-ticket" element={<Movie_Ticket />} />
-                <Route path="/movie-seat" element={<Movie_Seat />} />
-                <Route path="/movie-food" element={<Movie_Food />} />
-                <Route path="/movie-checkout" element={<Movie_Checkout />} />
+                <Route path="/movie-details" element={<MovieDetails />} />
+                <Route path="/movie-ticket" element={<MovieTicket />} />
+                <Route path="/movie-seat" element={<MovieSeat />} />
+                <Route path="/movie-food" element={<MovieFood />} />
+                <Route path="/movie-checkout" element={<MovieCheckout />} />
 
                 {/* Blog */}
                 <Route path="/blog-list" element={<Blog />} />
-                <Route path="/blog-details" element={<Blog_Details />} />
+                <Route path="/blog-details" element={<BlogDetails />} />
 
                 {/* About and Contact Us */}
-                <Route path="/about-us" element={<About_Us />} />
+                <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/contact-us" element={<Contact />} />
 
                 {/* Auth */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<Forgot_Password />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/change-password" element={<ChangePassword />} />
 
                 {/* Profile */}

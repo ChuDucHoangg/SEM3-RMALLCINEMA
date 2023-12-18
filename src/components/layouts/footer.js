@@ -28,27 +28,27 @@ function Footer() {
                             </div>
                             <ul className="social-icons">
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fab fa-facebook-f"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="active">
+                                    <a href="#!" className="active">
                                         <i className="fab fa-twitter"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fab fa-pinterest-p"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fab fa-google"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fab fa-instagram"></i>
                                     </a>
                                 </li>
@@ -67,38 +67,37 @@ function Footer() {
                                 <div className="col-lg-3">
                                     <h5 className="footer-middle-title">Important Link</h5>
                                     <div className="footer-middle-link">
-                                        <a href="#">About Us</a>
-                                        <a href="#">Contact</a>
-                                        <a href="#">Faq</a>
-                                        <a href="#">Terms & Conditions</a>
-                                        <a href="#">Privacy Policy</a>
-                                        <a href="#">Help</a>
+                                        <a href="#!">About Us</a>
+                                        <a href="#!">Contact</a>
+                                        <a href="#!">Faq</a>
+                                        <a href="#!">Terms & Conditions</a>
+                                        <a href="#!">Privacy Policy</a>
+                                        <a href="#!">Help</a>
                                     </div>
                                 </div>
                                 <div className="col-lg-3">
                                     <h5 className="footer-middle-title">Quick Browse</h5>
                                     <div className="footer-middle-link">
-                                        <a href="#">Support</a>
-                                        <a href="#">Blog</a>
-                                        <a href="#">Movies</a>
-                                        <a href="#">Events</a>
-                                        <a href="#">Sports</a>
-                                        <a href="#">Feedback</a>
+                                        <a href="#!">Support</a>
+                                        <a href="#!">Blog</a>
+                                        <a href="#!">Movies</a>
+                                        <a href="#!">Events</a>
+                                        <a href="#!">Sports</a>
+                                        <a href="#!">Feedback</a>
                                     </div>
                                 </div>
                                 <div className="col-lg-3">
                                     <h5 className="footer-middle-title">Download</h5>
                                     <p className="footer-text">There are many variations of passages of Lorem Ipsum</p>
                                     <div className="footer-middle-download">
-                                        <a href="#">
-                                            <img src="assets/img/app/app_store.jpg" alt />
+                                        <a href="#!">
+                                            <img src="assets/img/app/app_store.jpg" alt="" />
                                         </a>
-                                        <a href="#">
-                                            <img src="assets/img/app/google_play.jpg" alt />
+                                        <a href="#!">
+                                            <img src="assets/img/app/google_play.jpg" alt="" />
                                         </a>
                                         <a href>
-                                            {" "}
-                                            <img src="assets/img/app/windows.jpg" alt />
+                                            <img src="assets/img/app/windows.jpg" alt="" />
                                         </a>
                                     </div>
                                 </div>
@@ -111,24 +110,24 @@ function Footer() {
                         <div className="footer-bottom-area">
                             <div className="left">
                                 <p>
-                                    Copyright © <span id="date"></span>.All Rights Reserved By <a href="#">R Mall Cinema</a>.
+                                    Copyright © <span id="date"></span>.All Rights Reserved By <a href="#!">R Mall Cinema</a>.
                                 </p>
                             </div>
                             <ul className="links">
                                 <li>
-                                    <a href="#">About</a>
+                                    <a href="#!">About</a>
                                 </li>
                                 <li>
-                                    <a href="#">Terms Of Use</a>
+                                    <a href="#!">Terms Of Use</a>
                                 </li>
                                 <li>
-                                    <a href="#">Privacy Policy</a>
+                                    <a href="#!">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="#">FAQ</a>
+                                    <a href="#!">FAQ</a>
                                 </li>
                                 <li>
-                                    <a href="#">Feedback</a>
+                                    <a href="#!">Feedback</a>
                                 </li>
                             </ul>
                         </div>

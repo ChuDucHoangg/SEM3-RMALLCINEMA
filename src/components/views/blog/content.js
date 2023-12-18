@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
-import Search_Blog from "./search";
+import SearchBlog from "./search";
 
-function Blog_Content() {
+function BlogContent() {
     return (
         <>
             <section className="blog-section padding-top padding-bottom">
@@ -21,10 +21,10 @@ function Blog_Content() {
                                                 <NavLink to="/blog-details">There are many variations of passages of lorem ipsum available</NavLink>
                                             </h4>
                                             <div className="meta-post">
-                                                <a href="#" className="mr-4">
+                                                <a href="#!" className="mr-4">
                                                     <i className="fal fa-clock"></i>Feb 12, 2023
                                                 </a>
-                                                <a href="#">
+                                                <a href="#!">
                                                     <i className="fal fa-comments-alt"></i>40 Comments
                                                 </a>
                                             </div>
@@ -37,16 +37,16 @@ function Blog_Content() {
                                             <div className="left">
                                                 <div className="authors">
                                                     <div className="thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/blog/author.jpg" alt="#" />
                                                         </a>
                                                     </div>
                                                     <h6 className="title">
-                                                        <a href="#">Harold C Ayala</a>
+                                                        <a href="#!">Harold C Ayala</a>
                                                     </h6>
                                                 </div>
                                             </div>
-                                            <a href="#" className="buttons">
+                                            <a href="#!" className="buttons">
                                                 Read More <i className="fal fa-long-arrow-alt-right"></i>
                                             </a>
                                         </div>
@@ -73,10 +73,10 @@ function Blog_Content() {
                                                 <a href="blog-details.html">There are many variations of passages of lorem ipsum available</a>
                                             </h4>
                                             <div className="meta-post">
-                                                <a href="#" className="mr-4">
+                                                <a href="#!" className="mr-4">
                                                     <i className="fal fa-clock"></i>Feb 12, 2023
                                                 </a>
-                                                <a href="#">
+                                                <a href="#!">
                                                     <i className="fal fa-comments-alt"></i>40 Comments
                                                 </a>
                                             </div>
@@ -89,16 +89,16 @@ function Blog_Content() {
                                             <div className="left">
                                                 <div className="authors">
                                                     <div className="thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/blog/author.jpg" alt="#" />
                                                         </a>
                                                     </div>
                                                     <h6 className="title">
-                                                        <a href="#">Harold C Ayala</a>
+                                                        <a href="#!">Harold C Ayala</a>
                                                     </h6>
                                                 </div>
                                             </div>
-                                            <a href="#" className="buttons">
+                                            <a href="#!" className="buttons">
                                                 Read More <i className="fal fa-long-arrow-alt-right"></i>
                                             </a>
                                         </div>
@@ -117,10 +117,10 @@ function Blog_Content() {
                                                 <a href="blog-details.html">There are many variations of passages of lorem ipsum available</a>
                                             </h4>
                                             <div className="meta-post">
-                                                <a href="#" className="mr-4">
+                                                <a href="#!" className="mr-4">
                                                     <i className="fal fa-clock"></i>Feb 12, 2023
                                                 </a>
-                                                <a href="#">
+                                                <a href="#!">
                                                     <i className="fal fa-comments-alt"></i>40 Comments
                                                 </a>
                                             </div>
@@ -133,16 +133,16 @@ function Blog_Content() {
                                             <div className="left">
                                                 <div className="authors">
                                                     <div className="thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/blog/author.jpg" alt="#" />
                                                         </a>
                                                     </div>
                                                     <h6 className="title">
-                                                        <a href="#">Harold C Ayala</a>
+                                                        <a href="#!">Harold C Ayala</a>
                                                     </h6>
                                                 </div>
                                             </div>
-                                            <a href="#" className="buttons">
+                                            <a href="#!" className="buttons">
                                                 Read More <i className="fal fa-long-arrow-alt-right"></i>
                                             </a>
                                         </div>
@@ -160,10 +160,10 @@ function Blog_Content() {
                                                 <a href="blog-details.html">There are many variations of passages of lorem ipsum available</a>
                                             </h4>
                                             <div className="meta-post">
-                                                <a href="#" className="mr-4">
+                                                <a href="#!" className="mr-4">
                                                     <i className="fal fa-clock"></i>Feb 12, 2023
                                                 </a>
-                                                <a href="#">
+                                                <a href="#!">
                                                     <i className="fal fa-comments-alt"></i>40 Comments
                                                 </a>
                                             </div>
@@ -176,16 +176,16 @@ function Blog_Content() {
                                             <div className="left">
                                                 <div className="authors">
                                                     <div className="thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/blog/author.jpg" alt="#" />
                                                         </a>
                                                     </div>
                                                     <h6 className="title">
-                                                        <a href="#">Harold C Ayala</a>
+                                                        <a href="#!">Harold C Ayala</a>
                                                     </h6>
                                                 </div>
                                             </div>
-                                            <a href="#" className="buttons">
+                                            <a href="#!" className="buttons">
                                                 Read More <i className="fal fa-long-arrow-alt-right"></i>
                                             </a>
                                         </div>
@@ -193,26 +193,26 @@ function Blog_Content() {
                                 </div>
                             </article>
                             <div className="pagination-area text-center">
-                                <a href="#">
+                                <a href="#!">
                                     <i className="fal fa-long-arrow-alt-left"></i>
                                     <span>Prev</span>
                                 </a>
-                                <a href="#">1</a>
-                                <a href="#" className="active">
+                                <a href="#!">1</a>
+                                <a href="#!" className="active">
                                     2
                                 </a>
-                                <a href="#">3</a>
-                                <a href="#">
+                                <a href="#!">3</a>
+                                <a href="#!">
                                     <span>Next</span>
                                     <i className="fal fa-long-arrow-alt-right"></i>
                                 </a>
                             </div>
                         </div>
-                        <Search_Blog />
+                        <SearchBlog />
                     </div>
                 </div>
             </section>
         </>
     );
 }
-export default Blog_Content;
+export default BlogContent;

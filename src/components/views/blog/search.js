@@ -1,4 +1,4 @@
-function Search_Blog() {
+function SearchBlog() {
     return (
         <>
             <div className="col-lg-4 col-sm-10 col-md-8">
@@ -21,19 +21,19 @@ function Search_Blog() {
                         <div className="widget-slider owl-carousel owl-theme">
                             <div className="item">
                                 <div className="thumb">
-                                    <a href="#">
+                                    <a href="#!">
                                         <img src="assets/img/blog/slider.jpg" alt="blog" />
                                     </a>
                                 </div>
                                 <div className="content">
                                     <h6 className="p-title">
-                                        <a href="#">There are many variations of passages</a>
+                                        <a href="#!">There are many variations of passages</a>
                                     </h6>
                                     <div className="meta-post">
-                                        <a href="#" className="mr-4">
+                                        <a href="#!" className="mr-4">
                                             <i className="fal fa-clock fa-lg"></i>Feb 12, 2023
                                         </a>
-                                        <a href="#">
+                                        <a href="#!">
                                             <i className="fal fa-comments-alt"></i>40 Comments
                                         </a>
                                     </div>
@@ -41,19 +41,19 @@ function Search_Blog() {
                             </div>
                             <div className="item">
                                 <div className="thumb">
-                                    <a href="#">
+                                    <a href="#!">
                                         <img src="assets/img/blog/slider.jpg" alt="blog" />
                                     </a>
                                 </div>
                                 <div className="content">
                                     <h6 className="p-title">
-                                        <a href="#">There are many variations of passages</a>
+                                        <a href="#!">There are many variations of passages</a>
                                     </h6>
                                     <div className="meta-post">
-                                        <a href="#" className="mr-4">
+                                        <a href="#!" className="mr-4">
                                             <i className="fal fa-clock"></i>Feb 12, 2023
                                         </a>
-                                        <a href="#">
+                                        <a href="#!">
                                             <i className="fal fa-comments-alt"></i>40 Comments
                                         </a>
                                     </div>
@@ -65,7 +65,7 @@ function Search_Blog() {
                         <h5 className="title">categories</h5>
                         <ul>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <span>
                                         <i className="fal fa-caret-right"></i> Latest Movie
                                     </span>
@@ -73,7 +73,7 @@ function Search_Blog() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <span>
                                         <i className="fal fa-caret-right"></i> Latest Trailers
                                     </span>
@@ -81,7 +81,7 @@ function Search_Blog() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <span>
                                         <i className="fal fa-caret-right"></i> Upcoming Events
                                     </span>
@@ -89,7 +89,7 @@ function Search_Blog() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <span>
                                         <i className="fal fa-caret-right"></i> Coming Soon
                                     </span>
@@ -97,7 +97,7 @@ function Search_Blog() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <span>
                                         <i className="fal fa-caret-right"></i> National League
                                     </span>
@@ -105,7 +105,7 @@ function Search_Blog() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <span>
                                         <i className="fal fa-caret-right"></i> Latest Events
                                     </span>
@@ -113,7 +113,7 @@ function Search_Blog() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <span>
                                         <i className="fal fa-caret-right"></i> Internation Sports{" "}
                                     </span>
@@ -126,27 +126,27 @@ function Search_Blog() {
                         <h5 className="title">Follow Us</h5>
                         <ul className="social-icons">
                             <li>
-                                <a href="#" className>
+                                <a href="#!" className>
                                     <i className="fab fa-facebook-f"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="active">
+                                <a href="#!" className="active">
                                     <i className="fab fa-twitter"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className>
+                                <a href="#!" className>
                                     <i className="fab fa-pinterest-p"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <i className="fab fa-google"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#!">
                                     <i className="fab fa-instagram"></i>
                                 </a>
                             </li>
@@ -156,19 +156,19 @@ function Search_Blog() {
                         <h5 className="title">featured tags</h5>
                         <ul>
                             <li>
-                                <a href="#">digital</a>
+                                <a href="#!">digital</a>
                             </li>
                             <li>
-                                <a href="#">sports</a>
+                                <a href="#!">sports</a>
                             </li>
                             <li>
-                                <a href="#">events</a>
+                                <a href="#!">events</a>
                             </li>
                             <li>
-                                <a href="#">movie</a>
+                                <a href="#!">movie</a>
                             </li>
                             <li>
-                                <a href="#">modern</a>
+                                <a href="#!">modern</a>
                             </li>
                         </ul>
                     </div>
@@ -177,4 +177,4 @@ function Search_Blog() {
         </>
     );
 }
-export default Search_Blog;
+export default SearchBlog;

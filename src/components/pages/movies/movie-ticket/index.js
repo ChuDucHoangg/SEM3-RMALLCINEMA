@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
 import { NavLink } from "react-router-dom";
-function Movie_Ticket() {
+function MovieTicket() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -44,10 +44,10 @@ function Movie_Ticket() {
                             <div className="details-banner-content">
                                 <h3 className="title">Irregular</h3>
                                 <div className="tags">
-                                    <a href="#">English</a>
-                                    <a href="#">France</a>
-                                    <a href="#">Germany</a>
-                                    <a href="#">Italy</a>
+                                    <a href="#!">English</a>
+                                    <a href="#!">France</a>
+                                    <a href="#!">Germany</a>
+                                    <a href="#!">Italy</a>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ function Movie_Ticket() {
                                                 <i className="far fa-heart"></i>
                                                 <i className="fas fa-heart"></i>
                                             </div>
-                                            <a href="#" className="name">
+                                            <a href="#!" className="name">
                                                 Cine World
                                             </a>
                                         </div>
@@ -157,7 +157,7 @@ function Movie_Ticket() {
                                                 <i className="far fa-heart"></i>
                                                 <i className="fas fa-heart"></i>
                                             </div>
-                                            <a href="#" className="name">
+                                            <a href="#!" className="name">
                                                 Cine Mark
                                             </a>
                                         </div>
@@ -179,7 +179,7 @@ function Movie_Ticket() {
                                                 <i className="far fa-heart"></i>
                                                 <i className="fas fa-heart"></i>
                                             </div>
-                                            <a href="#" className="name">
+                                            <a href="#!" className="name">
                                                 Wanda Cinemas
                                             </a>
                                         </div>
@@ -201,7 +201,7 @@ function Movie_Ticket() {
                                                 <i className="far fa-heart"></i>
                                                 <i className="fas fa-heart"></i>
                                             </div>
-                                            <a href="#" className="name">
+                                            <a href="#!" className="name">
                                                 box park
                                             </a>
                                         </div>
@@ -223,7 +223,7 @@ function Movie_Ticket() {
                                                 <i className="far fa-heart"></i>
                                                 <i className="fas fa-heart"></i>
                                             </div>
-                                            <a href="#" className="name">
+                                            <a href="#!" className="name">
                                                 Cineplex Entertainment
                                             </a>
                                         </div>
@@ -245,7 +245,7 @@ function Movie_Ticket() {
                                                 <i className="far fa-heart"></i>
                                                 <i className="fas fa-heart"></i>
                                             </div>
-                                            <a href="#" className="name">
+                                            <a href="#!" className="name">
                                                 Siverbird
                                             </a>
                                         </div>
@@ -270,4 +270,4 @@ function Movie_Ticket() {
         </>
     );
 }
-export default Movie_Ticket;
+export default MovieTicket;
