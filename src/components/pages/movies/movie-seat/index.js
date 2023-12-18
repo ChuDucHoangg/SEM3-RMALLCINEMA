@@ -30,9 +30,9 @@ function Movie_Seat() {
                             <div className="details-banner-content style-two">
                                 <h3 className="title">Irregular</h3>
                                 <div className="tags">
-                                    <a href="#">MOVIE</a>
-                                    <a href="#">2D</a>
-                                    <a href="#">3D</a>
+                                    <a href="#!">MOVIE</a>
+                                    <a href="#!">2D</a>
+                                    <a href="#!">3D</a>
                                 </div>
                             </div>
                         </div>
@@ -44,8 +44,7 @@ function Movie_Seat() {
                         <div className="page-title-area">
                             <div className="item md-order-1">
                                 <a href="movie-ticket-plan.html" className="custom-button back-button">
-                                    {" "}
-                                    <i className="far fa-reply"></i> Change Plan{" "}
+                                    <i className="far fa-reply"></i> Change Plan
                                 </a>
                             </div>
                             <div className="item date-item">
@@ -83,43 +82,47 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">h1</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">h2</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">h3</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">h4</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">h5</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-booked.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">h6</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">h7</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-booked.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">h8</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">h9</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">h10</span>
                                                     </li>
                                                 </ul>
@@ -127,16 +130,20 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g11</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g12</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g13</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g14</span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -149,19 +156,19 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">g1</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">g2</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">g3</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">g4</span>
                                                     </li>
                                                 </ul>
@@ -169,38 +176,48 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g5</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g6</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g7</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g8</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g9</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g10</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g11</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g12</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g13</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">g14</span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -213,59 +230,68 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f1</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f2</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f3</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f4</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f5</span>
                                                     </li>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f6</span>
+                                                    </li>
+                                                    <li className="single-seat seat-free">
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">f7</span>
                                                     </li>
-                                                    <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                    <li className="single-seat">
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">f8</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f9</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f10</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
-                                                        <span className="sit-num">f9</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
-                                                        <span className="sit-num">f10</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <img src="assets/img/movie/seat-1-free.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
                                                         <span className="sit-num">f11</span>
                                                     </li>
+                                                    <li className="single-seat seat-free">
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f12</span>
+                                                    </li>
+                                                    <li className="single-seat seat-free">
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f13</span>
+                                                    </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-1.png" alt="seat" />
+                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
+                                                        <span className="sit-num">f14</span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -283,11 +309,11 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">e1 e2</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">e3 e4</span>
                                                     </li>
                                                 </ul>
@@ -295,23 +321,28 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">e5 e6</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">e7 e8</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">e9 e10</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">e11 e12</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">e13 e14</span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -324,34 +355,40 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">d1 d2</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">d3 d4</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">d5 d6</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-booked.png" alt="seat" />
-                                                        <span className="sit-num booked-bg">D7 D8</span>
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num booked-bg">d7 d8</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">d9 d10</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">d11 d12</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">d13 d14</span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -364,34 +401,40 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">c1 c2</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">c3 c4</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">c5 c6</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">c7 c8</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">c9 c10</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">c11 c12</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">c13 c14</span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -404,11 +447,11 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">b1 b2</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">b3 b4</span>
                                                     </li>
                                                 </ul>
@@ -416,24 +459,28 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">b5 b6</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">b7 b8</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">b9 b10</span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">b11 b12</span>
                                                     </li>
                                                     <li className="single-seat">
-                                                        <img src="assets/img/movie/seat-2.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
+                                                        <span className="sit-num">b13 b14</span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -446,11 +493,11 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-booked.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num booked-bg">a1 a2</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">a3 a4</span>
                                                     </li>
                                                 </ul>
@@ -458,15 +505,15 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">a5 a6</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">a7 a8</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">a9 a10</span>
                                                     </li>
                                                 </ul>
@@ -474,11 +521,11 @@ function Movie_Seat() {
                                             <li className="front-seat">
                                                 <ul>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-booked.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num booked-bg">a11</span>
                                                     </li>
                                                     <li className="single-seat seat-free-two">
-                                                        <img src="assets/img/movie/seat-2-free.png" alt="seat" />
+                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
                                                         <span className="sit-num">a12</span>
                                                     </li>
                                                 </ul>
