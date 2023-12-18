@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-function Movies_List() {
+function MoviesList() {
     return (
         <>
             <section className="movie-section padding-top padding-bottom">
@@ -13,39 +13,39 @@ function Movies_List() {
                                     <div className="check-area">
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang1" />
-                                            <label for="lang1">Australia</label>
+                                            <label htmlFor="lang1">Australia</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang2" />
-                                            <label for="lang2">France</label>
+                                            <label htmlFor="lang2">France</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang3" />
-                                            <label for="lang3">Russia</label>
+                                            <label htmlFor="lang3">Russia</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang4" />
-                                            <label for="lang4">Thailand</label>
+                                            <label htmlFor="lang4">Thailand</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang5" />
-                                            <label for="lang5">Germany</label>
+                                            <label htmlFor="lang5">Germany</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang6" />
-                                            <label for="lang6">Italy</label>
+                                            <label htmlFor="lang6">Italy</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang7" />
-                                            <label for="lang7">USA</label>
+                                            <label htmlFor="lang7">USA</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="lang" id="lang8" />
-                                            <label for="lang8">UK</label>
+                                            <label htmlFor="lang8">UK</label>
                                         </div>
                                     </div>
                                     <div className="add-check-area">
-                                        <a href="#">view more</a> <i className="fal fa-chevron-circle-down"></i>
+                                        <a href="#!">view more</a> <i className="fal fa-chevron-circle-down"></i>
                                     </div>
                                 </div>
                             </div>
@@ -55,11 +55,11 @@ function Movies_List() {
                                     <div className="check-area">
                                         <div className="form-group">
                                             <input type="checkbox" name="mode" id="mode1" />
-                                            <label for="mode1">2d</label>
+                                            <label htmlFor="mode1">2d</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="mode" id="mode2" />
-                                            <label for="mode2">3d</label>
+                                            <label htmlFor="mode2">3d</label>
                                         </div>
                                     </div>
                                 </div>
@@ -70,53 +70,53 @@ function Movies_List() {
                                     <div className="check-area">
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre1" />
-                                            <label for="genre1">action</label>
+                                            <label htmlFor="genre1">action</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre2" />
-                                            <label for="genre2">horror</label>
+                                            <label htmlFor="genre2">horror</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre3" />
-                                            <label for="genre3">animation</label>
+                                            <label htmlFor="genre3">animation</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre4" />
-                                            <label for="genre4">sci-fi</label>
+                                            <label htmlFor="genre4">sci-fi</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre5" />
-                                            <label for="genre5">thriller</label>
+                                            <label htmlFor="genre5">thriller</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre6" />
-                                            <label for="genre6">comedy</label>
+                                            <label htmlFor="genre6">comedy</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre7" />
-                                            <label for="genre7">romantic</label>
+                                            <label htmlFor="genre7">romantic</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre8" />
-                                            <label for="genre8">drama</label>
+                                            <label htmlFor="genre8">drama</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre9" />
-                                            <label for="genre9">romance</label>
+                                            <label htmlFor="genre9">romance</label>
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="genre" id="genre10" />
-                                            <label for="genre10">adventure</label>
+                                            <label htmlFor="genre10">adventure</label>
                                         </div>
                                     </div>
                                     <div className="add-check-area">
-                                        <a href="#">view more</a> <i className="fal fa-chevron-circle-down"></i>
+                                        <a href="#!">view more</a> <i className="fal fa-chevron-circle-down"></i>
                                     </div>
                                 </div>
                             </div>
                             <div className="widget-1 widget-banner">
                                 <div className="widget-1-body">
-                                    <a href="#">
+                                    <a href="#!">
                                         <img src="assets/img/sidebar/banner/banner-2.jpg" alt="banner" />
                                     </a>
                                 </div>
@@ -166,7 +166,7 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-1.jpg" alt="movie" />
                                                         </a>
                                                     </div>
@@ -190,13 +190,13 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-2.jpg" alt="movie" />
                                                         </a>
                                                     </div>
                                                     <div className="movie-content">
                                                         <h5 className="title m-0">
-                                                            <a href="#">Godzilla Vs King Kong</a>
+                                                            <a href="#!">Godzilla Vs King Kong</a>
                                                         </h5>
                                                         <ul className="movie-rating-percent">
                                                             <li>
@@ -214,13 +214,13 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-3.jpg" alt="movie" />
                                                         </a>
                                                     </div>
                                                     <div className="movie-content">
                                                         <h5 className="title m-0">
-                                                            <a href="#">Mythic Quest Ravens</a>
+                                                            <a href="#!">Mythic Quest Ravens</a>
                                                         </h5>
                                                         <ul className="movie-rating-percent">
                                                             <li>
@@ -238,13 +238,13 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-4.jpg" alt="movie" />
                                                         </a>
                                                     </div>
                                                     <div className="movie-content">
                                                         <h5 className="title m-0">
-                                                            <a href="#">Wanda Vision</a>
+                                                            <a href="#!">Wanda Vision</a>
                                                         </h5>
                                                         <ul className="movie-rating-percent">
                                                             <li>
@@ -262,13 +262,13 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-5.jpg" alt="movie" />
                                                         </a>
                                                     </div>
                                                     <div className="movie-content">
                                                         <h5 className="title m-0">
-                                                            <a href="#">Irregular</a>
+                                                            <a href="#!">Irregular</a>
                                                         </h5>
                                                         <ul className="movie-rating-percent">
                                                             <li>
@@ -286,13 +286,13 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-6.jpg" alt="movie" />
                                                         </a>
                                                     </div>
                                                     <div className="movie-content">
                                                         <h5 className="title m-0">
-                                                            <a href="#">Raya and Last Dragon</a>
+                                                            <a href="#!">Raya and Last Dragon</a>
                                                         </h5>
                                                         <ul className="movie-rating-percent">
                                                             <li>
@@ -310,13 +310,13 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-3.jpg" alt="movie" />
                                                         </a>
                                                     </div>
                                                     <div className="movie-content">
                                                         <h5 className="title m-0">
-                                                            <a href="#">Mythic Quest Ravens</a>
+                                                            <a href="#!">Mythic Quest Ravens</a>
                                                         </h5>
                                                         <ul className="movie-rating-percent">
                                                             <li>
@@ -334,13 +334,13 @@ function Movies_List() {
                                             <div className="col-sm-6 col-lg-6">
                                                 <div className="movie-grid">
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#">
+                                                        <a href="#!">
                                                             <img src="assets/img/movie/movie-4.jpg" alt="movie" />
                                                         </a>
                                                     </div>
                                                     <div className="movie-content">
                                                         <h5 className="title m-0">
-                                                            <a href="#">Wanda Vision</a>
+                                                            <a href="#!">Wanda Vision</a>
                                                         </h5>
                                                         <ul className="movie-rating-percent">
                                                             <li>
@@ -371,12 +371,12 @@ function Movies_List() {
                                                     </h5>
                                                     <p className="duration">2h 20 min</p>
                                                     <div className="movie-tags">
-                                                        <a href="#">action</a>
-                                                        <a href="#">adventure</a>
-                                                        <a href="#">drama</a>
+                                                        <a href="#!">action</a>
+                                                        <a href="#!">adventure</a>
+                                                        <a href="#!">drama</a>
                                                     </div>
                                                     <div className="release">
-                                                        <span>Release Date : </span> <a href="#"> Feb 13, 2023</a>
+                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
                                                     </div>
                                                     <ul className="movie-rating-percent">
                                                         <li>
@@ -391,7 +391,7 @@ function Movies_List() {
                                                     <div className="book-area">
                                                         <div className="book-ticket">
                                                             <div className="react-item">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-heart"></i>
                                                                     </div>
@@ -399,7 +399,7 @@ function Movies_List() {
                                                                 </a>
                                                             </div>
                                                             <div className="react-item mr-auto">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-ticket"></i>
                                                                     </div>
@@ -430,12 +430,12 @@ function Movies_List() {
                                                     </h5>
                                                     <p className="duration">2h 20 min</p>
                                                     <div className="movie-tags">
-                                                        <a href="#">action</a>
-                                                        <a href="#">adventure</a>
-                                                        <a href="#">drama</a>
+                                                        <a href="#!">action</a>
+                                                        <a href="#!">adventure</a>
+                                                        <a href="#!">drama</a>
                                                     </div>
                                                     <div className="release">
-                                                        <span>Release Date : </span> <a href="#"> Feb 13, 2023</a>
+                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
                                                     </div>
                                                     <ul className="movie-rating-percent">
                                                         <li>
@@ -450,7 +450,7 @@ function Movies_List() {
                                                     <div className="book-area">
                                                         <div className="book-ticket">
                                                             <div className="react-item">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-heart"></i>
                                                                     </div>
@@ -458,7 +458,7 @@ function Movies_List() {
                                                                 </a>
                                                             </div>
                                                             <div className="react-item mr-auto">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-ticket"></i>
                                                                     </div>
@@ -489,12 +489,12 @@ function Movies_List() {
                                                     </h5>
                                                     <p className="duration">2h 20 min</p>
                                                     <div className="movie-tags">
-                                                        <a href="#">action</a>
-                                                        <a href="#">adventure</a>
-                                                        <a href="#">drama</a>
+                                                        <a href="#!">action</a>
+                                                        <a href="#!">adventure</a>
+                                                        <a href="#!">drama</a>
                                                     </div>
                                                     <div className="release">
-                                                        <span>Release Date : </span> <a href="#"> Feb 13, 2023</a>
+                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
                                                     </div>
                                                     <ul className="movie-rating-percent">
                                                         <li>
@@ -509,7 +509,7 @@ function Movies_List() {
                                                     <div className="book-area">
                                                         <div className="book-ticket">
                                                             <div className="react-item">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-heart"></i>
                                                                     </div>
@@ -517,7 +517,7 @@ function Movies_List() {
                                                                 </a>
                                                             </div>
                                                             <div className="react-item mr-auto">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-ticket"></i>
                                                                     </div>
@@ -548,12 +548,12 @@ function Movies_List() {
                                                     </h5>
                                                     <p className="duration">2h 20 min</p>
                                                     <div className="movie-tags">
-                                                        <a href="#">action</a>
-                                                        <a href="#">adventure</a>
-                                                        <a href="#">drama</a>
+                                                        <a href="#!">action</a>
+                                                        <a href="#!">adventure</a>
+                                                        <a href="#!">drama</a>
                                                     </div>
                                                     <div className="release">
-                                                        <span>Release Date : </span> <a href="#"> Feb 13, 2023</a>
+                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
                                                     </div>
                                                     <ul className="movie-rating-percent">
                                                         <li>
@@ -568,7 +568,7 @@ function Movies_List() {
                                                     <div className="book-area">
                                                         <div className="book-ticket">
                                                             <div className="react-item">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-heart"></i>
                                                                     </div>
@@ -576,7 +576,7 @@ function Movies_List() {
                                                                 </a>
                                                             </div>
                                                             <div className="react-item mr-auto">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-ticket"></i>
                                                                     </div>
@@ -607,12 +607,12 @@ function Movies_List() {
                                                     </h5>
                                                     <p className="duration">2h 20 min</p>
                                                     <div className="movie-tags">
-                                                        <a href="#">action</a>
-                                                        <a href="#">adventure</a>
-                                                        <a href="#">drama</a>
+                                                        <a href="#!">action</a>
+                                                        <a href="#!">adventure</a>
+                                                        <a href="#!">drama</a>
                                                     </div>
                                                     <div className="release">
-                                                        <span>Release Date : </span> <a href="#"> Feb 13, 2023</a>
+                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
                                                     </div>
                                                     <ul className="movie-rating-percent">
                                                         <li>
@@ -627,7 +627,7 @@ function Movies_List() {
                                                     <div className="book-area">
                                                         <div className="book-ticket">
                                                             <div className="react-item">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-heart"></i>
                                                                     </div>
@@ -635,7 +635,7 @@ function Movies_List() {
                                                                 </a>
                                                             </div>
                                                             <div className="react-item mr-auto">
-                                                                <a href="#">
+                                                                <a href="#!">
                                                                     <div className="thumb">
                                                                         <i className="fal fa-ticket"></i>
                                                                     </div>
@@ -658,16 +658,16 @@ function Movies_List() {
                                     </div>
                                 </div>
                                 <div className="pagination-area text-center">
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fal fa-long-arrow-alt-left"></i>
                                         <span>Prev</span>
                                     </a>
-                                    <a href="#">1</a>
-                                    <a href="#" className="active">
+                                    <a href="#!">1</a>
+                                    <a href="#!" className="active">
                                         2
                                     </a>
-                                    <a href="#">3</a>
-                                    <a href="#">
+                                    <a href="#!">3</a>
+                                    <a href="#!">
                                         <span>Next</span>
                                         <i className="fal fa-long-arrow-alt-right"></i>
                                     </a>
@@ -680,4 +680,4 @@ function Movies_List() {
         </>
     );
 }
-export default Movies_List;
+export default MoviesList;

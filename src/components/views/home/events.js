@@ -16,7 +16,7 @@ function Events() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="event-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/event/event-1.jpg" alt="event" />
                                                 </a>
                                                 <div className="event-date">
@@ -26,7 +26,7 @@ function Events() {
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Digital Conference 2023</a>
+                                                    <a href="#!">Digital Conference 2023</a>
                                                 </h5>
                                                 <div className="movie-rating-percent">
                                                     <div>
@@ -44,7 +44,7 @@ function Events() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="event-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/event/event-2.jpg" alt="event" />
                                                 </a>
                                                 <div className="event-date">
@@ -54,7 +54,7 @@ function Events() {
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Learn Conference 2023</a>
+                                                    <a href="#!">Learn Conference 2023</a>
                                                 </h5>
                                                 <div className="movie-rating-percent">
                                                     <div>
@@ -72,7 +72,7 @@ function Events() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="event-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/event/event-3.jpg" alt="event" />
                                                 </a>
                                                 <div className="event-date">
@@ -82,7 +82,7 @@ function Events() {
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Business World 2023</a>
+                                                    <a href="#!">Business World 2023</a>
                                                 </h5>
                                                 <div className="movie-rating-percent">
                                                     <div>
@@ -100,7 +100,7 @@ function Events() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="event-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/event/event-4.jpg" alt="event" />
                                                 </a>
                                                 <div className="event-date">
@@ -110,7 +110,7 @@ function Events() {
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Building New Community</a>
+                                                    <a href="#!">Building New Community</a>
                                                 </h5>
                                                 <div className="movie-rating-percent">
                                                     <div>
@@ -128,7 +128,7 @@ function Events() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="event-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/event/event-5.jpg" alt="event" />
                                                 </a>
                                                 <div className="event-date">
@@ -138,7 +138,7 @@ function Events() {
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">User Interface 2023</a>
+                                                    <a href="#!">User Interface 2023</a>
                                                 </h5>
                                                 <div className="movie-rating-percent">
                                                     <div>
@@ -156,7 +156,7 @@ function Events() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="event-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/event/event-6.jpg" alt="event" />
                                                 </a>
                                                 <div className="event-date">
@@ -166,7 +166,7 @@ function Events() {
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Freedom Music Fest 2023</a>
+                                                    <a href="#!">Freedom Music Fest 2023</a>
                                                 </h5>
                                                 <div className="movie-rating-percent">
                                                     <div>

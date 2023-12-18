@@ -82,25 +82,25 @@ function Contact() {
                                     </div>
                                     <form method="post" action="https://themes.themewild.com/ticket/assets/php/contact.php" id="contact-form" className="contact-form">
                                         <div className="form-group">
-                                            <label for="name">
+                                            <label htmlFor="name">
                                                 Name <span>*</span>
                                             </label>
-                                            <input type="text" placeholder="Enter Your Name" name="name" id="name" required />
+                                            <input type="text" placeholder="Enter Your Name" name="name" id="name" required autoFocus />
                                         </div>
                                         <div className="form-group">
-                                            <label for="email">
+                                            <label htmlFor="email">
                                                 Email <span>*</span>
                                             </label>
                                             <input type="text" placeholder="Enter Your Email" name="email" id="email" required />
                                         </div>
                                         <div className="form-group">
-                                            <label for="subject">
+                                            <label htmlFor="subject">
                                                 Subject <span>*</span>
                                             </label>
                                             <input type="text" placeholder="Enter Your Subject" name="subject" id="subject" required />
                                         </div>
                                         <div className="form-group">
-                                            <label for="message">
+                                            <label htmlFor="message">
                                                 Message <span>*</span>
                                             </label>
                                             <textarea name="message" id="message" placeholder="Enter Your Message" required></textarea>

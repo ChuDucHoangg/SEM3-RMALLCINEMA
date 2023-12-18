@@ -1,4 +1,4 @@
-function Search_Ticket() {
+function SearchTicket() {
     return (
         <>
             <section className="search-ticket-section padding-top pt-lg-0">
@@ -230,4 +230,4 @@ function Search_Ticket() {
         </>
     );
 }
-export default Search_Ticket;
+export default SearchTicket;

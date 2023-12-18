@@ -13,20 +13,20 @@ function Login() {
                             </div>
                             <form className="account-form">
                                 <div className="form-group">
-                                    <label for="email">
+                                    <label htmlFor="email">
                                         Email<span>*</span>
                                     </label>
-                                    <input type="text" placeholder="Email" id="email" required />
+                                    <input type="text" placeholder="Email" id="email" required autoFocus />
                                 </div>
                                 <div className="form-group">
-                                    <label for="password">
+                                    <label htmlFor="password">
                                         Password<span>*</span>
                                     </label>
                                     <input type="password" placeholder="Password" id="password" required />
                                 </div>
                                 <div className="form-group checkgroup">
-                                    <input type="checkbox" id="bal2" required checked />
-                                    <label for="bal2">remember me</label>
+                                    <input type="checkbox" id="bal2" checked />
+                                    <label htmlFor="bal2">remember me</label>
                                     <NavLink to="/forgot-password" className="forget-pass">
                                         Forgot Password?
                                     </NavLink>
@@ -43,17 +43,17 @@ function Login() {
                             </div>
                             <ul className="social-icons">
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fab fa-facebook-f"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fab fa-google"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fab fa-twitter"></i>
                                     </a>
                                 </li>

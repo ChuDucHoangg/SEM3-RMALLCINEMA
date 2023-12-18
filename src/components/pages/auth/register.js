@@ -13,33 +13,33 @@ function Register() {
                             </div>
                             <form className="account-form">
                                 <div className="form-group">
-                                    <label for="name">
+                                    <label htmlFor="name">
                                         Name<span>*</span>
                                     </label>
-                                    <input type="text" placeholder="Enter Your Name" id="name" required />
+                                    <input type="text" placeholder="Enter Your Name" id="name" required autoFocus />
                                 </div>
                                 <div className="form-group">
-                                    <label for="email">
+                                    <label htmlFor="email">
                                         Email<span>*</span>
                                     </label>
                                     <input type="text" placeholder="Enter Your Email" id="email" required />
                                 </div>
                                 <div className="form-group">
-                                    <label for="password">
+                                    <label htmlFor="password">
                                         Password<span>*</span>
                                     </label>
                                     <input type="password" placeholder="Password" id="password" required />
                                 </div>
                                 <div className="form-group">
-                                    <label for="confirm-password">
+                                    <label htmlFor="confirm-password">
                                         Confirm Password<span>*</span>
                                     </label>
                                     <input type="password" placeholder="Re-type Password" id="confirm-password" required />
                                 </div>
                                 <div className="form-group checkgroup">
                                     <input type="checkbox" id="agree" required checked />
-                                    <label for="agree">
-                                        I agree with this <a href="#">Terms </a> and <a href="#"> Privacy Policy</a>.{" "}
+                                    <label htmlFor="agree">
+                                        I agree with this <a href="#!">Terms </a> and <a href="#!"> Privacy Policy</a>.
                                     </label>
                                 </div>
                                 <div className="form-group text-center">

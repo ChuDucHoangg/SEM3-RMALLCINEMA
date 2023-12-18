@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 function Header() {
@@ -32,7 +31,7 @@ function Header() {
                                 </ul>
                             </li>
                             <li>
-                                <a>pages</a>
+                                <a href="#!">pages</a>
                                 <ul className="submenu">
                                     <li>
                                         <NavLink to="/about-us">

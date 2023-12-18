@@ -2,7 +2,7 @@ import Loading from "../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../layouts/layout";
-function About_Us() {
+function AboutUs() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -53,7 +53,7 @@ function About_Us() {
                                             It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum
                                             is that it has a more-or-less normal distribution of letters, as opposed to using Content here content here making.
                                         </p>
-                                        <a href="#" className="custom-button">
+                                        <a href="#!" className="custom-button">
                                             book tickets
                                         </a>
                                     </div>
@@ -123,7 +123,9 @@ function About_Us() {
                                             <i className="fal fa-users"></i>
                                         </div>
                                         <div className="counter-content">
-                                            <h3 className="title odometer" data-odometer-final="20"></h3>
+                                            <h3 className="title odometer" data-odometer-final="20">
+                                                20
+                                            </h3>
                                             <h3 className="title">k+</h3>
                                         </div>
                                         <span className="d-block info">Customers</span>
@@ -133,7 +135,9 @@ function About_Us() {
                                             <i className="fal fa-globe"></i>
                                         </div>
                                         <div className="counter-content">
-                                            <h3 className="title odometer" data-odometer-final="200"></h3>
+                                            <h3 className="title odometer" data-odometer-final="200">
+                                                200
+                                            </h3>
                                         </div>
                                         <span className="d-block info">Country</span>
                                     </div>
@@ -142,8 +146,10 @@ function About_Us() {
                                             <i className="fal fa-city"></i>
                                         </div>
                                         <div className="counter-content">
-                                            <h3 className="title odometer" data-odometer-final="10"></h3>
-                                            <h3 className="title">k+</h3>
+                                            <h3 className="title odometer" data-odometer-final="10">
+                                                10
+                                            </h3>
+                                            <h className="title">k+</h>
                                         </div>
                                         <span className="d-block info">Area & City</span>
                                     </div>
@@ -152,7 +158,9 @@ function About_Us() {
                                             <i className="fal fa-wallet"></i>
                                         </div>
                                         <div className="counter-content">
-                                            <h3 className="title odometer" data-odometer-final="80"></h3>
+                                            <h3 className="title odometer" data-odometer-final="10">
+                                                10
+                                            </h3>
                                             <h3 className="title">m+</h3>
                                         </div>
                                         <span className="d-block info">Ticket Sale</span>
@@ -182,7 +190,7 @@ function About_Us() {
                                 </div>
                                 <div className="client-content">
                                     <h5 className="title">
-                                        <a href="#">Rafuz</a>
+                                        <a href="#!">Rafuz</a>
                                     </h5>
                                     <blockquote className="client-quote">
                                         "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
@@ -196,7 +204,7 @@ function About_Us() {
                                 </div>
                                 <div className="client-content">
                                     <h5 className="title">
-                                        <a href="#">Rudra</a>
+                                        <a href="#!">Rudra</a>
                                     </h5>
                                     <blockquote className="client-quote">
                                         "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
@@ -210,7 +218,7 @@ function About_Us() {
                                 </div>
                                 <div className="client-content">
                                     <h5 className="title">
-                                        <a href="#">Raihan</a>
+                                        <a href="#!">Raihan</a>
                                     </h5>
                                     <blockquote className="client-quote">
                                         "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
@@ -224,7 +232,7 @@ function About_Us() {
                                 </div>
                                 <div className="client-content">
                                     <h5 className="title">
-                                        <a href="#">Shahidul</a>
+                                        <a href="#!">Shahidul</a>
                                     </h5>
                                     <blockquote className="client-quote">
                                         "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
@@ -257,16 +265,16 @@ function About_Us() {
                                         </h5>
                                         <span>CEO & CO-FOUNDER</span>
                                         <div className="speaker-social">
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-facebook"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-twitter"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-instagram"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-linkedin"></i>
                                             </a>
                                         </div>
@@ -284,16 +292,16 @@ function About_Us() {
                                         </h5>
                                         <span>CEO & CO-FOUNDER</span>
                                         <div className="speaker-social">
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-facebook"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-twitter"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-instagram"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-linkedin"></i>
                                             </a>
                                         </div>
@@ -311,16 +319,16 @@ function About_Us() {
                                         </h5>
                                         <span>CEO & CO-FOUNDER</span>
                                         <div className="speaker-social">
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-facebook"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-twitter"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-instagram"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-linkedin"></i>
                                             </a>
                                         </div>
@@ -338,16 +346,16 @@ function About_Us() {
                                         </h5>
                                         <span>CEO & CO-FOUNDER</span>
                                         <div className="speaker-social">
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-facebook"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-twitter"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-instagram"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="#!">
                                                 <i className="fab fa-linkedin"></i>
                                             </a>
                                         </div>
@@ -463,4 +471,4 @@ function About_Us() {
         </>
     );
 }
-export default About_Us;
+export default AboutUs;

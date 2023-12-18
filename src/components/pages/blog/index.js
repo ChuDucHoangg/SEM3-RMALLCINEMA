@@ -2,7 +2,7 @@ import Loading from "../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../layouts/layout";
-import Blog_Content from "../../views/blog/content";
+import BlogContent from "../../views/blog/content";
 function Blog() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -38,7 +38,7 @@ function Blog() {
                     </div>
                 </section>
 
-                <Blog_Content />
+                <BlogContent />
             </Layout>
         </>
     );

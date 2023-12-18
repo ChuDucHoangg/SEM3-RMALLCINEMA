@@ -16,13 +16,13 @@ function Movies() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="movie-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/movie/movie-1.jpg" alt="movie" />
                                                 </a>
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Avatar Special Edition</a>
+                                                    <a href="#!">Avatar Special Edition</a>
                                                 </h5>
                                                 <ul className="movie-rating-percent">
                                                     <li>
@@ -40,13 +40,13 @@ function Movies() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="movie-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/movie/movie-2.jpg" alt="movie" />
                                                 </a>
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Avengers Endgame</a>
+                                                    <a href="#!">Avengers Endgame</a>
                                                 </h5>
                                                 <ul className="movie-rating-percent">
                                                     <li>
@@ -64,13 +64,13 @@ function Movies() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="movie-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/movie/movie-3.jpg" alt="movie" />
                                                 </a>
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">Terminator 2</a>
+                                                    <a href="#!">Terminator 2</a>
                                                 </h5>
                                                 <ul className="movie-rating-percent">
                                                     <li>
@@ -88,13 +88,13 @@ function Movies() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="movie-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/movie/movie-4.jpg" alt="movie" />
                                                 </a>
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">The Salesman</a>
+                                                    <a href="#!">The Salesman</a>
                                                 </h5>
                                                 <ul className="movie-rating-percent">
                                                     <li>
@@ -112,13 +112,13 @@ function Movies() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="movie-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/movie/movie-5.jpg" alt="movie" />
                                                 </a>
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">La La Land</a>
+                                                    <a href="#!">La La Land</a>
                                                 </h5>
                                                 <ul className="movie-rating-percent">
                                                     <li>
@@ -136,13 +136,13 @@ function Movies() {
                                     <div className="col-sm-6 col-lg-4">
                                         <div className="movie-grid">
                                             <div className="movie-thumb c-thumb">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <img src="assets/img/movie/movie-6.jpg" alt="movie" />
                                                 </a>
                                             </div>
                                             <div className="movie-content">
                                                 <h5 className="title m-0">
-                                                    <a href="#">First Man</a>
+                                                    <a href="#!">First Man</a>
                                                 </h5>
                                                 <ul className="movie-rating-percent">
                                                     <li>

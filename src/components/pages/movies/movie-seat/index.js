@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
 import { NavLink } from "react-router-dom";
-function Movie_Seat() {
+function MovieSeat() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -559,4 +559,4 @@ function Movie_Seat() {
         </>
     );
 }
-export default Movie_Seat;
+export default MovieSeat;

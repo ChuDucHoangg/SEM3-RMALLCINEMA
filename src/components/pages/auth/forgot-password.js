@@ -1,4 +1,4 @@
-function Forgot_Password() {
+function ForgotPassword() {
     return (
         <>
             <section className="account-section">
@@ -11,10 +11,10 @@ function Forgot_Password() {
                             </div>
                             <form className="account-form">
                                 <div className="form-group">
-                                    <label for="email">
+                                    <label htmlFor="email">
                                         Email<span>*</span>
                                     </label>
-                                    <input type="text" placeholder="Email" id="email" required />
+                                    <input type="text" placeholder="Email" id="email" required autoFocus />
                                 </div>
                                 <div className="form-group text-center">
                                     <input type="submit" value="reset link" />
@@ -28,4 +28,4 @@ function Forgot_Password() {
         </>
     );
 }
-export default Forgot_Password;
+export default ForgotPassword;

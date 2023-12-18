@@ -2,9 +2,8 @@ import Loading from "../../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { NavLink } from "react-router-dom";
-import Search_Blog from "../../../views/blog/search";
-function Blog_Details() {
+import SearchBlog from "../../../views/blog/search";
+function BlogDetails() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -87,29 +86,29 @@ function Blog_Details() {
                                                     <div className="tags">
                                                         <span>Tags :</span>
                                                         <div className="tags-item">
-                                                            <a href="#"> Sports </a>
-                                                            <a href="#"> Events </a>
-                                                            <a href="#"> Movies </a>
+                                                            <a href="#!"> Sports </a>
+                                                            <a href="#!"> Events </a>
+                                                            <a href="#!"> Movies </a>
                                                         </div>
                                                     </div>
                                                     <ul className="social-icons">
                                                         <li>
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 <i className="fab fa-facebook-f"></i>
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" className="active">
+                                                            <a href="#!" className="active">
                                                                 <i className="fab fa-twitter"></i>
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 <i className="fab fa-instagram"></i>
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">
+                                                            <a href="#!">
                                                                 <i className="fab fa-pinterest"></i>
                                                             </a>
                                                         </li>
@@ -118,19 +117,19 @@ function Blog_Details() {
                                             </div>
                                             <div className="post-meta text-center">
                                                 <div className="item">
-                                                    <a href="#">
+                                                    <a href="#!">
                                                         <i className="fal fa-comments-alt"></i>
                                                         <span>30</span>
                                                     </a>
                                                 </div>
                                                 <div className="item">
-                                                    <a href="#">
+                                                    <a href="#!">
                                                         <i className="fal fa-share-alt"></i>
                                                         <span>22</span>
                                                     </a>
                                                 </div>
                                                 <div className="item">
-                                                    <a href="#">
+                                                    <a href="#!">
                                                         <i className="fal fa-eye"></i>
                                                         <span>22k</span>
                                                     </a>
@@ -140,14 +139,14 @@ function Blog_Details() {
                                     </div>
                                     <div className="blog-author">
                                         <div className="author-thumb my-auto">
-                                            <a href="#">
+                                            <a href="#!">
                                                 <img src="assets/img/blog/author.jpg" alt="blog" />
                                             </a>
                                         </div>
                                         <div className="author-content">
                                             <b>Author</b>
                                             <h5 className="title">
-                                                <a href="#">Charley R Owens</a>
+                                                <a href="#!">Charley R Owens</a>
                                             </h5>
                                             <p>There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form by injected humour.</p>
                                         </div>
@@ -157,14 +156,14 @@ function Blog_Details() {
                                         <ul className="comment-area">
                                             <li>
                                                 <div className="blog-thumb">
-                                                    <a href="#">
+                                                    <a href="#!">
                                                         <img src="assets/img/blog/author.jpg" alt="blog" />
                                                     </a>
                                                 </div>
                                                 <div className="blog-content">
                                                     <div className="blog-thumb-info">
                                                         <h6 className="title">
-                                                            <a href="#" className="mb-0">
+                                                            <a href="#!" className="mb-0">
                                                                 Ralph M Harrison
                                                             </a>
                                                         </h6>
@@ -177,14 +176,14 @@ function Blog_Details() {
                                             </li>
                                             <li>
                                                 <div className="blog-thumb ml-5">
-                                                    <a href="#">
+                                                    <a href="#!">
                                                         <img src="assets/img/blog/author.jpg" alt="blog" />
                                                     </a>
                                                 </div>
                                                 <div className="blog-content">
                                                     <div className="blog-thumb-info">
                                                         <h6 className="title">
-                                                            <a href="#" className="mb-0">
+                                                            <a href="#!" className="mb-0">
                                                                 Ralph M Harrison
                                                             </a>
                                                         </h6>
@@ -197,14 +196,14 @@ function Blog_Details() {
                                             </li>
                                             <li>
                                                 <div className="blog-thumb">
-                                                    <a href="#">
+                                                    <a href="#!">
                                                         <img src="assets/img/blog/author.jpg" alt="blog" />
                                                     </a>
                                                 </div>
                                                 <div className="blog-content">
                                                     <div className="blog-thumb-info">
                                                         <h6 className="title">
-                                                            <a href="#" className="mb-0">
+                                                            <a href="#!" className="mb-0">
                                                                 Ralph M Harrison
                                                             </a>
                                                         </h6>
@@ -236,7 +235,7 @@ function Blog_Details() {
                                     </div>
                                 </article>
                             </div>
-                            <Search_Blog />
+                            <SearchBlog />
                         </div>
                     </div>
                 </section>
@@ -244,4 +243,4 @@ function Blog_Details() {
         </>
     );
 }
-export default Blog_Details;
+export default BlogDetails;
