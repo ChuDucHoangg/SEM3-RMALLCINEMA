@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { isLoggedIn } from "../../utils/auth";
 
 function Header() {
     return (
@@ -48,9 +49,16 @@ function Header() {
                             <li>
                                 <NavLink to="/blog-list">blog</NavLink>
                             </li>
-                            <li className="header-button pr-0">
-                                <NavLink to="/login">login</NavLink>
-                            </li>
+
+                            {isLoggedIn() ? (
+                                <li>
+                                    <NavLink to="/profile">Profile</NavLink>
+                                </li>
+                            ) : (
+                                <li className="header-button pr-0">
+                                    <NavLink to="/login">Login</NavLink>
+                                </li>
+                            )}
                         </ul>
                         <div className="header-bar d-lg-none">
                             <span></span>

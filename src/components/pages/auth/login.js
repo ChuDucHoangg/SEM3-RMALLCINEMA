@@ -4,6 +4,7 @@ import url from "../../../services/url";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Loading from "../../layouts/loading";
+import { setAccessToken } from "../../../utils/auth";
 
 function Login() {
     const navigate = useNavigate();
@@ -71,7 +72,7 @@ function Login() {
 
                 if (loginRequest.status === 200) {
                     const token = loginRequest.data.data;
-                    localStorage.setItem("access_token", token);
+                    setAccessToken(token);
 
                     const redirectPath = localStorage.getItem("redirectPath") || "/";
                     localStorage.removeItem("redirectPath");

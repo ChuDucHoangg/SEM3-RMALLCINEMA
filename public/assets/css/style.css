@@ -2023,6 +2023,7 @@ input[type="submit"] {
     background: #31d7a9;
     border-radius: 50px 0 0 50px;
     margin: auto 0;
+    transition: all 0.3s ease-in-out;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -9311,7 +9312,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .btn-base {
-    width: 100px;
+    padding: 0 20px;
     height: 45px;
     background: transparent;
     border: none;
@@ -9319,4 +9320,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .btn-primary-color {
     background: #31d7a9;
+}
+
+.button-resize {
+    width: inherit;
 }
