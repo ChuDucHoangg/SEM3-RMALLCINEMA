@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./components/pages/home";
 import Movie from "./components/pages/movies";
 import MovieDetails from "./components/pages/movies/movie-details/index.js";
@@ -17,8 +17,31 @@ import Profile from "./components/pages/profile/index.js";
 import MyBooking from "./components/pages/profile/my-booking.js";
 import Favorite from "./components/pages/profile/favorite.js";
 import ChangePassword from "./components/pages/auth/change-password.js";
+import { useJwt } from "react-jwt";
 
 function App() {
+    const ProtectedRoute = ({ element }) => {
+        const token = localStorage.getItem("accessToken");
+        const { isExpired, isInvalid } = useJwt(token);
+
+        if (!token || isExpired || isInvalid) {
+            localStorage.removeItem("access_token");
+            return <Navigate to="/login" />;
+        }
+
+        return element;
+    };
+
+    const ProtectedLoginRoute = ({ element }) => {
+        const token = localStorage.getItem("access_token");
+        const { isExpired, isInvalid } = useJwt(token);
+
+        if (token && !isExpired && !isInvalid) {
+            return <Navigate to="/" />;
+        }
+
+        return element;
+    };
     return (
         <div className="App">
             <Routes>
@@ -42,9 +65,9 @@ function App() {
                 <Route path="/contact-us" element={<Contact />} />
 
                 {/* Auth */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
+                <Route path="/register" element={<ProtectedLoginRoute element={<Register />} />} />
+                <Route path="/forgot-password" element={<ProtectedLoginRoute element={<ForgotPassword />} />} />
                 <Route path="/change-password" element={<ChangePassword />} />
 
                 {/* Profile */}
