@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Layout from "./layout";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function LayoutProfile({ children }) {
+    const navigate = useNavigate();
+
     const location = useLocation();
     const [activeLink, setActiveLink] = useState("");
 
@@ -20,13 +22,18 @@ function LayoutProfile({ children }) {
         setActiveLink(link);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("access_token");
+        navigate("/login");
+    };
+
     return (
         <>
             <Layout>
                 <section className="movie-facility padding-bottom padding-top">
                     <div className="container">
-                        <div className="row g-2">
-                            <div className="col-3 col-xl-4 col-lg-5 col-md-12 col-sm-12">
+                        <div className="row">
+                            <div className="col-xl-4 col-lg-5 col-md-12 col-sm-12">
                                 <div className="checkout-contact">
                                     <div className="profile__sidebar">
                                         <div className="profile-menu">
@@ -73,7 +80,7 @@ function LayoutProfile({ children }) {
                                             <h3 className="profile-menu__title">Customer Service</h3>
                                             <ul className="profile-menu__list">
                                                 <li>
-                                                    <Link to="#!" className={`profile-menu__link ${activeLink === "" ? "active" : ""}`} onClick={() => handleSetActiveLink("")}>
+                                                    <Link to="/help" className={`profile-menu__link ${activeLink === "help" ? "active" : ""}`} onClick={() => handleSetActiveLink("help")}>
                                                         <span className="profile-menu__icon">
                                                             <img src="./assets/icons/info.svg" alt="" className="icon" />
                                                         </span>
@@ -81,7 +88,11 @@ function LayoutProfile({ children }) {
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="#!" className={`profile-menu__link ${activeLink === "" ? "active" : ""}`} onClick={() => handleSetActiveLink("")}>
+                                                    <Link
+                                                        to="/terms-of-use"
+                                                        className={`profile-menu__link ${activeLink === "terms-of-use" ? "active" : ""}`}
+                                                        onClick={() => handleSetActiveLink("terms-of-use")}
+                                                    >
                                                         <span className="profile-menu__icon">
                                                             <img src="./assets/icons/danger.svg" alt="" className="icon" />
                                                         </span>
@@ -107,12 +118,12 @@ function LayoutProfile({ children }) {
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <a href="#!" className="profile-menu__link">
+                                                    <p className="profile-menu__link" onClick={handleLogout} style={{ marginTop: "5px", cursor: "pointer" }}>
                                                         <span className="profile-menu__icon">
                                                             <img src="./assets/icons/arrow-left.svg" alt="" className="icon" />
                                                         </span>
                                                         Logout
-                                                    </a>
+                                                    </p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -120,7 +131,7 @@ function LayoutProfile({ children }) {
                                 </div>
                             </div>
 
-                            <div className="col-9 col-xl-8 col-lg-7 col-md-12 col-sm-12">
+                            <div className="col-xl-8 col-lg-7 col-md-12 col-sm-12">
                                 <div className="checkout-widget checkout-widget__custom">
                                     <div>{children}</div>
                                 </div>
