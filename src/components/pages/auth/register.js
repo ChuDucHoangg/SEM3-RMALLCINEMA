@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import url from "../../../services/url";
 import api from "../../../services/api";
+import { Helmet } from "react-helmet";
+import Loading from "../../layouts/loading";
 
 function Register() {
-    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
 
     const [formData, setFormData] = useState({
         fullname: "",
@@ -79,6 +90,10 @@ function Register() {
     };
     return (
         <>
+            <Helmet>
+                <title>Register | RMall</title>
+            </Helmet>
+            {loading ? <Loading /> : ""}
             <section className="account-section bg_img" data-background="assets/images/account/account-bg.html">
                 <div className="container">
                     <div className="padding-top padding-bottom">
