@@ -5,6 +5,8 @@ const url = {
         REGISTER: "auth/register",
         LOGIN: "auth/login",
         FORGOT_PASSWORD: "auth/forgot-password",
+        PROFILE: "auth/profile",
+        UPDATE_PROFILE: "auth/update-profile",
     },
 };
 
