@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import Layout from "./layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { removeAccessToken } from "../../utils/auth";
 
 function LayoutProfile({ children }) {
     const navigate = useNavigate();
-
     const location = useLocation();
+
     const [activeLink, setActiveLink] = useState("");
 
     // Effect to run when the component mounts or when the location changes
@@ -23,7 +24,7 @@ function LayoutProfile({ children }) {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("access_token");
+        removeAccessToken();
         navigate("/login");
     };
 

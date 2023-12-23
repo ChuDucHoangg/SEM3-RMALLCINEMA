@@ -2,15 +2,29 @@ import Loading from "../../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../../../../utils/auth";
 function MovieDetails() {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         setLoading(true);
+
         setTimeout(() => {
             setLoading(false);
         }, 1500);
     }, []);
+
+    const handleBooking = () => {
+        if (!isLoggedIn()) {
+            localStorage.setItem("redirectPath", window.location.pathname);
+            navigate("/login");
+        } else {
+            navigate("/movie-ticket");
+        }
+    };
+
     return (
         <>
             <Helmet>
@@ -139,9 +153,9 @@ function MovieDetails() {
                                     </div>
                                 </div>
                             </div>
-                            <NavLink to="/movie-ticket" className="custom-button">
-                                book tickets
-                            </NavLink>
+                            <button className="custom-button button-resize" onClick={handleBooking}>
+                                Book Tickets
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -377,7 +391,7 @@ function MovieDetails() {
                                                                 <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
-                                                                <i className="fal fa-clock"></i> 1 hour ago{" "}
+                                                                <i className="fal fa-clock"></i> 1 hour ago
                                                             </span>
                                                             <div className="review">
                                                                 <i className="fal fa-star"></i>
@@ -390,18 +404,15 @@ function MovieDetails() {
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
                                                             <a href="#!">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
-                                                                <span>10</span>{" "}
+                                                                <span>10</span>
                                                             </a>
                                                             <a href="#!" className="dislike">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
-                                                                <span>02</span>{" "}
+                                                                <span>02</span>
                                                             </a>
                                                             <a href="#!">
-                                                                {" "}
-                                                                <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
+                                                                <i className="fal fa-flag"></i> <span>Report Review</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -420,7 +431,7 @@ function MovieDetails() {
                                                                 <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
-                                                                <i className="fal fa-clock"></i> 1 hour ago{" "}
+                                                                <i className="fal fa-clock"></i> 1 hour ago
                                                             </span>
                                                             <div className="review">
                                                                 <i className="fal fa-star"></i>
@@ -433,18 +444,15 @@ function MovieDetails() {
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
                                                             <a href="#!">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
-                                                                <span>10</span>{" "}
+                                                                <span>10</span>
                                                             </a>
                                                             <a href="#!" className="dislike">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
-                                                                <span>02</span>{" "}
+                                                                <span>02</span>
                                                             </a>
                                                             <a href="#!">
-                                                                {" "}
-                                                                <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
+                                                                <i className="fal fa-flag"></i> <span>Report Review</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -463,7 +471,7 @@ function MovieDetails() {
                                                                 <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
-                                                                <i className="fal fa-clock"></i> 1 hour ago{" "}
+                                                                <i className="fal fa-clock"></i> 1 hour ago
                                                             </span>
                                                             <div className="review">
                                                                 <i className="fal fa-star"></i>
@@ -476,18 +484,15 @@ function MovieDetails() {
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
                                                             <a href="#!">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
-                                                                <span>10</span>{" "}
+                                                                <span>10</span>
                                                             </a>
                                                             <a href="#!" className="dislike">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
-                                                                <span>02</span>{" "}
+                                                                <span>02</span>
                                                             </a>
                                                             <a href="#!">
-                                                                {" "}
-                                                                <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
+                                                                <i className="fal fa-flag"></i> <span>Report Review</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -506,7 +511,7 @@ function MovieDetails() {
                                                                 <a href="#!">Thomas E Criswell</a>
                                                             </h6>
                                                             <span className="reply-date">
-                                                                <i className="fal fa-clock"></i> 1 hour ago{" "}
+                                                                <i className="fal fa-clock"></i> 1 hour ago
                                                             </span>
                                                             <div className="review">
                                                                 <i className="fal fa-star"></i>
@@ -519,18 +524,15 @@ function MovieDetails() {
                                                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                                                         <div className="review-meta">
                                                             <a href="#!">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-up"></i>
-                                                                <span>10</span>{" "}
+                                                                <span>10</span>
                                                             </a>
                                                             <a href="#!" className="dislike">
-                                                                {" "}
                                                                 <i className="fal fa-thumbs-down"></i>
-                                                                <span>02</span>{" "}
+                                                                <span>02</span>
                                                             </a>
                                                             <a href="#!">
-                                                                {" "}
-                                                                <i className="fal fa-flag"></i> <span>Report Review</span>{" "}
+                                                                <i className="fal fa-flag"></i> <span>Report Review</span>
                                                             </a>
                                                         </div>
                                                     </div>

@@ -6,6 +6,7 @@ import api from "../../../services/api";
 import url from "../../../services/url";
 import Swal from "sweetalert2";
 import { format } from "date-fns";
+import { getAccessToken } from "../../../utils/auth";
 
 function Profile() {
     const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ function Profile() {
     }, []);
 
     const loadProfile = async () => {
-        const userToken = localStorage.getItem("access_token");
+        const userToken = getAccessToken();
 
         try {
             const config = {
@@ -214,10 +215,10 @@ function Profile() {
                     </div>
                     {isEditing && (
                         <div className="d-flex justify-content-end">
-                            <button className="btn-base" onClick={handleCancelClick}>
+                            <button className="btn-base button-resize" onClick={handleCancelClick}>
                                 Cancel
                             </button>
-                            <button className="btn-base btn-primary-color ml-2" onClick={handleSaveClick}>
+                            <button className="btn-base btn-primary-color button-resize ml-2" onClick={handleSaveClick}>
                                 Save
                             </button>
                         </div>

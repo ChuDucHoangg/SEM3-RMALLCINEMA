@@ -18,10 +18,11 @@ import MyBooking from "./components/pages/profile/my-booking.js";
 import Favorite from "./components/pages/profile/favorite.js";
 import ChangePassword from "./components/pages/auth/change-password.js";
 import { useJwt } from "react-jwt";
+import { getAccessToken } from "./utils/auth.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
-        const token = localStorage.getItem("accessToken");
+        const token = getAccessToken();
         const { isExpired, isInvalid } = useJwt(token);
 
         if (!token || isExpired || isInvalid) {
@@ -33,7 +34,7 @@ function App() {
     };
 
     const ProtectedLoginRoute = ({ element }) => {
-        const token = localStorage.getItem("access_token");
+        const token = getAccessToken();
         const { isExpired, isInvalid } = useJwt(token);
 
         if (token && !isExpired && !isInvalid) {
@@ -51,10 +52,10 @@ function App() {
                 {/* Movie */}
                 <Route path="/movie-list" element={<Movie />} />
                 <Route path="/movie-details" element={<MovieDetails />} />
-                <Route path="/movie-ticket" element={<MovieTicket />} />
-                <Route path="/movie-seat" element={<MovieSeat />} />
-                <Route path="/movie-food" element={<MovieFood />} />
-                <Route path="/movie-checkout" element={<MovieCheckout />} />
+                <Route path="/movie-ticket" element={<ProtectedRoute element={<MovieTicket />} />} />
+                <Route path="/movie-seat" element={<ProtectedRoute element={<MovieSeat />} />} />
+                <Route path="/movie-food" element={<ProtectedRoute element={<MovieFood />} />} />
+                <Route path="/movie-checkout" element={<ProtectedRoute element={<MovieCheckout />} />} />
 
                 {/* Blog */}
                 <Route path="/blog-list" element={<Blog />} />
@@ -68,12 +69,12 @@ function App() {
                 <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
                 <Route path="/register" element={<ProtectedLoginRoute element={<Register />} />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/change-password" element={<ChangePassword />} />
+                <Route path="/change-password" element={<ProtectedRoute element={<ChangePassword />} />} />
 
                 {/* Profile */}
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/my-booking" element={<MyBooking />} />
-                <Route path="/favorite" element={<Favorite />} />
+                <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+                <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
+                <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
             </Routes>
         </div>
     );
