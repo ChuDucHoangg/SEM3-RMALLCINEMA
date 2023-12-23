@@ -7447,7 +7447,8 @@ input[type="submit"] {
     border-color: #31d7a9;
 }
 
-.account-area .account-form .form-group input[type="submit"] {
+.account-area .account-form .form-group input[type="submit"],
+.btn-custom {
     background: #31d7a9;
     -webkit-transition: all ease 0.3s;
     transition: all ease 0.3s;
@@ -9278,4 +9279,19 @@ aside {
     z-index: 5;
     display: block;
     cursor: pointer;
+}
+
+.btn-custom,
+.btn-custom:disabled {
+    color: #ffffff;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+.btn-custom:disabled {
+    cursor: initial;
+}
+
+label {
+    user-select: none;
 }
