@@ -67,7 +67,7 @@ function App() {
                 {/* Auth */}
                 <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
                 <Route path="/register" element={<ProtectedLoginRoute element={<Register />} />} />
-                <Route path="/forgot-password" element={<ProtectedLoginRoute element={<ForgotPassword />} />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/change-password" element={<ChangePassword />} />
 
                 {/* Profile */}
