@@ -1,6 +1,27 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import api from "../../../services/api";
+import url from "../../../services/url";
+import { useCallback, useEffect, useState } from "react";
+import { format } from "date-fns";
+import ReactPlayer from "react-player";
 
 function MoviesList() {
+    const [movies, setMovies] = useState([]);
+    const [currentTrailerUrl, setCurrentTrailerUrl] = useState("");
+
+    const loadMovie = useCallback(async () => {
+        try {
+            const movieResponse = await api.get(url.MOVIE.LIST);
+            setMovies(movieResponse.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadMovie();
+    }, [loadMovie]);
+
     return (
         <>
             <section className="movie-section padding-top padding-bottom">
@@ -152,28 +173,41 @@ function MoviesList() {
                                         </div>
                                         <ul className="grid-button tab-menu">
                                             <li className="active">
-                                                <i className="fal fa-th-large"></i>
+                                                <i className="fal fa-th-list"></i>
                                             </li>
                                             <li>
-                                                <i className="fal fa-th-list"></i>
+                                                <i className="fal fa-th-large"></i>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div className="tab-area">
                                     <div className="tab-item active">
-                                        <div className="row mb-10 justify-content-center">
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
+                                        <div className="movie-area mb-10">
+                                            {movies.map((item, index) => (
+                                                <div className="movie-list" key={index}>
                                                     <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-1.jpg" alt="movie" />
-                                                        </a>
+                                                        <Link to={`/movie-details/${item.id}`} className="w-100 h-100">
+                                                            <img src={item.movie_image} alt="movie" className="movie-thumb__custom" />
+                                                        </Link>
                                                     </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <NavLink to="/movie-details">The Walking Dead</NavLink>
+                                                    <div className="movie-content bg-one">
+                                                        <h5 className="title">
+                                                            <Link to={`/movie-details/${item.id}`} className="line-clamp">
+                                                                {item.title}
+                                                            </Link>
                                                         </h5>
+                                                        <p className="duration">
+                                                            {item.duration}h {item.duration > 1 ? "hours" : "hour"}
+                                                        </p>
+                                                        <div className="movie-tags">
+                                                            {item.genres.map((genre, genreIndex) => (
+                                                                <p key={genreIndex}>{genre.name}</p>
+                                                            ))}
+                                                        </div>
+                                                        <div className="release">
+                                                            <span>Release Date : </span> <a href="#!">{format(new Date(item.release_date), "dd/MM/yyyy")}</a>
+                                                        </div>
                                                         <ul className="movie-rating-percent">
                                                             <li>
                                                                 <i className="fal fa-shopping-cart"></i>
@@ -181,479 +215,90 @@ function MoviesList() {
                                                             </li>
                                                             <li>
                                                                 <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
+                                                                <span className="content">{item.ratings}</span>
                                                             </li>
                                                         </ul>
+                                                        <div className="book-area">
+                                                            <div className="book-ticket">
+                                                                <div className="react-item">
+                                                                    <a href="#!">
+                                                                        <div className="thumb">
+                                                                            <i className="fal fa-heart"></i>
+                                                                        </div>
+                                                                        <span>10k</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div className="react-item mr-auto">
+                                                                    <Link to={`/movie-details/${item.id}`}>
+                                                                        <div className="thumb">
+                                                                            <i className="fal fa-ticket"></i>
+                                                                        </div>
+                                                                        <span>Book Ticket</span>
+                                                                    </Link>
+                                                                </div>
+
+                                                                <div className="react-item">
+                                                                    <button
+                                                                        className="popup-video video-popup"
+                                                                        data-toggle="modal"
+                                                                        data-target="#trailerModal"
+                                                                        onClick={() => setCurrentTrailerUrl(item.trailer)}
+                                                                    >
+                                                                        <div className="thumb">
+                                                                            <i className="fal fa-play-circle"></i>
+                                                                        </div>
+                                                                        <span>Watch Trailer</span>
+                                                                    </button>
+                                                                </div>
+
+                                                                <div className="modal fade" id="trailerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                                        <div className="modal-content modal-content__custom-movie">
+                                                                            <div className="modal-body d-flex justify-content-center align-items-center">
+                                                                                <ReactPlayer url={currentTrailerUrl} controls />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
-                                                    <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-2.jpg" alt="movie" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <a href="#!">Godzilla Vs King Kong</a>
-                                                        </h5>
-                                                        <ul className="movie-rating-percent">
-                                                            <li>
-                                                                <i className="fal fa-shopping-cart"></i>
-                                                                <span className="content">88.8k</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
-                                                    <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-3.jpg" alt="movie" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <a href="#!">Mythic Quest Ravens</a>
-                                                        </h5>
-                                                        <ul className="movie-rating-percent">
-                                                            <li>
-                                                                <i className="fal fa-shopping-cart"></i>
-                                                                <span className="content">88.8k</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
-                                                    <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-4.jpg" alt="movie" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <a href="#!">Wanda Vision</a>
-                                                        </h5>
-                                                        <ul className="movie-rating-percent">
-                                                            <li>
-                                                                <i className="fal fa-shopping-cart"></i>
-                                                                <span className="content">88.8k</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
-                                                    <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-5.jpg" alt="movie" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <a href="#!">Irregular</a>
-                                                        </h5>
-                                                        <ul className="movie-rating-percent">
-                                                            <li>
-                                                                <i className="fal fa-shopping-cart"></i>
-                                                                <span className="content">88.8k</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
-                                                    <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-6.jpg" alt="movie" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <a href="#!">Raya and Last Dragon</a>
-                                                        </h5>
-                                                        <ul className="movie-rating-percent">
-                                                            <li>
-                                                                <i className="fal fa-shopping-cart"></i>
-                                                                <span className="content">88.8k</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
-                                                    <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-3.jpg" alt="movie" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <a href="#!">Mythic Quest Ravens</a>
-                                                        </h5>
-                                                        <ul className="movie-rating-percent">
-                                                            <li>
-                                                                <i className="fal fa-shopping-cart"></i>
-                                                                <span className="content">88.8k</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-6 col-lg-6">
-                                                <div className="movie-grid">
-                                                    <div className="movie-thumb c-thumb">
-                                                        <a href="#!">
-                                                            <img src="assets/img/movie/movie-4.jpg" alt="movie" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="movie-content">
-                                                        <h5 className="title m-0">
-                                                            <a href="#!">Wanda Vision</a>
-                                                        </h5>
-                                                        <ul className="movie-rating-percent">
-                                                            <li>
-                                                                <i className="fal fa-shopping-cart"></i>
-                                                                <span className="content">88.8k</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fal fa-star"></i>
-                                                                <span className="content">5.0</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            ))}
                                         </div>
                                     </div>
                                     <div className="tab-item">
-                                        <div className="movie-area mb-10">
-                                            <div className="movie-list">
-                                                <div className="movie-thumb c-thumb">
-                                                    <a href="movie-details.html" className="w-100 h-100">
-                                                        <img src="assets/img/movie/movie-list-1.jpg" alt="movie" />
-                                                    </a>
-                                                </div>
-                                                <div className="movie-content bg-one">
-                                                    <h5 className="title">
-                                                        <a href="movie-details.html">The Walking Dead</a>
-                                                    </h5>
-                                                    <p className="duration">2h 20 min</p>
-                                                    <div className="movie-tags">
-                                                        <a href="#!">action</a>
-                                                        <a href="#!">adventure</a>
-                                                        <a href="#!">drama</a>
-                                                    </div>
-                                                    <div className="release">
-                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
-                                                    </div>
-                                                    <ul className="movie-rating-percent">
-                                                        <li>
-                                                            <i className="fal fa-shopping-cart"></i>
-                                                            <span className="content">88.8k</span>
-                                                        </li>
-                                                        <li>
-                                                            <i className="fal fa-star"></i>
-                                                            <span className="content">5.0</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div className="book-area">
-                                                        <div className="book-ticket">
-                                                            <div className="react-item">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-heart"></i>
-                                                                    </div>
-                                                                    <span>10k</span>
-                                                                </a>
+                                        <div className="row mb-10 justify-content-center custom-gy">
+                                            {movies.map((item, index) => {
+                                                return (
+                                                    <div className="col-sm-6 col-lg-6" key={index}>
+                                                        <div className="movie-grid">
+                                                            <div className="movie-thumb c-thumb">
+                                                                <Link to={`/movie-details/${item.id}`}>
+                                                                    <img src={item.movie_image} alt="movie" className="c-thumb__custom" />
+                                                                </Link>
                                                             </div>
-                                                            <div className="react-item mr-auto">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-ticket"></i>
-                                                                    </div>
-                                                                    <span>Book Ticket</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item">
-                                                                <a href="https://www.youtube.com/watch?v=uyNh0RPiLyI" className="popup-video video-popup">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-play-circle"></i>
-                                                                    </div>
-                                                                    <span>Watch Trailer</span>
-                                                                </a>
+                                                            <div className="movie-content">
+                                                                <h5 className="title m-0">
+                                                                    <Link to={`/movie-details/${item.id}`} className="line-clamp">
+                                                                        {item.title}
+                                                                    </Link>
+                                                                </h5>
+                                                                <ul className="movie-rating-percent">
+                                                                    <li>
+                                                                        <i className="fal fa-shopping-cart"></i>
+                                                                        <span className="content">88.8k</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <i className="fal fa-star"></i>
+                                                                        <span className="content">{item.ratings}</span>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className="movie-list">
-                                                <div className="movie-thumb c-thumb">
-                                                    <a href="movie-details.html" className="w-100 h-100">
-                                                        <img src="assets/img/movie/movie-list-2.jpg" alt="movie" />
-                                                    </a>
-                                                </div>
-                                                <div className="movie-content bg-one">
-                                                    <h5 className="title">
-                                                        <a href="movie-details.html">The Walking Dead</a>
-                                                    </h5>
-                                                    <p className="duration">2h 20 min</p>
-                                                    <div className="movie-tags">
-                                                        <a href="#!">action</a>
-                                                        <a href="#!">adventure</a>
-                                                        <a href="#!">drama</a>
-                                                    </div>
-                                                    <div className="release">
-                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
-                                                    </div>
-                                                    <ul className="movie-rating-percent">
-                                                        <li>
-                                                            <i className="fal fa-shopping-cart"></i>
-                                                            <span className="content">88.8k</span>
-                                                        </li>
-                                                        <li>
-                                                            <i className="fal fa-star"></i>
-                                                            <span className="content">5.0</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div className="book-area">
-                                                        <div className="book-ticket">
-                                                            <div className="react-item">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-heart"></i>
-                                                                    </div>
-                                                                    <span>10k</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item mr-auto">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-ticket"></i>
-                                                                    </div>
-                                                                    <span>Book Ticket</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item">
-                                                                <a href="https://www.youtube.com/watch?v=uyNh0RPiLyI" className="popup-video video-popup">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-play-circle"></i>
-                                                                    </div>
-                                                                    <span>Watch Trailer</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="movie-list">
-                                                <div className="movie-thumb c-thumb">
-                                                    <a href="movie-details.html" className="w-100 h-100">
-                                                        <img src="assets/img/movie/movie-list-3.jpg" alt="movie" />
-                                                    </a>
-                                                </div>
-                                                <div className="movie-content bg-one">
-                                                    <h5 className="title">
-                                                        <a href="movie-details.html">The Walking Dead</a>
-                                                    </h5>
-                                                    <p className="duration">2h 20 min</p>
-                                                    <div className="movie-tags">
-                                                        <a href="#!">action</a>
-                                                        <a href="#!">adventure</a>
-                                                        <a href="#!">drama</a>
-                                                    </div>
-                                                    <div className="release">
-                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
-                                                    </div>
-                                                    <ul className="movie-rating-percent">
-                                                        <li>
-                                                            <i className="fal fa-shopping-cart"></i>
-                                                            <span className="content">88.8k</span>
-                                                        </li>
-                                                        <li>
-                                                            <i className="fal fa-star"></i>
-                                                            <span className="content">5.0</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div className="book-area">
-                                                        <div className="book-ticket">
-                                                            <div className="react-item">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-heart"></i>
-                                                                    </div>
-                                                                    <span>10k</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item mr-auto">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-ticket"></i>
-                                                                    </div>
-                                                                    <span>Book Ticket</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item">
-                                                                <a href="https://www.youtube.com/watch?v=uyNh0RPiLyI" className="popup-video video-popup">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-play-circle"></i>
-                                                                    </div>
-                                                                    <span>Watch Trailer</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="movie-list">
-                                                <div className="movie-thumb c-thumb">
-                                                    <a href="movie-details.html" className="w-100 h-100">
-                                                        <img src="assets/img/movie/movie-list-4.jpg" alt="movie" />
-                                                    </a>
-                                                </div>
-                                                <div className="movie-content bg-one">
-                                                    <h5 className="title">
-                                                        <a href="movie-details.html">The Walking Dead</a>
-                                                    </h5>
-                                                    <p className="duration">2h 20 min</p>
-                                                    <div className="movie-tags">
-                                                        <a href="#!">action</a>
-                                                        <a href="#!">adventure</a>
-                                                        <a href="#!">drama</a>
-                                                    </div>
-                                                    <div className="release">
-                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
-                                                    </div>
-                                                    <ul className="movie-rating-percent">
-                                                        <li>
-                                                            <i className="fal fa-shopping-cart"></i>
-                                                            <span className="content">88.8k</span>
-                                                        </li>
-                                                        <li>
-                                                            <i className="fal fa-star"></i>
-                                                            <span className="content">5.0</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div className="book-area">
-                                                        <div className="book-ticket">
-                                                            <div className="react-item">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-heart"></i>
-                                                                    </div>
-                                                                    <span>10k</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item mr-auto">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-ticket"></i>
-                                                                    </div>
-                                                                    <span>Book Ticket</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item">
-                                                                <a href="https://www.youtube.com/watch?v=uyNh0RPiLyI" className="popup-video video-popup">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-play-circle"></i>
-                                                                    </div>
-                                                                    <span>Watch Trailer</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="movie-list">
-                                                <div className="movie-thumb c-thumb">
-                                                    <a href="movie-details.html" className="w-100 h-100">
-                                                        <img src="assets/img/movie/movie-list-5.jpg" alt="movie" />
-                                                    </a>
-                                                </div>
-                                                <div className="movie-content bg-one">
-                                                    <h5 className="title">
-                                                        <a href="movie-details.html">The Walking Dead</a>
-                                                    </h5>
-                                                    <p className="duration">2h 20 min</p>
-                                                    <div className="movie-tags">
-                                                        <a href="#!">action</a>
-                                                        <a href="#!">adventure</a>
-                                                        <a href="#!">drama</a>
-                                                    </div>
-                                                    <div className="release">
-                                                        <span>Release Date : </span> <a href="#!"> Feb 13, 2023</a>
-                                                    </div>
-                                                    <ul className="movie-rating-percent">
-                                                        <li>
-                                                            <i className="fal fa-shopping-cart"></i>
-                                                            <span className="content">88.8k</span>
-                                                        </li>
-                                                        <li>
-                                                            <i className="fal fa-star"></i>
-                                                            <span className="content">5.0</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div className="book-area">
-                                                        <div className="book-ticket">
-                                                            <div className="react-item">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-heart"></i>
-                                                                    </div>
-                                                                    <span>10k</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item mr-auto">
-                                                                <a href="#!">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-ticket"></i>
-                                                                    </div>
-                                                                    <span>Book Ticket</span>
-                                                                </a>
-                                                            </div>
-                                                            <div className="react-item">
-                                                                <a href="https://www.youtube.com/watch?v=uyNh0RPiLyI" className="popup-video video-popup">
-                                                                    <div className="thumb">
-                                                                        <i className="fal fa-play-circle"></i>
-                                                                    </div>
-                                                                    <span>Watch Trailer</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 </div>

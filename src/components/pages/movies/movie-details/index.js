@@ -1,20 +1,21 @@
 import Loading from "../../../layouts/loading";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { isLoggedIn } from "../../../../utils/auth";
+import api from "../../../../services/api";
+import url from "../../../../services/url";
+import { format } from "date-fns";
+import ReactPlayer from "react-player";
+
 function MovieDetails() {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [movies, setMovies] = useState([]);
 
-    useEffect(() => {
-        setLoading(true);
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 1500);
-    }, []);
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const handleBooking = () => {
         if (!isLoggedIn()) {
@@ -23,6 +24,33 @@ function MovieDetails() {
         } else {
             navigate("/movie-ticket");
         }
+    };
+
+    const loadMovie = useCallback(async () => {
+        try {
+            const movieResponse = await api.get(url.MOVIE.DETAILS + `${id}`);
+            setMovies(movieResponse.data);
+            console.log(movieResponse.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }, [id]);
+
+    useEffect(() => {
+        loadMovie();
+        setLoading(true);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, [loadMovie]);
+
+    const handleVideoButtonClick = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
     };
 
     return (
@@ -42,31 +70,25 @@ function MovieDetails() {
                     <div className="container">
                         <div className="details-banner-wrapper">
                             <div className="details-banner-thumb">
-                                <img src="assets/img/movie/movie-list-5.jpg" alt="movie" />
-                                <a href="https://www.youtube.com/watch?v=uyNh0RPiLyI" className="video-button video-popup">
+                                <img src={movies.movie_image} alt="movie" />
+                                <button onClick={handleVideoButtonClick} className="video-button video-popup" data-toggle="modal" data-target="#videoModal">
                                     <i className="fal fa-play"></i>
-                                </a>
+                                </button>
                             </div>
                             <div className="details-banner-content offset-lg-4">
-                                <h3 className="title">Irregular</h3>
-                                <div className="tags">
-                                    <a href="#!">English</a>
-                                    <a href="#!">France</a>
-                                    <a href="#!">Italy</a>
-                                    <a href="#!">Germany</a>
-                                </div>
-                                <a href="#!" className="button">
-                                    horror
-                                </a>
+                                <h3 className="title">{movies.title}</h3>
+                                <div className="tags">{movies && movies.genres && movies.genres.map((genre, genreIndex) => <p key={genreIndex}>{genre.name}</p>)}</div>
                                 <div className="social-and-duration">
                                     <div className="duration-area">
                                         <div className="item">
                                             <i className="fal fa-calendar-alt"></i>
-                                            <span>12 Feb, 2023</span>
+                                            <span>{movies && movies.release_date && format(new Date(movies.release_date), "dd/MM/yyyy")}</span>
                                         </div>
                                         <div className="item">
                                             <i className="fal fa-clock"></i>
-                                            <span>2h 20min</span>
+                                            <span>
+                                                {movies.duration} {movies.duration > 1 ? "hours" : "hour"}
+                                            </span>
                                         </div>
                                     </div>
                                     <ul className="social-share">
@@ -96,6 +118,23 @@ function MovieDetails() {
                                             </a>
                                         </li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className={`modal fade ${isModalOpen ? "show" : ""}`}
+                            id="videoModal"
+                            tabIndex="-1"
+                            role="dialog"
+                            aria-labelledby="videoModalLabel"
+                            aria-hidden={!isModalOpen}
+                            style={{ display: isModalOpen ? "block" : "none" }}
+                        >
+                            <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div className="modal-content modal-content__custom-movie">
+                                    <div className="modal-body d-flex justify-content-center align-items-center">
+                                        {movies && movies.trailer && <ReactPlayer url={movies.trailer} controls playing={isModalOpen} onEnded={handleCloseModal} />}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +173,7 @@ function MovieDetails() {
                                 </div>
                                 <div className="item">
                                     <div className="item-header">
-                                        <h5 className="title">5.0</h5>
+                                        <h5 className="title">{movies.ratings}</h5>
                                         <div className="rated">
                                             <i className="fas fa-star"></i>
                                         </div>
@@ -208,32 +247,19 @@ function MovieDetails() {
                                         <div className="tab-area">
                                             <div className="tab-item active">
                                                 <div className="item">
-                                                    <h5 className="sub-title">There are many variations of passages</h5>
-                                                    <p>
-                                                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or
-                                                        randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                                                        anything embarrassing hidden in the middle of text.
-                                                    </p>
-                                                    <p>
-                                                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or
-                                                        randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                                                        anything embarrassing hidden in the middle of text.
-                                                    </p>
+                                                    <h5 className="sub-title">{movies.title}</h5>
+                                                    <p>{movies.describe}</p>
+
                                                     <div className="widget-tags mt-5">
                                                         <p>Tags :</p>
                                                         <ul>
-                                                            <li>
-                                                                <a href="#!">2D</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#!">3D</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#!">MOVIE</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#!">2023</a>
-                                                            </li>
+                                                            {movies &&
+                                                                movies.genres &&
+                                                                movies.genres.map((genre, genreIndex) => (
+                                                                    <li key={genreIndex}>
+                                                                        <a href="#!">{genre.name}</a>
+                                                                    </li>
+                                                                ))}
                                                         </ul>
                                                     </div>
                                                 </div>

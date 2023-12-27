@@ -8,6 +8,11 @@ const url = {
         PROFILE: "auth/profile",
         UPDATE_PROFILE: "auth/update-profile",
     },
+
+    MOVIE: {
+        LIST: "movie",
+        DETAILS: "movie/",
+    },
 };
 
 export default url;

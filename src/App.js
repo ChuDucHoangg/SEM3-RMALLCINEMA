@@ -51,7 +51,7 @@ function App() {
 
                 {/* Movie */}
                 <Route path="/movie-list" element={<Movie />} />
-                <Route path="/movie-details" element={<MovieDetails />} />
+                <Route path="/movie-details/:id" element={<MovieDetails />} />
                 <Route path="/movie-ticket" element={<ProtectedRoute element={<MovieTicket />} />} />
                 <Route path="/movie-seat" element={<ProtectedRoute element={<MovieSeat />} />} />
                 <Route path="/movie-food" element={<ProtectedRoute element={<MovieFood />} />} />
