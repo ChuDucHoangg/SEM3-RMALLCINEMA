@@ -19,6 +19,7 @@ import Favorite from "./components/pages/profile/favorite.js";
 import ChangePassword from "./components/pages/auth/change-password.js";
 import { useJwt } from "react-jwt";
 import { getAccessToken } from "./utils/auth.js";
+import NotFound from "./components/pages/other/not-found.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -50,7 +51,7 @@ function App() {
                 <Route path="/" element={<Home />} />
 
                 {/* Movie */}
-                <Route path="/movie-list" element={<Movie />} />
+                <Route path="/movies" element={<Movie />} />
                 <Route path="/movie-details/:id" element={<MovieDetails />} />
                 <Route path="/movie-ticket" element={<ProtectedRoute element={<MovieTicket />} />} />
                 <Route path="/movie-seat" element={<ProtectedRoute element={<MovieSeat />} />} />
@@ -75,6 +76,9 @@ function App() {
                 <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
                 <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
                 <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
+
+                {/* Other */}
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </div>
     );
