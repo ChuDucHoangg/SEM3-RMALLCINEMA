@@ -3873,15 +3873,35 @@ input[type="submit"] {
 
 .pagination-area {
     font-size: 18px;
-    margin: 0 -15px;
 }
 
-.pagination-area a {
+.pagination-area .pagination {
+    justify-content: center;
+    gap: 10px;
+}
+
+.pagination-area a,
+.pagination-area .pagination .page-item .page-link {
     color: #7a89bb;
-    margin: 0 8px;
     border: 2px solid #7a89bb;
     padding: 4px 16px;
     border-radius: 8px;
+    background: transparent;
+    transition: background-color, color;
+    transition-duration: 0.3s;
+    user-select: none;
+}
+
+.pagination-area .pagination .page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-area .pagination .page-item .page-link:hover,
+.pagination-area .pagination .page-item.active .page-link {
+    background: #7a89bb;
+    color: #fff;
 }
 
 .pagination-area a i {

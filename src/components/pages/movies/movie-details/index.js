@@ -12,11 +12,13 @@ import ReactPlayer from "react-player";
 function MovieDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+
     const [loading, setLoading] = useState(false);
     const [movies, setMovies] = useState([]);
 
     const [isModalOpen, setModalOpen] = useState(false);
 
+    // Check if you are logged in or not
     const handleBooking = () => {
         if (!isLoggedIn()) {
             localStorage.setItem("redirectPath", window.location.pathname);
@@ -26,6 +28,7 @@ function MovieDetails() {
         }
     };
 
+    // Call the api according to the movie id
     const loadMovie = useCallback(async () => {
         try {
             const movieResponse = await api.get(url.MOVIE.DETAILS + `${id}`);
@@ -56,7 +59,7 @@ function MovieDetails() {
     return (
         <>
             <Helmet>
-                <title>Movie | R Mall Cinema</title>
+                <title>{movies.title}</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>
@@ -71,7 +74,7 @@ function MovieDetails() {
                         <div className="details-banner-wrapper">
                             <div className="details-banner-thumb">
                                 <img src={movies.movie_image} alt="movie" />
-                                <button onClick={handleVideoButtonClick} className="video-button video-popup" data-toggle="modal" data-target="#videoModal">
+                                <button onClick={handleVideoButtonClick} className="video-button" data-toggle="modal" data-target="#videoModal">
                                     <i className="fal fa-play"></i>
                                 </button>
                             </div>

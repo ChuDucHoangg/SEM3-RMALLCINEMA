@@ -17,19 +17,7 @@ function Header() {
                                 <NavLink to="/">Home</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/movie-list">movies</NavLink>
-                                <ul className="submenu">
-                                    <li>
-                                        <NavLink to="/movie-list">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie List
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="/movie-ticket">
-                                            <i className="fal fa-long-arrow-alt-right"></i>Movie Ticket Plan
-                                        </NavLink>
-                                    </li>
-                                </ul>
+                                <NavLink to="/movies">movies</NavLink>
                             </li>
                             <li>
                                 <a href="#!">pages</a>

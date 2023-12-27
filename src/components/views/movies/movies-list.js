@@ -1,14 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../../services/api";
 import url from "../../../services/url";
 import { useCallback, useEffect, useState } from "react";
 import { format } from "date-fns";
 import ReactPlayer from "react-player";
+import Pagination from "../../layouts/pagination";
 
 function MoviesList() {
+    const navigate = useNavigate();
     const [movies, setMovies] = useState([]);
     const [currentTrailerUrl, setCurrentTrailerUrl] = useState("");
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5);
+
+    // Call api movies
     const loadMovie = useCallback(async () => {
         try {
             const movieResponse = await api.get(url.MOVIE.LIST);
@@ -18,9 +24,22 @@ function MoviesList() {
         }
     }, []);
 
+    // Pagination
+    const indexOfLastCourse = currentPage * itemsPerPage;
+    const indexOfFirstCourse = indexOfLastCourse - itemsPerPage;
+    const currentItemPage = movies.slice(indexOfFirstCourse, indexOfLastCourse);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        navigate(`/movies?page=${pageNumber}`);
+    };
+
     useEffect(() => {
         loadMovie();
-    }, [loadMovie]);
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = parseInt(urlParams.get("page")) || 1;
+        setCurrentPage(page);
+    }, [loadMovie, currentPage, navigate]);
 
     return (
         <>
@@ -184,7 +203,7 @@ function MoviesList() {
                                 <div className="tab-area">
                                     <div className="tab-item active">
                                         <div className="movie-area mb-10">
-                                            {movies.map((item, index) => (
+                                            {currentItemPage.map((item, index) => (
                                                 <div className="movie-list" key={index}>
                                                     <div className="movie-thumb c-thumb">
                                                         <Link to={`/movie-details/${item.id}`} className="w-100 h-100">
@@ -302,21 +321,7 @@ function MoviesList() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="pagination-area text-center">
-                                    <a href="#!">
-                                        <i className="fal fa-long-arrow-alt-left"></i>
-                                        <span>Prev</span>
-                                    </a>
-                                    <a href="#!">1</a>
-                                    <a href="#!" className="active">
-                                        2
-                                    </a>
-                                    <a href="#!">3</a>
-                                    <a href="#!">
-                                        <span>Next</span>
-                                        <i className="fal fa-long-arrow-alt-right"></i>
-                                    </a>
-                                </div>
+                                <Pagination perPage={itemsPerPage} totalPage={movies.length} paginate={paginate} currentPage={currentPage} />
                             </div>
                         </div>
                     </div>
