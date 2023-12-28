@@ -3,12 +3,13 @@ import api from "../../../services/api";
 import url from "../../../services/url";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import Loading from "../../layouts/loading";
 import { setAccessToken } from "../../../utils/auth";
+import Loading from "../../layouts/loading";
 
 function Login() {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -83,13 +84,18 @@ function Login() {
                         password: "Invalid email or password.",
                     });
                 }
-            } catch (error) {}
+            } catch (error) {
+                setFormErrors({
+                    email: "Invalid email or password.",
+                    password: "Invalid email or password.",
+                });
+            }
         }
     };
     return (
         <>
             <Helmet>
-                <title>Login | RMall</title>
+                <title>Login | RMall Cinema</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <section className="account-section" style={{ height: "100vh" }}>
