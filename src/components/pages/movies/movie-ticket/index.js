@@ -2,19 +2,22 @@ import Loading from "../../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 function MovieTicket() {
+    const { id } = useParams();
     const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
         }, 1500);
     }, []);
+
     return (
         <>
             <Helmet>
-                <title>Ticket | R Mall Cinema</title>
+                <title>Show | R Mall Cinema</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>

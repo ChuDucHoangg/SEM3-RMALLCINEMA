@@ -9,6 +9,8 @@ import Pagination from "../../layouts/pagination";
 function MoviesList() {
     const navigate = useNavigate();
     const [movies, setMovies] = useState([]);
+    const [languages, setLanguages] = useState([]);
+    const [genres, setGenres] = useState([]);
     const [currentTrailerUrl, setCurrentTrailerUrl] = useState("");
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,8 +19,13 @@ function MoviesList() {
     // Call api movies
     const loadMovie = useCallback(async () => {
         try {
-            const movieResponse = await api.get(url.MOVIE.LIST);
-            setMovies(movieResponse.data);
+            const moviesResponse = await api.get(url.MOVIE.LIST);
+            const languagesResponse = await api.get(url.LANGUAGE.LIST);
+            const genresResponse = await api.get(url.GENRE.LIST);
+
+            setMovies(moviesResponse.data);
+            setLanguages(languagesResponse.data);
+            setGenres(genresResponse.data);
         } catch (error) {
             console.log(error);
         }
@@ -51,38 +58,14 @@ function MoviesList() {
                                 <div className="widget-1-body">
                                     <h6 className="subtitle">Country</h6>
                                     <div className="check-area">
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang1" />
-                                            <label htmlFor="lang1">Australia</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang2" />
-                                            <label htmlFor="lang2">France</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang3" />
-                                            <label htmlFor="lang3">Russia</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang4" />
-                                            <label htmlFor="lang4">Thailand</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang5" />
-                                            <label htmlFor="lang5">Germany</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang6" />
-                                            <label htmlFor="lang6">Italy</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang7" />
-                                            <label htmlFor="lang7">USA</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="lang" id="lang8" />
-                                            <label htmlFor="lang8">UK</label>
-                                        </div>
+                                        {languages.map((item, index) => {
+                                            return (
+                                                <div className="form-group" key={index}>
+                                                    <input type="checkbox" name="lang" id={item.name} />
+                                                    <label htmlFor={item.name}>{item.name}</label>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                     <div className="add-check-area">
                                         <a href="#!">view more</a> <i className="fal fa-chevron-circle-down"></i>
@@ -108,46 +91,14 @@ function MoviesList() {
                                 <div className="widget-1-body">
                                     <h6 className="subtitle">genre</h6>
                                     <div className="check-area">
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre1" />
-                                            <label htmlFor="genre1">action</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre2" />
-                                            <label htmlFor="genre2">horror</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre3" />
-                                            <label htmlFor="genre3">animation</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre4" />
-                                            <label htmlFor="genre4">sci-fi</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre5" />
-                                            <label htmlFor="genre5">thriller</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre6" />
-                                            <label htmlFor="genre6">comedy</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre7" />
-                                            <label htmlFor="genre7">romantic</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre8" />
-                                            <label htmlFor="genre8">drama</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre9" />
-                                            <label htmlFor="genre9">romance</label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="checkbox" name="genre" id="genre10" />
-                                            <label htmlFor="genre10">adventure</label>
-                                        </div>
+                                        {genres.map((item, index) => {
+                                            return (
+                                                <div className="form-group" key={index}>
+                                                    <input type="checkbox" name="genre" id={item.name} />
+                                                    <label htmlFor={item.name}>{item.name}</label>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                     <div className="add-check-area">
                                         <a href="#!">view more</a> <i className="fal fa-chevron-circle-down"></i>
