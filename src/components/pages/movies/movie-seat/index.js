@@ -5,11 +5,13 @@ import Layout from "../../../layouts/layout";
 import { NavLink, useParams } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
+import { useMovieContext } from "../../../../context/MovieContext";
 function MovieSeat() {
     const { id } = useParams();
+    const { updateSelectedSeats } = useMovieContext();
     const [loading, setLoading] = useState(false);
     const [seat, setSeat] = useState([]);
-    const [selectedSeats, setSelectedSeats] = useState([]);
+    const [selectSeats, setSelectSeats] = useState([]);
 
     const loadSeat = useCallback(async () => {
         try {
@@ -48,22 +50,24 @@ function MovieSeat() {
 
     const handleSeatSelect = (seat) => {
         // Check if the seat is already selected
-        if (selectedSeats.includes(seat)) {
-            // If yes, remove it from the selectedSeats list
-            setSelectedSeats(selectedSeats.filter((selectedSeat) => selectedSeat !== seat));
+        if (selectSeats.includes(seat)) {
+            // If yes, remove it from the selectSeats list
+            setSelectSeats(selectSeats.filter((selectedSeat) => selectedSeat !== seat));
         } else {
             // If not, check if the total selected seats is less than 5
-            if (selectedSeats.length < 5) {
-                // If yes, add it to the selectedSeats list
-                setSelectedSeats([...selectedSeats, seat]);
+            if (selectSeats.length < 5) {
+                // If yes, add it to the selectSeats list
+                setSelectSeats([...selectSeats, seat]);
             } else {
                 // If no, show a message or handle it accordingly
                 alert("You can only select up to 5 seats.");
             }
         }
+
+        updateSelectedSeats(selectSeats);
     };
 
-    const totalPrice = selectedSeats.length * 40;
+    const totalPrice = selectSeats.length * 40;
 
     return (
         <>
@@ -150,7 +154,7 @@ function MovieSeat() {
                                                                                         type="checkbox"
                                                                                         className="single-seat__custom"
                                                                                         name="single-seat"
-                                                                                        checked={selectedSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        checked={selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
                                                                                         onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
                                                                                     />
                                                                                     <span className="sit-num">{item.seatNumber}</span>
@@ -190,7 +194,7 @@ function MovieSeat() {
                                                                                         type="checkbox"
                                                                                         className="single-seat__custom"
                                                                                         name="single-seat"
-                                                                                        checked={selectedSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        checked={selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
                                                                                         onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
                                                                                     />
                                                                                     <span className="sit-num">{item.seatNumber}</span>
@@ -230,7 +234,7 @@ function MovieSeat() {
                                                                                         type="checkbox"
                                                                                         className="two-seat__custom"
                                                                                         name="two-seat"
-                                                                                        checked={selectedSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        checked={selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
                                                                                         onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
                                                                                     />
                                                                                     <span className="sit-num">{item.seatNumber}</span>
@@ -252,7 +256,7 @@ function MovieSeat() {
                             <div className="proceed-to-book">
                                 <div className="book-item">
                                     <span>Your Selected Seat</span>
-                                    <h3 className="title">{selectedSeats.join(", ")}</h3>
+                                    <h3 className="title">{selectSeats.join(", ")}</h3>
                                 </div>
                                 <div className="book-item">
                                     <span>total price</span>

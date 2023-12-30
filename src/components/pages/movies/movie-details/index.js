@@ -1,4 +1,3 @@
-import Loading from "../../../layouts/loading";
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
@@ -8,12 +7,13 @@ import api from "../../../../services/api";
 import url from "../../../../services/url";
 import { format } from "date-fns";
 import ReactPlayer from "react-player";
+import { useMovieContext } from "../../../../context/MovieContext";
 
 function MovieDetails() {
     const { id } = useParams();
+    const { setMovieDetails } = useMovieContext();
     const navigate = useNavigate();
 
-    const [loading, setLoading] = useState(false);
     const [movies, setMovies] = useState([]);
 
     const [isModalOpen, setModalOpen] = useState(false);
@@ -33,18 +33,14 @@ function MovieDetails() {
         try {
             const movieResponse = await api.get(url.MOVIE.DETAILS + `${id}`);
             setMovies(movieResponse.data);
+            setMovieDetails(movieResponse.data);
         } catch (error) {
             console.log(error);
         }
-    }, [id]);
+    }, [id, setMovieDetails]);
 
     useEffect(() => {
         loadMovie();
-        setLoading(true);
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
     }, [loadMovie]);
 
     const handleVideoButtonClick = () => {
@@ -60,7 +56,7 @@ function MovieDetails() {
             <Helmet>
                 <title>{movies.title}</title>
             </Helmet>
-            {loading ? <Loading /> : ""}
+
             <Layout>
                 <section
                     className="details-banner"

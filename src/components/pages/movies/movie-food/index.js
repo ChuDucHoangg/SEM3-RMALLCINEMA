@@ -6,8 +6,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
 import Pagination from "../../../layouts/pagination";
+import { useMovieContext } from "../../../../context/MovieContext";
 function MovieFood() {
     const navigate = useNavigate();
+    const { movieData, setFoods } = useMovieContext();
+    const { movieDetails, selectedSeats } = movieData;
+
     const [loading, setLoading] = useState(false);
     const [food, setFood] = useState([]);
     const [quantities, setQuantities] = useState({});
@@ -50,10 +54,12 @@ function MovieFood() {
                 price: updatedOrderFoods[existingProductIndex].price + price,
             };
             setOrderFood(updatedOrderFoods);
+            setFoods(updatedOrderFoods);
         } else {
             // If the product doesn't exist, add a new entry to the order
             const updatedOrderFoods = [...orderFood, { foodName, quantity, price }];
             setOrderFood(updatedOrderFoods);
+            setFoods(updatedOrderFoods);
         }
     };
 
@@ -61,6 +67,7 @@ function MovieFood() {
         const updatedOrderFoods = [...orderFood];
         updatedOrderFoods.splice(index, 1); // Remove the item at the specified index
         setOrderFood(updatedOrderFoods);
+        setFoods(updatedOrderFoods);
     };
 
     // Pagination
@@ -219,23 +226,28 @@ function MovieFood() {
                                     <h4 className="title">booking summery</h4>
                                     <ul>
                                         <li>
-                                            <h6 className="subtitle">Irregular</h6>
-                                            <span className="info">Movie-3d</span>
+                                            <h6 className="subtitle">Movie name</h6>
+                                            <span className="info">
+                                                <span>{movieDetails.title}</span>
+                                                <span>Tickets: {selectedSeats.length}</span>
+                                            </span>
                                         </li>
                                         <li>
                                             <h6 className="subtitle">
-                                                <span>Cine World</span>
-                                                <span>04</span>
+                                                <span>Number of seats</span>
                                             </h6>
-                                            <div className="info">
-                                                <span>14 APR FRI, 7:00 PM</span> <span>Tickets</span>
-                                            </div>
+                                            <span className="info">
+                                                <span>{selectedSeats.join(", ")}</span>
+                                                <span>$23</span>
+                                            </span>
                                         </li>
                                         <li>
-                                            <h6 className="subtitle mb-0">
-                                                <span>Tickets Price</span>
-                                                <span>$200</span>
+                                            <h6 className="subtitle">
+                                                <span>Premiere</span>
                                             </h6>
+                                            <div className="info">
+                                                <span>14 APR FRI, 7:00 PM</span>
+                                            </div>
                                         </li>
                                     </ul>
                                     <ul>
@@ -244,8 +256,8 @@ function MovieFood() {
                                                 <span>FOOD & SOFT DRINK</span>
                                             </h6>
                                             {orderFood.map((item, index) => (
-                                                <div className="info">
-                                                    <span key={index}>{`${item.foodName} x${item.quantity}`}</span>
+                                                <div className="info" key={index}>
+                                                    <span>{`${item.foodName} x${item.quantity}`}</span>
                                                     <span>
                                                         {`$${item.price * item.quantity}`} <i className="fal fa-trash-alt" onClick={() => handleRemoveItem(index)} style={{ cursor: "pointer" }}></i>
                                                     </span>
@@ -255,14 +267,16 @@ function MovieFood() {
                                     </ul>
                                     <ul>
                                         <li>
-                                            <span className="info">
-                                                <span>price</span>
-                                                <span>$280</span>
-                                            </span>
-                                            <span className="info">
-                                                <span>vat</span>
-                                                <span>$10</span>
-                                            </span>
+                                            <h6 className="subtitle">
+                                                <span>Sub Total</span>
+                                                <span>$200</span>
+                                            </h6>
+                                        </li>
+                                        <li>
+                                            <h6 className="subtitle">
+                                                <span>VAT</span>
+                                                <span>10%</span>
+                                            </h6>
                                         </li>
                                     </ul>
                                 </div>
