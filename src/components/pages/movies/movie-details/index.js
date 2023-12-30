@@ -24,7 +24,7 @@ function MovieDetails() {
             localStorage.setItem("redirectPath", window.location.pathname);
             navigate("/login");
         } else {
-            navigate("/movie-ticket");
+            navigate(`/movie-ticket/${id}`);
         }
     };
 
@@ -33,7 +33,6 @@ function MovieDetails() {
         try {
             const movieResponse = await api.get(url.MOVIE.DETAILS + `${id}`);
             setMovies(movieResponse.data);
-            console.log(movieResponse.data);
         } catch (error) {
             console.log(error);
         }

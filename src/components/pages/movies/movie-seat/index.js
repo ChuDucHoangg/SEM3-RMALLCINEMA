@@ -1,16 +1,70 @@
 import Loading from "../../../layouts/loading";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import api from "../../../../services/api";
+import url from "../../../../services/url";
 function MovieSeat() {
+    const { id } = useParams();
     const [loading, setLoading] = useState(false);
+    const [seat, setSeat] = useState([]);
+    const [selectedSeats, setSelectedSeats] = useState([]);
+
+    const loadSeat = useCallback(async () => {
+        try {
+            const seatResponse = await api.get(url.SEAT.BY_ROOMID + `/${id}`);
+            const seatData = seatResponse.data;
+
+            // Use reduce to combine data by rowNumber
+            const groupedSeats = seatData.reduce((acc, seat) => {
+                const { rowNumber } = seat;
+
+                if (!acc[rowNumber]) {
+                    // If there is no key with rowNumber, create a new key and set the value to an array containing seats
+                    acc[rowNumber] = [seat];
+                } else {
+                    // If there is already a key with rowNumber, add seat to the corresponding array
+                    acc[rowNumber].push(seat);
+                }
+
+                return acc;
+            }, {});
+
+            setSeat(groupedSeats);
+        } catch (error) {
+            console.error("Error loading seats:", error);
+        }
+    }, [id]);
+
     useEffect(() => {
+        loadSeat();
         setLoading(true);
+
         setTimeout(() => {
             setLoading(false);
         }, 1500);
-    }, []);
+    }, [loadSeat]);
+
+    const handleSeatSelect = (seat) => {
+        // Check if the seat is already selected
+        if (selectedSeats.includes(seat)) {
+            // If yes, remove it from the selectedSeats list
+            setSelectedSeats(selectedSeats.filter((selectedSeat) => selectedSeat !== seat));
+        } else {
+            // If not, check if the total selected seats is less than 5
+            if (selectedSeats.length < 5) {
+                // If yes, add it to the selectedSeats list
+                setSelectedSeats([...selectedSeats, seat]);
+            } else {
+                // If no, show a message or handle it accordingly
+                alert("You can only select up to 5 seats.");
+            }
+        }
+    };
+
+    const totalPrice = selectedSeats.length * 40;
+
     return (
         <>
             <Helmet>
@@ -73,466 +127,124 @@ function MovieSeat() {
                             <div className="screen-thumb">
                                 <img src="assets/img/movie/theater.png" alt="movie" />
                             </div>
+
                             <h5 className="subtitle">single seat plan</h5>
                             <div className="screen-wrapper">
                                 <ul className="seat-area">
-                                    <li className="seat-line">
-                                        <span>H</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h1</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h2</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h3</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h5</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h6</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h7</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h8</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h9</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">h10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g11</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g12</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g13</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g14</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>H</span>
-                                    </li>
-                                    <li className="seat-line">
-                                        <span>G</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g1</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g2</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g3</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g5</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g6</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g7</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g8</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g9</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g11</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g12</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g13</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">g14</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>G</span>
-                                    </li>
-                                    <li className="seat-line">
-                                        <span>f</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f1</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f2</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f3</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f5</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f6</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f7</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f8</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f9</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f11</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f12</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f13</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="single-seat__custom" name="single-seat" />
-                                                        <span className="sit-num">f14</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>f</span>
-                                    </li>
+                                    {Object.keys(seat)
+                                        .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 1))
+                                        .map((rowNumber) => (
+                                            <div key={rowNumber}>
+                                                {seat[rowNumber].length > 0 && (
+                                                    <>
+                                                        <ul className="seat--area">
+                                                            <li className="seat-line">
+                                                                <span>{rowNumber}</span>
+                                                                <li className="front-seat">
+                                                                    <ul>
+                                                                        {seat[rowNumber]
+                                                                            .filter((item) => item.seatTypeId === 1)
+                                                                            .map((item, index) => (
+                                                                                <li key={index} className="single-seat">
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        className="single-seat__custom"
+                                                                                        name="single-seat"
+                                                                                        checked={selectedSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                    />
+                                                                                    <span className="sit-num">{item.seatNumber}</span>
+                                                                                </li>
+                                                                            ))}
+                                                                    </ul>
+                                                                </li>
+                                                                <span>{rowNumber}</span>
+                                                            </li>
+                                                        </ul>
+                                                    </>
+                                                )}
+                                            </div>
+                                        ))}
                                 </ul>
                             </div>
+
+                            <h5 className="subtitle">VIP seat plan</h5>
+                            <div className="screen-wrapper">
+                                <ul className="seat-area">
+                                    {Object.keys(seat)
+                                        .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 2))
+                                        .map((rowNumber) => (
+                                            <div key={rowNumber}>
+                                                {seat[rowNumber].length > 0 && (
+                                                    <>
+                                                        <ul className="seat--area">
+                                                            <li className="seat-line">
+                                                                <span>{rowNumber}</span>
+                                                                <li className="front-seat">
+                                                                    <ul>
+                                                                        {seat[rowNumber]
+                                                                            .filter((item) => item.seatTypeId === 2)
+                                                                            .map((item, index) => (
+                                                                                <li key={index} className="single-seat">
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        className="single-seat__custom"
+                                                                                        name="single-seat"
+                                                                                        checked={selectedSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                    />
+                                                                                    <span className="sit-num">{item.seatNumber}</span>
+                                                                                </li>
+                                                                            ))}
+                                                                    </ul>
+                                                                </li>
+                                                                <span>{rowNumber}</span>
+                                                            </li>
+                                                        </ul>
+                                                    </>
+                                                )}
+                                            </div>
+                                        ))}
+                                </ul>
+                            </div>
+
                             <h5 className="subtitle">double seat plan</h5>
                             <div className="screen-wrapper">
                                 <ul className="seat-area couple">
-                                    <li className="seat-line">
-                                        <span>e</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">e1 e2</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">e3 e4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">e5 e6</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">e7 e8</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">e9 e10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">e11 e12</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">e13 e14</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>e</span>
-                                    </li>
-                                    <li className="seat-line">
-                                        <span>d</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">d1 d2</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">d3 d4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">d5 d6</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num booked-bg">d7 d8</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">d9 d10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">d11 d12</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">d13 d14</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>d</span>
-                                    </li>
-                                    <li className="seat-line">
-                                        <span>c</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">c1 c2</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">c3 c4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">c5 c6</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">c7 c8</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">c9 c10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">c11 c12</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">c13 c14</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>c</span>
-                                    </li>
-                                    <li className="seat-line">
-                                        <span>b</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">b1 b2</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">b3 b4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">b5 b6</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">b7 b8</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">b9 b10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">b11 b12</span>
-                                                    </li>
-                                                    <li className="single-seat">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">b13 b14</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>b</span>
-                                    </li>
-                                    <li className="seat-line">
-                                        <span>a</span>
-                                        <ul className="seat--area">
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num booked-bg">a1 a2</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">a3 a4</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">a5 a6</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">a7 a8</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">a9 a10</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li className="front-seat">
-                                                <ul>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num booked-bg">a11</span>
-                                                    </li>
-                                                    <li className="single-seat seat-free-two">
-                                                        <input type="checkbox" className="two-seat__custom" name="two-seat" />
-                                                        <span className="sit-num">a12</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span>a</span>
-                                    </li>
+                                    {Object.keys(seat)
+                                        .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 3))
+                                        .map((rowNumber) => (
+                                            <div key={rowNumber}>
+                                                {seat[rowNumber].length > 0 && (
+                                                    <>
+                                                        <ul className="seat--area">
+                                                            <li className="seat-line">
+                                                                <span>{rowNumber}</span>
+                                                                <li className="front-seat">
+                                                                    <ul>
+                                                                        {seat[rowNumber]
+                                                                            .filter((item) => item.seatTypeId === 3)
+                                                                            .map((item, index) => (
+                                                                                <li key={index} className="single-seat">
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        className="two-seat__custom"
+                                                                                        name="two-seat"
+                                                                                        checked={selectedSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                    />
+                                                                                    <span className="sit-num">{item.seatNumber}</span>
+                                                                                </li>
+                                                                            ))}
+                                                                    </ul>
+                                                                </li>
+                                                                <span>{rowNumber}</span>
+                                                            </li>
+                                                        </ul>
+                                                    </>
+                                                )}
+                                            </div>
+                                        ))}
                                 </ul>
                             </div>
                         </div>
@@ -540,11 +252,11 @@ function MovieSeat() {
                             <div className="proceed-to-book">
                                 <div className="book-item">
                                     <span>Your Selected Seat</span>
-                                    <h3 className="title">a1, a2</h3>
+                                    <h3 className="title">{selectedSeats.join(", ")}</h3>
                                 </div>
                                 <div className="book-item">
                                     <span>total price</span>
-                                    <h3 className="title">$200</h3>
+                                    <h3 className="title">${totalPrice}</h3>
                                 </div>
                                 <div className="book-item">
                                     <NavLink to="/movie-food" className="custom-button">

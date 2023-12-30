@@ -53,8 +53,8 @@ function App() {
                 {/* Movie */}
                 <Route path="/movies" element={<Movie />} />
                 <Route path="/movie-details/:id" element={<MovieDetails />} />
-                <Route path="/movie-ticket" element={<ProtectedRoute element={<MovieTicket />} />} />
-                <Route path="/movie-seat" element={<ProtectedRoute element={<MovieSeat />} />} />
+                <Route path="/movie-ticket/:id" element={<ProtectedRoute element={<MovieTicket />} />} />
+                <Route path="/movie-seat/:id" element={<ProtectedRoute element={<MovieSeat />} />} />
                 <Route path="/movie-food" element={<ProtectedRoute element={<MovieFood />} />} />
                 <Route path="/movie-checkout" element={<ProtectedRoute element={<MovieCheckout />} />} />
 

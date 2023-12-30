@@ -1,27 +1,48 @@
 import Loading from "../../../layouts/loading";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
 import { NavLink, useParams } from "react-router-dom";
+import api from "../../../../services/api";
+import url from "../../../../services/url";
 function MovieTicket() {
     const { id } = useParams();
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState([]);
+
+    const [windowWarning, setWindowWarning] = useState(false);
+    const [selectedShowId, setSelectedShowId] = useState(null);
+
+    const handleShowTimeClick = (showId) => {
+        setWindowWarning(!windowWarning);
+        setSelectedShowId(showId);
+    };
+
+    const loadShow = useCallback(async () => {
+        try {
+            const showResponse = await api.get(url.SHOW.BY_MOVIE + `/${id}`);
+            setShow(showResponse.data);
+            console.log(showResponse.data);
+        } catch (error) {}
+    }, [id]);
 
     useEffect(() => {
+        loadShow();
         setLoading(true);
+
         setTimeout(() => {
             setLoading(false);
-        }, 1500);
-    }, []);
+        }, 2000);
+    }, [loadShow]);
 
     return (
         <>
             <Helmet>
-                <title>Show | R Mall Cinema</title>
+                <title>Ticket | R Mall Cinema</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>
-                <section className="window-warning inActive">
+                <section className={`window-warning ${windowWarning ? "" : "inActive"}`}>
                     <div className="lay"></div>
                     <div className="warning-item">
                         <h6 className="subtitle">Show Time : 07:40</h6>
@@ -29,7 +50,7 @@ function MovieTicket() {
                         <div className="thumb">
                             <img src="assets/img/movie/tt.png" alt="movie" />
                         </div>
-                        <NavLink to="/movie-seat" className="custom-button seatPlanButton">
+                        <NavLink to={`/movie-seat/${selectedShowId}`} className="custom-button seatPlanButton">
                             Show Seat Plans<i className="fal fa-long-arrow-alt-right"></i>
                         </NavLink>
                     </div>
@@ -132,138 +153,44 @@ function MovieTicket() {
                         <div className="row justify-content-center">
                             <div className="col-lg-12 mb-5 mb-lg-0">
                                 <ul className="seat-plan-wrapper">
-                                    <li>
-                                        <div className="movie-name">
-                                            <div className="icons">
-                                                <i className="far fa-heart"></i>
-                                                <i className="fas fa-heart"></i>
-                                            </div>
-                                            <a href="#!" className="name">
-                                                Cine World
-                                            </a>
-                                        </div>
-                                        <div className="location-icon">
-                                            <i className="fas fa-map-marker-alt"></i> London
-                                        </div>
-                                        <div className="movie-schedule">
-                                            <div className="item">07:40</div>
-                                            <div className="item">09:40</div>
-                                            <div className="item active">11:40</div>
-                                            <div className="item">13:40</div>
-                                            <div className="item">15:50</div>
-                                            <div className="item">19:50</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="movie-name">
-                                            <div className="icons">
-                                                <i className="far fa-heart"></i>
-                                                <i className="fas fa-heart"></i>
-                                            </div>
-                                            <a href="#!" className="name">
-                                                Cine Mark
-                                            </a>
-                                        </div>
-                                        <div className="location-icon">
-                                            <i className="fas fa-map-marker-alt"></i> Germany
-                                        </div>
-                                        <div className="movie-schedule">
-                                            <div className="item">07:40</div>
-                                            <div className="item">09:40</div>
-                                            <div className="item active">11:40</div>
-                                            <div className="item">13:40</div>
-                                            <div className="item">15:50</div>
-                                            <div className="item">19:50</div>
-                                        </div>
-                                    </li>
-                                    <li className="active">
-                                        <div className="movie-name">
-                                            <div className="icons">
-                                                <i className="far fa-heart"></i>
-                                                <i className="fas fa-heart"></i>
-                                            </div>
-                                            <a href="#!" className="name">
-                                                Wanda Cinemas
-                                            </a>
-                                        </div>
-                                        <div className="location-icon">
-                                            <i className="fas fa-map-marker-alt"></i> France
-                                        </div>
-                                        <div className="movie-schedule">
-                                            <div className="item">07:40</div>
-                                            <div className="item">09:40</div>
-                                            <div className="item active">11:40</div>
-                                            <div className="item">13:40</div>
-                                            <div className="item">15:50</div>
-                                            <div className="item">19:50</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="movie-name">
-                                            <div className="icons">
-                                                <i className="far fa-heart"></i>
-                                                <i className="fas fa-heart"></i>
-                                            </div>
-                                            <a href="#!" className="name">
-                                                box park
-                                            </a>
-                                        </div>
-                                        <div className="location-icon">
-                                            <i className="fas fa-map-marker-alt"></i> New York
-                                        </div>
-                                        <div className="movie-schedule">
-                                            <div className="item">07:40</div>
-                                            <div className="item">09:40</div>
-                                            <div className="item active">11:40</div>
-                                            <div className="item">13:40</div>
-                                            <div className="item">15:50</div>
-                                            <div className="item">19:50</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="movie-name">
-                                            <div className="icons">
-                                                <i className="far fa-heart"></i>
-                                                <i className="fas fa-heart"></i>
-                                            </div>
-                                            <a href="#!" className="name">
-                                                Cineplex Entertainment
-                                            </a>
-                                        </div>
-                                        <div className="location-icon">
-                                            <i className="fas fa-map-marker-alt"></i> Texas
-                                        </div>
-                                        <div className="movie-schedule">
-                                            <div className="item">07:40</div>
-                                            <div className="item">09:40</div>
-                                            <div className="item active">11:40</div>
-                                            <div className="item">13:40</div>
-                                            <div className="item">15:50</div>
-                                            <div className="item">19:50</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="movie-name">
-                                            <div className="icons">
-                                                <i className="far fa-heart"></i>
-                                                <i className="fas fa-heart"></i>
-                                            </div>
-                                            <a href="#!" className="name">
-                                                Siverbird
-                                            </a>
-                                        </div>
-                                        <div className="location-icon">
-                                            <i className="fas fa-map-marker-alt"></i> Nevada
-                                        </div>
-                                        <div className="movie-schedule">
-                                            <div className="item">07:40</div>
-                                            <div className="item">09:40</div>
-                                            <div className="item active">11:40</div>
-                                            <div className="item">13:40</div>
-                                            <div className="item">15:50</div>
-                                            <div className="item">19:50</div>
-                                        </div>
-                                    </li>
+                                    {show.map((item, index) => {
+                                        return (
+                                            <li key={index}>
+                                                <div className="movie-name">
+                                                    <div className="icons">
+                                                        <i className="far fa-heart"></i>
+                                                        <i className="fas fa-heart"></i>
+                                                    </div>
+                                                    <a href="#!" className="name">
+                                                        Cine World
+                                                    </a>
+                                                </div>
+                                                <div className="location-icon">
+                                                    <i className="far fa-language"></i> {item.language}
+                                                </div>
+                                                <div className="movie-schedule">
+                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
+                                                        07:40
+                                                    </div>
+                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
+                                                        09:40
+                                                    </div>
+                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
+                                                        11:40
+                                                    </div>
+                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
+                                                        13:40
+                                                    </div>
+                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
+                                                        15:50
+                                                    </div>
+                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
+                                                        19:50
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             </div>
                         </div>
