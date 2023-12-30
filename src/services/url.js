@@ -16,7 +16,7 @@ const url = {
     },
 
     LANGUAGE: {
-        LIST: "language",
+        LIST: "language/get-all",
     },
 
     GENRE: {
@@ -24,7 +24,11 @@ const url = {
     },
 
     SHOW: {
-        BY_MOVIE: "get-by-movie",
+        BY_MOVIE: "show/get-by-movie",
+    },
+
+    SEAT: {
+        BY_ROOMID: "seat/get-by-roomId",
     },
 };
 

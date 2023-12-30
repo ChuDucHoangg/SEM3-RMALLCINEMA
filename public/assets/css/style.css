@@ -4422,6 +4422,7 @@ input[type="submit"] {
     -webkit-transition: all ease 0.3s;
     transition: all ease 0.3s;
     margin: 5px;
+    user-select: none;
 }
 
 .seat-plan-wrapper li .movie-schedule .item:hover {
@@ -4739,10 +4740,6 @@ input[type="submit"] {
     .seat-area.couple {
         margin-bottom: 110px;
     }
-}
-
-.seat-area.couple .seat-line .single-seat {
-    padding: 10px;
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
@@ -9397,3 +9394,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .checkout-widget p.invalid-feedback {
     color: #dc3545;
 }
+
+/* .seat-area__grid {
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+/* .seat-area .seat-line {
+    flex: 1;
+} */
