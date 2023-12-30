@@ -30,6 +30,10 @@ const url = {
     SEAT: {
         BY_ROOMID: "seat/get-by-roomId",
     },
+
+    FOOD: {
+        LIST: "food/get-all",
+    },
 };
 
 export default url;
