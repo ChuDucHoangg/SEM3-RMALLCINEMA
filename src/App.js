@@ -20,6 +20,7 @@ import ChangePassword from "./components/pages/auth/change-password.js";
 import { useJwt } from "react-jwt";
 import { getAccessToken } from "./utils/auth.js";
 import NotFound from "./components/pages/other/not-found.js";
+import { MovieProvider } from "./context/MovieContext.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -45,42 +46,44 @@ function App() {
         return element;
     };
     return (
-        <div className="App">
-            <Routes>
-                {/* Home  */}
-                <Route path="/" element={<Home />} />
+        <MovieProvider>
+            <div className="App">
+                <Routes>
+                    {/* Home  */}
+                    <Route path="/" element={<Home />} />
 
-                {/* Movie */}
-                <Route path="/movies" element={<Movie />} />
-                <Route path="/movie-details/:id" element={<MovieDetails />} />
-                <Route path="/movie-ticket/:id" element={<ProtectedRoute element={<MovieTicket />} />} />
-                <Route path="/movie-seat/:id" element={<ProtectedRoute element={<MovieSeat />} />} />
-                <Route path="/movie-food" element={<ProtectedRoute element={<MovieFood />} />} />
-                <Route path="/movie-checkout" element={<ProtectedRoute element={<MovieCheckout />} />} />
+                    {/* Movie */}
+                    <Route path="/movies" element={<Movie />} />
+                    <Route path="/movie-details/:id" element={<MovieDetails />} />
+                    <Route path="/movie-ticket/:id" element={<ProtectedRoute element={<MovieTicket />} />} />
+                    <Route path="/movie-seat/:id" element={<ProtectedRoute element={<MovieSeat />} />} />
+                    <Route path="/movie-food" element={<ProtectedRoute element={<MovieFood />} />} />
+                    <Route path="/movie-checkout" element={<ProtectedRoute element={<MovieCheckout />} />} />
 
-                {/* Blog */}
-                <Route path="/blog-list" element={<Blog />} />
-                <Route path="/blog-details" element={<BlogDetails />} />
+                    {/* Blog */}
+                    <Route path="/blog-list" element={<Blog />} />
+                    <Route path="/blog-details" element={<BlogDetails />} />
 
-                {/* About and Contact Us */}
-                <Route path="/about-us" element={<AboutUs />} />
-                <Route path="/contact-us" element={<Contact />} />
+                    {/* About and Contact Us */}
+                    <Route path="/about-us" element={<AboutUs />} />
+                    <Route path="/contact-us" element={<Contact />} />
 
-                {/* Auth */}
-                <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
-                <Route path="/register" element={<ProtectedLoginRoute element={<Register />} />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/change-password" element={<ProtectedRoute element={<ChangePassword />} />} />
+                    {/* Auth */}
+                    <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
+                    <Route path="/register" element={<ProtectedLoginRoute element={<Register />} />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/change-password" element={<ProtectedRoute element={<ChangePassword />} />} />
 
-                {/* Profile */}
-                <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
-                <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
-                <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
+                    {/* Profile */}
+                    <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+                    <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
+                    <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
 
-                {/* Other */}
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </div>
+                    {/* Other */}
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </div>
+        </MovieProvider>
     );
 }
 
