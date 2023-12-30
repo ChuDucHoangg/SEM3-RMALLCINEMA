@@ -86,7 +86,7 @@ const Pagination = ({ perPage, totalPage, paginate, currentPage }) => {
             <ul className="pagination">
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                     <button onClick={() => paginate(currentPage - 1)} className="page-link">
-                        <i class="fal fa-long-arrow-alt-left"></i> Previous
+                        <i className="fal fa-long-arrow-alt-left"></i> Previous
                     </button>
                 </li>
 
@@ -94,7 +94,7 @@ const Pagination = ({ perPage, totalPage, paginate, currentPage }) => {
 
                 <li className={`page-item ${currentPage === Math.ceil(totalPage / perPage) ? "disabled" : ""}`}>
                     <button onClick={() => paginate(currentPage + 1)} className="page-link">
-                        Next <i class="fal fa-long-arrow-alt-right"></i>
+                        Next <i className="fal fa-long-arrow-alt-right"></i>
                     </button>
                 </li>
             </ul>

@@ -5083,7 +5083,26 @@ input[type="submit"] {
     border-radius: 20px;
     border: 1px solid #11326f;
     text-align: center;
-    padding: 0;
+    position: relative;
+    padding: 0 50px;
+}
+
+.grid--area .grid-item .grid-inner .grid-content .cart-button .cart-plus-minus .qty-btn {
+    position: absolute;
+    top: 0;
+    background: transparent;
+    border: none;
+    width: 50px;
+    height: 100%;
+    z-index: 1;
+}
+
+.grid--area .grid-item .grid-inner .grid-content .cart-button .cart-plus-minus .qty-btn__left {
+    left: 0;
+}
+
+.grid--area .grid-item .grid-inner .grid-content .cart-button .cart-plus-minus .qty-btn__right {
+    right: 0;
 }
 
 .grid--area .grid-item .grid-inner .grid-content .cart-button .cart-plus-minus .qtybutton {
@@ -9395,11 +9414,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #dc3545;
 }
 
-/* .seat-area__grid {
-    display: flex;
-    flex-wrap: wrap;
-} */
-
-/* .seat-area .seat-line {
-    flex: 1;
-} */
+.reset-styles {
+    position: static !important;
+    height: auto !important;
+}

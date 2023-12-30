@@ -1,16 +1,94 @@
 import Loading from "../../../layouts/loading";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import api from "../../../../services/api";
+import url from "../../../../services/url";
+import Pagination from "../../../layouts/pagination";
 function MovieFood() {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [food, setFood] = useState([]);
+    const [quantities, setQuantities] = useState({});
+    const [orderFood, setOrderFood] = useState([]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(4);
+
+    const loadFood = useCallback(async () => {
+        try {
+            const foodResponse = await api.get(url.FOOD.LIST);
+            setFood(foodResponse.data);
+
+            const initialQuantities = {};
+            foodResponse.data.forEach((item) => {
+                initialQuantities[item.id] = 1; // Set default quantity to 1 for each product
+            });
+            setQuantities(initialQuantities);
+        } catch (error) {}
+    }, []);
+
+    const handleQuantityChange = (productId, newQuantity) => {
+        const quantity = parseInt(newQuantity, 10);
+
+        setQuantities((prevQuantities) => ({
+            ...prevQuantities,
+            [productId]: quantity,
+        }));
+    };
+
+    const handleAddFood = (foodName, quantity, price) => {
+        const existingProductIndex = orderFood.findIndex((item) => item.foodName === foodName);
+
+        if (existingProductIndex !== -1) {
+            // If the product exists, update the quantity and total price
+            const updatedOrderFoods = [...orderFood];
+            updatedOrderFoods[existingProductIndex] = {
+                ...updatedOrderFoods[existingProductIndex],
+                quantity: updatedOrderFoods[existingProductIndex].quantity + quantity,
+                price: updatedOrderFoods[existingProductIndex].price + price,
+            };
+            setOrderFood(updatedOrderFoods);
+        } else {
+            // If the product doesn't exist, add a new entry to the order
+            const updatedOrderFoods = [...orderFood, { foodName, quantity, price }];
+            setOrderFood(updatedOrderFoods);
+        }
+    };
+
+    const handleRemoveItem = (index) => {
+        const updatedOrderFoods = [...orderFood];
+        updatedOrderFoods.splice(index, 1); // Remove the item at the specified index
+        setOrderFood(updatedOrderFoods);
+    };
+
+    // Pagination
+    const indexOfLastCourse = currentPage * itemsPerPage;
+    const indexOfFirstCourse = indexOfLastCourse - itemsPerPage;
+    const currentItemPage = food.slice(indexOfFirstCourse, indexOfLastCourse);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        navigate(`/movie-food?page=${pageNumber}`);
+
+        const scrollToHeight = window.innerHeight * 0.6;
+        window.scrollTo({ top: scrollToHeight, left: 0, behavior: "smooth" });
+    };
+
     useEffect(() => {
+        loadFood();
         setLoading(true);
+
         setTimeout(() => {
             setLoading(false);
         }, 1500);
-    }, []);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = parseInt(urlParams.get("page")) || 1;
+        setCurrentPage(page);
+    }, [loadFood, currentPage, navigate]);
+
     return (
         <>
             <Helmet>
@@ -44,8 +122,7 @@ function MovieFood() {
                         <div className="page-title-area">
                             <div className="item md-order-1">
                                 <a href="movie-ticket-plan.html" className="custom-button back-button">
-                                    {" "}
-                                    <i className="far fa-reply"></i> Change Plan{" "}
+                                    <i className="far fa-reply"></i> Change Plan
                                 </a>
                             </div>
                             <div className="item date-item">
@@ -71,121 +148,69 @@ function MovieFood() {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-8">
-                                <div className="section-header-3">
+                                {/* <div className="section-header-3">
                                     <span className="cate">Food</span>
                                     <h2 className="title">order your food</h2>
-                                    <p>It is a long established fact that a reader will be distracted by the readable content</p>
-                                </div>
+                                    <p>
+                                        Skip the lines and enjoy a seamless process – your favorite treats will be ready for you at the counter. Make the most of your cinema outing with a hassle-free
+                                        food and beverage experience! 🎬🥤🍿
+                                    </p>
+                                </div> */}
+
                                 <div className="grid--area">
                                     <ul className="filter">
-                                        <li data-filter="*" className="active">
-                                            all
-                                        </li>
-                                        <li data-filter=".package">package</li>
-                                        <li data-filter=".drink">drink</li>
-                                        <li data-filter=".popcorn">popcorn</li>
+                                        <li className="active">all</li>
+                                        <li>package</li>
+                                        <li>drink</li>
+                                        <li>popcorn</li>
                                     </ul>
-                                    <div className="grid-area">
-                                        <div className="grid-item package popcorn">
-                                            <div className="grid-inner">
-                                                <div className="grid-thumb">
-                                                    <img src="assets/img/movie/drink.jpg" alt="movie/popcorn" />
-                                                    <div className="offer-tag">$80</div>
-                                                    <div className="offer-remainder">
-                                                        <h6 className="o-title mt-0">30%</h6>
-                                                        <span>off</span>
+                                    <div className="grid-area reset-styles">
+                                        {currentItemPage.map((item, index) => (
+                                            <div className="grid-item drink" key={index}>
+                                                <div className="grid-inner">
+                                                    <div className="grid-thumb">
+                                                        <img src="assets/img/movie/drink.jpg" alt="movie/popcorn" />
+                                                        <div className="offer-tag">${item.price}</div>
+                                                        <div className="offer-remainder">
+                                                            <h6 className="o-title mt-0">30%</h6>
+                                                            <span>off</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid-content">
+                                                        <h5 className="subtitle">
+                                                            <p>{item.name}</p>
+                                                        </h5>
+                                                        <form className="cart-button">
+                                                            <div className="cart-plus-minus">
+                                                                <button
+                                                                    type="button"
+                                                                    className="qty-btn qty-btn__left"
+                                                                    onClick={() => handleQuantityChange(item.id, Math.max(1, quantities[item.id] - 1))}
+                                                                >
+                                                                    -
+                                                                </button>
+                                                                <input
+                                                                    className="cart-plus-minus-box"
+                                                                    type="text"
+                                                                    name={`qtybutton-${item.id}`}
+                                                                    value={quantities[item.id] || ""}
+                                                                    onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                                                                />
+                                                                <button type="button" className="qty-btn qty-btn__right" onClick={() => handleQuantityChange(item.id, (quantities[item.id] || 0) + 1)}>
+                                                                    +
+                                                                </button>
+                                                            </div>
+                                                            <button type="button" className="custom-button" onClick={() => handleAddFood(item.name, quantities[item.id] || 1, item.price)}>
+                                                                <i className="fal fa-shopping-cart"></i> add
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                                <div className="grid-content">
-                                                    <h5 className="subtitle">
-                                                        <a href="#0">Popcon,Drink</a>
-                                                    </h5>
-                                                    <form className="cart-button">
-                                                        <div className="cart-plus-minus">
-                                                            <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
-                                                        </div>
-                                                        <button type="submit" className="custom-button">
-                                                            <i className="fal fa-shopping-cart"></i> add
-                                                        </button>
-                                                    </form>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="grid-item drink">
-                                            <div className="grid-inner">
-                                                <div className="grid-thumb">
-                                                    <img src="assets/img/movie/food.jpg" alt="movie/popcorn" />
-                                                    <div className="offer-tag">$80</div>
-                                                    <div className="offer-remainder">
-                                                        <h6 className="o-title mt-0">30%</h6>
-                                                        <span>off</span>
-                                                    </div>
-                                                </div>
-                                                <div className="grid-content">
-                                                    <h5 className="subtitle">
-                                                        <a href="#0">Popcon,Drink</a>
-                                                    </h5>
-                                                    <form className="cart-button">
-                                                        <div className="cart-plus-minus">
-                                                            <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
-                                                        </div>
-                                                        <button type="submit" className="custom-button">
-                                                            <i className="fal fa-shopping-cart"></i> add
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="grid-item package">
-                                            <div className="grid-inner">
-                                                <div className="grid-thumb">
-                                                    <img src="assets/img/movie/drink.jpg" alt="movie/popcorn" />
-                                                    <div className="offer-tag">$80</div>
-                                                    <div className="offer-remainder">
-                                                        <h6 className="o-title mt-0">30%</h6>
-                                                        <span>off</span>
-                                                    </div>
-                                                </div>
-                                                <div className="grid-content">
-                                                    <h5 className="subtitle">
-                                                        <a href="#0">Popcon,Drink</a>
-                                                    </h5>
-                                                    <form className="cart-button">
-                                                        <div className="cart-plus-minus">
-                                                            <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
-                                                        </div>
-                                                        <button type="submit" className="custom-button">
-                                                            <i className="fal fa-shopping-cart"></i> add
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="grid-item drink popcorn">
-                                            <div className="grid-inner">
-                                                <div className="grid-thumb">
-                                                    <img src="assets/img/movie/food.jpg" alt="movie/popcorn" />
-                                                    <div className="offer-tag">$80</div>
-                                                    <div className="offer-remainder">
-                                                        <h6 className="o-title mt-0">30%</h6>
-                                                        <span>off</span>
-                                                    </div>
-                                                </div>
-                                                <div className="grid-content">
-                                                    <h5 className="subtitle">
-                                                        <a href="#0">Popcon,Drink</a>
-                                                    </h5>
-                                                    <form className="cart-button">
-                                                        <div className="cart-plus-minus">
-                                                            <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
-                                                        </div>
-                                                        <button type="submit" className="custom-button">
-                                                            <i className="fal fa-shopping-cart"></i> add
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        ))}
+                                    </div>
+                                    <div className="mt-20">
+                                        <Pagination perPage={itemsPerPage} totalPage={food.length} paginate={paginate} currentPage={currentPage} />
                                     </div>
                                 </div>
                             </div>
@@ -216,17 +241,16 @@ function MovieFood() {
                                     <ul>
                                         <li>
                                             <h6 className="subtitle">
-                                                <span>package</span>
-                                                <span>$80</span>
+                                                <span>FOOD & SOFT DRINK</span>
                                             </h6>
-                                            <span className="info">
-                                                <span>3 star package</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <h6 className="subtitle">
-                                                <span>food & soft drink</span>
-                                            </h6>
+                                            {orderFood.map((item, index) => (
+                                                <div className="info">
+                                                    <span key={index}>{`${item.foodName} x${item.quantity}`}</span>
+                                                    <span>
+                                                        {`$${item.price * item.quantity}`} <i className="fal fa-trash-alt" onClick={() => handleRemoveItem(index)} style={{ cursor: "pointer" }}></i>
+                                                    </span>
+                                                </div>
+                                            ))}
                                         </li>
                                     </ul>
                                     <ul>
