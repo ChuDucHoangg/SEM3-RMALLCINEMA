@@ -663,6 +663,8 @@ input[type="submit"] {
 .screen-area .subtitle::before,
 .checkout-widget .payment-option li.active a::after,
 .checkout-widget .payment-option li.active a::before,
+.checkout-widget .payment-option li.active p::after,
+.checkout-widget .payment-option li.active p::before,
 .checkout-widget.checkout-card .payment-card-form .form-group.check-group label::after,
 .checkout-widget.checkout-card .payment-card-form .form-group.check-group label::before,
 .event-about-thumb::after,
@@ -5225,42 +5227,51 @@ input[type="submit"] {
 }
 
 .checkout-widget .payment-option {
-    margin: -15px;
-    margin-top: 5px;
-    margin-bottom: 25px;
+    margin-top: 25px;
+    /* margin-bottom: 25px; */
 }
 
-@media (min-width: 576px) {
+/* @media (min-width: 576px) {
     .checkout-widget .payment-option {
         margin-bottom: 40px;
     }
-}
+} */
 
 .checkout-widget .payment-option li {
     padding: 15px;
+    cursor: pointer;
 }
 
-.checkout-widget .payment-option li a {
+.checkout-widget .payment-option li a,
+.checkout-widget .payment-option li p {
     width: 90px;
     border-radius: 10px;
     color: #bbcbff;
-    border: 1px solid #11326f;
+    border: 2px solid #11326f;
     text-align: center;
     padding: 20px 10px 18px;
     height: 100%;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+    transition: border 0.3s;
 }
 
-.checkout-widget .payment-option li a i {
+.checkout-widget .payment-option li a i,
+.checkout-widget .payment-option li p i,
+.checkout-widget .payment-option li p img {
     width: 100%;
     margin-top: auto;
     margin-bottom: 10px;
     font-size: 30px;
 }
 
-.checkout-widget .payment-option li a span {
+.checkout-widget .payment-option li p img {
+    max-width: 100%;
+}
+
+.checkout-widget .payment-option li a span,
+.checkout-widget .payment-option li p span {
     font-size: 12px;
     text-transform: capitalize;
     display: block;
@@ -5268,14 +5279,20 @@ input[type="submit"] {
     line-height: 1.2;
 }
 
-.checkout-widget .payment-option li.active a {
+.checkout-widget .payment-option li p span {
+    padding-bottom: 15px;
+}
+
+.checkout-widget .payment-option li.active a,
+.checkout-widget .payment-option li.active p {
     border-color: #31d7a9;
     border-width: 2px;
     color: #31d7a9;
     position: relative;
 }
 
-.checkout-widget .payment-option li.active a::after {
+.checkout-widget .payment-option li.active a::after,
+.checkout-widget .payment-option li.active p::after {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -5285,7 +5302,8 @@ input[type="submit"] {
     background-size: cover;
 }
 
-.checkout-widget .payment-option li.active a::before {
+.checkout-widget .payment-option li.active a::before,
+.checkout-widget .payment-option li.active p::before {
     background-color: #032055;
     width: 40px;
     height: 40px;

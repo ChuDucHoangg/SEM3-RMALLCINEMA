@@ -2,14 +2,38 @@ import Loading from "../../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
+import { PayPalButton } from "react-paypal-button-v2";
 function MovieCheckout() {
     const [loading, setLoading] = useState(false);
+
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("paypal");
+
     useEffect(() => {
         setLoading(true);
+
         setTimeout(() => {
             setLoading(false);
         }, 1500);
     }, []);
+
+    // Paypal
+    const handlePaymentSuccess = (details, data) => {
+        console.log("Payment success:", details);
+        console.log("Payment data:", data);
+    };
+
+    const handlePaymentCancel = (data) => {
+        console.log("Payment canceled:", data);
+    };
+
+    const handlePaymentError = (err) => {
+        console.error("Payment error:", err);
+    };
+
+    const handlePaymentMethodClick = (method) => {
+        setSelectedPaymentMethod(method);
+    };
+
     return (
         <>
             <Helmet>
@@ -113,39 +137,34 @@ function MovieCheckout() {
                                 <div className="checkout-widget checkout-card mb-0">
                                     <h5 className="title">Payment Option</h5>
                                     <ul className="payment-option">
-                                        <li className="active">
-                                            <a href="#!">
-                                                <i className="fas fa-credit-card-front"></i>
-                                                <span> Card</span>
-                                            </a>
+                                        <li className={selectedPaymentMethod === "paypal" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("paypal")}>
+                                                <img src="assets/img/payment/paypal.png" alt="" />
+                                                <span> Paypal</span>
+                                            </p>
                                         </li>
-                                        <li>
-                                            <a href="#!">
-                                                <i className="fab fa-cc-paypal"></i>
-                                                <span>paypal</span>
-                                            </a>
+
+                                        <li className={selectedPaymentMethod === "applePay" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("applePay")}>
+                                                <img src="assets/img/payment/apple-pay.png" alt="" className="icon" />
+                                                <span>Apple Pay</span>
+                                            </p>
                                         </li>
-                                        <li>
-                                            <a href="#!">
-                                                <i className="fab fa-cc-stripe"></i>
-                                                <span>stripe</span>
-                                            </a>
+                                        <li className={selectedPaymentMethod === "zaloPay" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("zaloPay")}>
+                                                <img src="assets/img/payment/zalopay.png" alt="" />
+                                                <span>Zalo Pay</span>
+                                            </p>
                                         </li>
-                                        <li>
-                                            <a href="#!">
-                                                <i className="fab fa-cc-apple-pay"></i>
-                                                <span>Apple</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#!">
-                                                <i className="fab fa-cc-amazon-pay"></i>
-                                                <span>Amazon</span>
-                                            </a>
+                                        <li className={selectedPaymentMethod === "momo" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("momo")}>
+                                                <img src="assets/img/payment/momo.png" alt="" />
+                                                <span>MoMo</span>
+                                            </p>
                                         </li>
                                     </ul>
-                                    <h6 className="subtitle">Enter Your Card Details</h6>
-                                    <form className="payment-card-form">
+                                    {/* <h6 className="subtitle">Enter Your Card Details</h6> */}
+                                    {/* <form className="payment-card-form">
                                         <div className="form-group w-100">
                                             <label htmlFor="card1">Name on the Card</label>
                                             <input type="text" id="card1" />
@@ -178,7 +197,7 @@ function MovieCheckout() {
                                     </form>
                                     <p className="notice">
                                         By clicking this payment button you agree with our <a href="#!">terms and conditions</a>.
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                             <div className="col-lg-4">
@@ -239,9 +258,8 @@ function MovieCheckout() {
                                         <span> Pay Amount</span>
                                         <span>$290</span>
                                     </h6>
-                                    <a href="#!" className="custom-button">
-                                        confirm payment
-                                    </a>
+
+                                    {selectedPaymentMethod === "paypal" && <PayPalButton amount={100} onSuccess={handlePaymentSuccess} onCancel={handlePaymentCancel} onError={handlePaymentError} />}
                                 </div>
                             </div>
                         </div>
