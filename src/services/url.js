@@ -35,6 +35,11 @@ const url = {
     FOOD: {
         LIST: "food/get-all",
     },
+
+    ORDER: {
+        CREATE: "order",
+        MY_ORDER: "order/get-by-user",
+    },
 };
 
 export default url;

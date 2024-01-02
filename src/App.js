@@ -14,13 +14,14 @@ import Login from "./components/pages/auth/login.js";
 import Register from "./components/pages/auth/register.js";
 import ForgotPassword from "./components/pages/auth/forgot-password.js";
 import Profile from "./components/pages/profile/index.js";
-import MyBooking from "./components/pages/profile/my-booking.js";
+import MyOrder from "./components/pages/profile/my-order.js";
 import Favorite from "./components/pages/profile/favorite.js";
 import ChangePassword from "./components/pages/auth/change-password.js";
 import { useJwt } from "react-jwt";
 import { getAccessToken } from "./utils/auth.js";
 import NotFound from "./components/pages/other/not-found.js";
 import { MovieProvider } from "./context/MovieContext.js";
+import Result from "./components/pages/movies/movie-checkout/result.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -58,7 +59,7 @@ function App() {
                     <Route path="/movie-ticket/:id" element={<ProtectedRoute element={<MovieTicket />} />} />
                     <Route path="/movie-seat/:showCode" element={<ProtectedRoute element={<MovieSeat />} />} />
                     <Route path="/movie-food" element={<ProtectedRoute element={<MovieFood />} />} />
-                    <Route path="/movie-checkout" element={<ProtectedRoute element={<MovieCheckout />} />} />
+                    <Route path="/checkout" element={<ProtectedRoute element={<MovieCheckout />} />} />
 
                     {/* Blog */}
                     <Route path="/blog-list" element={<Blog />} />
@@ -76,11 +77,12 @@ function App() {
 
                     {/* Profile */}
                     <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
-                    <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
+                    <Route path="/my-order" element={<ProtectedRoute element={<MyOrder />} />} />
                     <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
 
                     {/* Other */}
                     <Route path="*" element={<NotFound />} />
+                    <Route path="checkout/result" element={<Result />} />
                 </Routes>
             </div>
         </MovieProvider>
