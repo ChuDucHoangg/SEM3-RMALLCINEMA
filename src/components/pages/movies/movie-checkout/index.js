@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
 import { getDecodedToken } from "../../../../utils/auth";
+import GooglePayButton from "@google-pay/button-react";
 
 function MovieCheckout() {
     const navigate = useNavigate();
@@ -216,12 +217,21 @@ function MovieCheckout() {
                                                 <span>Apple Pay</span>
                                             </p>
                                         </li>
+
+                                        <li className={selectedPaymentMethod === "googlePay" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("googlePay")}>
+                                                <img src="assets/img/payment/google-pay.png" alt="" />
+                                                <span>Google Pay</span>
+                                            </p>
+                                        </li>
+
                                         <li className={selectedPaymentMethod === "zaloPay" ? "active" : ""}>
                                             <p onClick={() => handlePaymentMethodClick("zaloPay")}>
                                                 <img src="assets/img/payment/zalopay.png" alt="" />
                                                 <span>Zalo Pay</span>
                                             </p>
                                         </li>
+
                                         <li className={selectedPaymentMethod === "momo" ? "active" : ""}>
                                             <p onClick={() => handlePaymentMethodClick("momo")}>
                                                 <img src="assets/img/payment/momo.png" alt="" />
@@ -322,6 +332,58 @@ function MovieCheckout() {
                                             onSuccess={(details, data) => handlePaymentSuccess(details, data)}
                                             onCancel={handlePaymentCancel}
                                             onError={handlePaymentError}
+                                        />
+                                    )}
+
+                                    {selectedPaymentMethod === "googlePay" && (
+                                        <GooglePayButton
+                                            environment="TEST"
+                                            paymentRequest={{
+                                                apiVersion: 2,
+                                                apiVersionMinor: 0,
+                                                allowedPaymentMethods: [
+                                                    {
+                                                        type: "CARD",
+                                                        parameters: {
+                                                            allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+                                                            allowedCardNetworks: ["MASTERCARD", "VISA"],
+                                                        },
+                                                        tokenizationSpecification: {
+                                                            type: "PAYMENT_GATEWAY",
+                                                            parameters: {
+                                                                gateway: "example",
+                                                                gatewayMerchantId: "exampleGatewayMerchantId",
+                                                            },
+                                                        },
+                                                    },
+                                                ],
+                                                merchantInfo: {
+                                                    merchantId: "BCR2DN4TZKBZLYYZ",
+                                                    merchantName: "NgoManhSon",
+                                                },
+                                                transactionInfo: {
+                                                    totalPriceStatus: "FINAL",
+                                                    totalPriceLabel: "Total",
+                                                    totalPrice: "1",
+                                                    currencyCode: "USD",
+                                                    countryCode: "US",
+                                                },
+                                                shippingAddressRequired: true,
+                                                callbackIntents: ["SHIPPING_ADDRESS", "PAYMENT_AUTHORIZATION"],
+                                            }}
+                                            onLoadPaymentData={(paymentRequest) => {
+                                                console.log("Success", paymentRequest);
+                                            }}
+                                            onPaymentAuthorized={(paymentData) => {
+                                                console.log("Payment Authorised Success", paymentData);
+                                                return { transactionState: "SUCCESS" };
+                                            }}
+                                            onPaymentDataChanged={(paymentData) => {
+                                                console.log("On Payment Data Changed", paymentData);
+                                                return {};
+                                            }}
+                                            existingPaymentMethodRequired="false"
+                                            buttonType="Pay"
                                         />
                                     )}
                                 </div>
