@@ -69,7 +69,7 @@ function MovieSeat() {
         updateSelectedSeats(selectSeats);
     };
 
-    const totalPrice = selectSeats.length * 40;
+    // const totalPrice = selectSeats.length * 10;
 
     return (
         <>

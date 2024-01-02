@@ -4,13 +4,22 @@ import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useMovieContext } from "../../../../context/MovieContext";
-function MovieCheckout() {
-    const [loading, setLoading] = useState(false);
+import { useNavigate } from "react-router-dom";
+import api from "../../../../services/api";
+import url from "../../../../services/url";
+import { getDecodedToken } from "../../../../utils/auth";
 
-    const { movieData } = useMovieContext();
+function MovieCheckout() {
+    const navigate = useNavigate();
+
+    const { movieData, setMessageContext } = useMovieContext();
     const { movieDetails, selectedSeats, addFoods } = movieData;
 
+    const decodedToken = getDecodedToken();
+
+    const [loading, setLoading] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("paypal");
+    const [finalTotal, setFinalTotal] = useState(0);
 
     useEffect(() => {
         setLoading(true);
@@ -20,24 +29,98 @@ function MovieCheckout() {
         }, 1500);
     }, []);
 
+    // Decode the token
+    const userInfo = {
+        fullName: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
+        userId: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
+        userEmail: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],
+    };
+
     // Select payment method
     const handlePaymentMethodClick = (method) => {
         setSelectedPaymentMethod(method);
     };
 
     // Paypal
-    const handlePaymentSuccess = (details, data) => {
-        console.log("Payment success:", details);
-        console.log("Payment data:", data);
+    const handlePaymentSuccess = async (details, data) => {
+        // console.log("Payment success:", details);
+        // console.log("Payment data:", data);
+
+        try {
+            if (decodedToken) {
+                // Create Order form context
+                const orderData = {
+                    orderCode: Math.random().toString(36).substring(2, 10).toUpperCase(),
+                    showId: movieData.movieDetails.id,
+                    userId: userInfo.userId,
+                    total: calculateTotal(movieData.selectedSeats.length, movieData.addFoods),
+                    discountAmount: 0,
+                    discountCode: "",
+                    finalTotal: calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0),
+                    paymentMethod: selectedPaymentMethod,
+                    tickets: movieData.selectedSeats.map((seat) => ({ orderId: 0, seatId: seat })),
+                    foods: movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity })),
+                };
+
+                await api.post(url.ORDER.CREATE, orderData);
+
+                movieData.setMovieDetails();
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+        setMessageContext("Payment Success!");
+        navigate("/checkout/result");
     };
 
     const handlePaymentCancel = (data) => {
         console.log("Payment canceled:", data);
+
+        setMessageContext("Payment canceled.");
+        navigate("/checkout/result");
     };
 
     const handlePaymentError = (err) => {
         console.error("Payment error:", err);
+
+        setMessageContext("Payment encountered an error.");
+        navigate("/checkout/result");
     };
+
+    // Global variable for ticket price per seat
+    const seatPrice = 10;
+
+    // Function to calculate the total seat fees
+    const calculateSeatFees = (seats) => {
+        return seats.length * seatPrice;
+    };
+
+    // Function to calculate total order value
+    // const calculateTotal = (numSeats, foods) => {
+    //     const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
+    //     return numSeats * seatPrice + foodTotal;
+    // };
+
+    const calculateTotal = (numSeats, foods) => {
+        if (!foods) {
+            return numSeats * seatPrice;
+        }
+
+        const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
+        return numSeats * seatPrice + foodTotal;
+    };
+
+    // Function to calculate the total final value (after applying the discount)
+    const calculateFinalTotal = (total, discountAmount) => {
+        return total - discountAmount;
+    };
+
+    useEffect(() => {
+        // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
+        const newFinalTotal = calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0);
+        setFinalTotal(newFinalTotal);
+    }, [movieData.selectedSeats, movieData.addFoods]);
 
     return (
         <>
@@ -86,34 +169,24 @@ function MovieCheckout() {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-8">
-                                {/* <div className="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
-                                    <div className="title-area">
-                                        <h5 className="title">Already Have An Account?</h5>
-                                        <p>It is a long established fact that a reader will be distracted!</p>
-                                    </div>
-                                    <a href="#!" className="sign-in-area">
-                                        <i className="fal fa-user"></i>
-                                        <span>Login</span>
-                                    </a>
-                                </div> */}
                                 <div className="checkout-widget checkout-contact">
                                     <h5 className="title">Billing Info</h5>
                                     <form className="checkout-contact-form">
                                         <div className="form-group">
-                                            <input type="text" placeholder="Full Name" />
+                                            <input type="text" value={userInfo.fullName} />
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" placeholder="Enter email" />
+                                            <input type="text" value={userInfo.userEmail} />
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" placeholder="Enter Phone" />
+                                            <input type="text" placeholder="Enter phone" />
                                         </div>
                                         <div className="form-group">
                                             <input type="text" placeholder="Enter address " />
                                         </div>
-                                        <div className="form-group">
+                                        {/* <div className="form-group">
                                             <input type="submit" value="Continue" className="custom-button" />
-                                        </div>
+                                        </div> */}
                                     </form>
                                 </div>
                                 <div className="checkout-widget checkout-contact">
@@ -210,7 +283,7 @@ function MovieCheckout() {
                                             </h6>
                                             <div className="info">
                                                 <span>{selectedSeats.join(", ")}</span>
-                                                <span>$23</span>
+                                                <span>${calculateSeatFees(movieData.selectedSeats)}</span>
                                             </div>
                                         </li>
                                         <li>
@@ -227,36 +300,30 @@ function MovieCheckout() {
                                             <h6 className="subtitle">
                                                 <span>food & soft drink</span>
                                             </h6>
-                                            {addFoods.map((item, index) => (
-                                                <div className="info" key={index}>
-                                                    <span className="text-default">{`${item.foodName} x${item.quantity}`}</span>
-                                                    <span>{`$${item.price * item.quantity}`}</span>
-                                                </div>
-                                            ))}
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li>
-                                            <h6 className="subtitle">
-                                                <span>Sub Total</span>
-                                                <span>$200</span>
-                                            </h6>
-                                        </li>
-                                        <li>
-                                            <h6 className="subtitle">
-                                                <span>VAT</span>
-                                                <span>10%</span>
-                                            </h6>
+                                            {addFoods &&
+                                                addFoods.map((item, index) => (
+                                                    <div className="info" key={index}>
+                                                        <span className="text-default">{`${item.foodName} x${item.quantity}`}</span>
+                                                        <span>{`$${item.price * item.quantity}`}</span>
+                                                    </div>
+                                                ))}
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="proceed-area text-center">
                                     <h6 className="subtitle">
                                         <span> Pay Amount</span>
-                                        <span>$290</span>
+                                        <span>${finalTotal}</span>
                                     </h6>
 
-                                    {selectedPaymentMethod === "paypal" && <PayPalButton amount={100} onSuccess={handlePaymentSuccess} onCancel={handlePaymentCancel} onError={handlePaymentError} />}
+                                    {selectedPaymentMethod === "paypal" && (
+                                        <PayPalButton
+                                            amount={finalTotal}
+                                            onSuccess={(details, data) => handlePaymentSuccess(details, data)}
+                                            onCancel={handlePaymentCancel}
+                                            onError={handlePaymentError}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         </div>
