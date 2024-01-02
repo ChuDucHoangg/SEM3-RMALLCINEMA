@@ -2,20 +2,24 @@ import Loading from "../../../layouts/loading";
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
+import { format } from "date-fns";
+import { useMovieContext } from "../../../../context/MovieContext";
 function MovieTicket() {
     const { id } = useParams();
+    const { movieData } = useMovieContext();
+    const { movieDetails } = movieData;
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState([]);
 
     const [windowWarning, setWindowWarning] = useState(false);
-    const [selectedShowId, setSelectedShowId] = useState(null);
+    const [selectedShowCode, setSelectedShowCode] = useState(null);
 
-    const handleShowTimeClick = (showId) => {
+    const handleShowTimeClick = (showCode) => {
         setWindowWarning(!windowWarning);
-        setSelectedShowId(showId);
+        setSelectedShowCode(showCode);
     };
 
     const loadShow = useCallback(async () => {
@@ -50,29 +54,24 @@ function MovieTicket() {
                         <div className="thumb">
                             <img src="assets/img/movie/tt.png" alt="movie" />
                         </div>
-                        <NavLink to={`/movie-seat/${selectedShowId}`} className="custom-button seatPlanButton">
+                        <Link to={`/movie-seat/${selectedShowCode}`} className="custom-button seatPlanButton">
                             Show Seat Plans<i className="fal fa-long-arrow-alt-right"></i>
-                        </NavLink>
+                        </Link>
                     </div>
                 </section>
 
                 <section
                     className="details-banner hero-area"
                     style={{
-                        backgroundImage: "url('assets/img/banner/banner-movie-details.jpg')",
+                        backgroundImage: `url(${movieDetails.cover_image})`,
                         backgroundSize: "cover",
                     }}
                 >
                     <div className="container">
                         <div className="details-banner-wrapper">
                             <div className="details-banner-content">
-                                <h3 className="title">Irregular</h3>
-                                <div className="tags">
-                                    <a href="#!">English</a>
-                                    <a href="#!">France</a>
-                                    <a href="#!">Germany</a>
-                                    <a href="#!">Italy</a>
-                                </div>
+                                <h3 className="title">{movieDetails.title}</h3>
+                                <div className="tags">{movieDetails && movieDetails.genres && movieDetails.genres.map((genre, genreIndex) => <p key={genreIndex}>{genre.name}</p>)}</div>
                             </div>
                         </div>
                     </div>
@@ -161,31 +160,16 @@ function MovieTicket() {
                                                         <i className="far fa-heart"></i>
                                                         <i className="fas fa-heart"></i>
                                                     </div>
-                                                    <a href="#!" className="name">
-                                                        Cine World
-                                                    </a>
+                                                    <Link to={`/movie-seat/${item.showCode}`} className="name">
+                                                        {format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy")}
+                                                    </Link>
                                                 </div>
                                                 <div className="location-icon">
                                                     <i className="far fa-language"></i> {item.language}
                                                 </div>
                                                 <div className="movie-schedule">
-                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
-                                                        07:40
-                                                    </div>
-                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
-                                                        09:40
-                                                    </div>
-                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
-                                                        11:40
-                                                    </div>
-                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
-                                                        13:40
-                                                    </div>
-                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
-                                                        15:50
-                                                    </div>
-                                                    <div className="item" onClick={() => handleShowTimeClick(item.roomId)}>
-                                                        19:50
+                                                    <div className="item" onClick={() => handleShowTimeClick(item.showCode)}>
+                                                        Buy
                                                     </div>
                                                 </div>
                                             </li>

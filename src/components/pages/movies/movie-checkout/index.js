@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
 import { PayPalButton } from "react-paypal-button-v2";
+import { useMovieContext } from "../../../../context/MovieContext";
 function MovieCheckout() {
     const [loading, setLoading] = useState(false);
+
+    const { movieData } = useMovieContext();
+    const { movieDetails, selectedSeats, addFoods } = movieData;
 
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("paypal");
 
@@ -15,6 +19,11 @@ function MovieCheckout() {
             setLoading(false);
         }, 1500);
     }, []);
+
+    // Select payment method
+    const handlePaymentMethodClick = (method) => {
+        setSelectedPaymentMethod(method);
+    };
 
     // Paypal
     const handlePaymentSuccess = (details, data) => {
@@ -30,10 +39,6 @@ function MovieCheckout() {
         console.error("Payment error:", err);
     };
 
-    const handlePaymentMethodClick = (method) => {
-        setSelectedPaymentMethod(method);
-    };
-
     return (
         <>
             <Helmet>
@@ -44,19 +49,15 @@ function MovieCheckout() {
                 <section
                     className="details-banner hero-area seat-plan-banner"
                     style={{
-                        backgroundImage: "url('assets/img/banner/banner-movie-details.jpg')",
+                        backgroundImage: `url(${movieDetails.cover_image})`,
                         backgroundSize: "cover",
                     }}
                 >
                     <div className="container">
                         <div className="details-banner-wrapper">
                             <div className="details-banner-content style-two">
-                                <h3 className="title">Irregular</h3>
-                                <div className="tags">
-                                    <a href="#!">MOVIE</a>
-                                    <a href="#!">2D</a>
-                                    <a href="#!">3D</a>
-                                </div>
+                                <h3 className="title">{movieDetails.title}</h3>
+                                <div className="tags">{movieDetails && movieDetails.genres && movieDetails.genres.map((genre, genreIndex) => <p key={genreIndex}>{genre.name}</p>)}</div>
                             </div>
                         </div>
                     </div>
@@ -72,14 +73,6 @@ function MovieCheckout() {
                             </div>
                             <div className="item date-item">
                                 <span className="date">FRI 14, 2023</span>
-                                <select className="select-bar">
-                                    <option value="sc1">07:40</option>
-                                    <option value="sc2">09:40</option>
-                                    <option value="sc3">11:40</option>
-                                    <option value="sc4">13:40</option>
-                                    <option value="sc5">15:50</option>
-                                    <option value="sc6">19:50</option>
-                                </select>
                             </div>
                             <div className="item">
                                 <small> TIME LEFT </small>
@@ -93,7 +86,7 @@ function MovieCheckout() {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-8">
-                                <div className="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
+                                {/* <div className="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
                                     <div className="title-area">
                                         <h5 className="title">Already Have An Account?</h5>
                                         <p>It is a long established fact that a reader will be distracted!</p>
@@ -102,7 +95,7 @@ function MovieCheckout() {
                                         <i className="fal fa-user"></i>
                                         <span>Login</span>
                                     </a>
-                                </div>
+                                </div> */}
                                 <div className="checkout-widget checkout-contact">
                                     <h5 className="title">Billing Info</h5>
                                     <form className="checkout-contact-form">
@@ -205,51 +198,55 @@ function MovieCheckout() {
                                     <h4 className="title">booking summery</h4>
                                     <ul>
                                         <li>
-                                            <h6 className="subtitle">Irregular</h6>
-                                            <span className="info">Movie-3d</span>
-                                        </li>
-                                        <li>
-                                            <h6 className="subtitle">
-                                                <span>Cine World</span>
-                                                <span>04</span>
-                                            </h6>
+                                            <h6 className="subtitle">MOVIE NAME</h6>
                                             <div className="info">
-                                                <span>14 APR FRI, 7:00 PM</span> <span>Tickets</span>
+                                                <span>{movieDetails.title}</span>
+                                                <span>Tickets: {selectedSeats.length}</span>
                                             </div>
                                         </li>
                                         <li>
-                                            <h6 className="subtitle mb-0">
-                                                <span>Tickets Price</span>
-                                                <span>$200</span>
+                                            <h6 className="subtitle">
+                                                <span>NUMBER OF SEATS</span>
                                             </h6>
+                                            <div className="info">
+                                                <span>{selectedSeats.join(", ")}</span>
+                                                <span>$23</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <h6 className="subtitle">
+                                                <span>Premiere</span>
+                                            </h6>
+                                            <div className="info">
+                                                <span>14 APR FRI, 7:00 PM</span>
+                                            </div>
                                         </li>
                                     </ul>
                                     <ul>
-                                        <li>
-                                            <h6 className="subtitle">
-                                                <span>package</span>
-                                                <span>$80</span>
-                                            </h6>
-                                            <span className="info">
-                                                <span>3 star package</span>
-                                            </span>
-                                        </li>
                                         <li>
                                             <h6 className="subtitle">
                                                 <span>food & soft drink</span>
                                             </h6>
+                                            {addFoods.map((item, index) => (
+                                                <div className="info" key={index}>
+                                                    <span className="text-default">{`${item.foodName} x${item.quantity}`}</span>
+                                                    <span>{`$${item.price * item.quantity}`}</span>
+                                                </div>
+                                            ))}
                                         </li>
                                     </ul>
                                     <ul>
                                         <li>
-                                            <span className="info">
-                                                <span>price</span>
-                                                <span>$280</span>
-                                            </span>
-                                            <span className="info">
-                                                <span>vat</span>
-                                                <span>$10</span>
-                                            </span>
+                                            <h6 className="subtitle">
+                                                <span>Sub Total</span>
+                                                <span>$200</span>
+                                            </h6>
+                                        </li>
+                                        <li>
+                                            <h6 className="subtitle">
+                                                <span>VAT</span>
+                                                <span>10%</span>
+                                            </h6>
                                         </li>
                                     </ul>
                                 </div>

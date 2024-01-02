@@ -9436,3 +9436,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: static !important;
     height: auto !important;
 }
+
+.text-default {
+    text-transform: lowercase;
+}
