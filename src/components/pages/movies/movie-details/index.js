@@ -15,7 +15,6 @@ function MovieDetails() {
     const navigate = useNavigate();
 
     const [movies, setMovies] = useState([]);
-
     const [isModalOpen, setModalOpen] = useState(false);
 
     // Check if you are logged in or not

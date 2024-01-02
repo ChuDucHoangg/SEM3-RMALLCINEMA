@@ -16,6 +16,7 @@ function MovieFood() {
     const [food, setFood] = useState([]);
     const [quantities, setQuantities] = useState({});
     const [orderFood, setOrderFood] = useState([]);
+    const [finalTotal, setFinalTotal] = useState(0);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(4);
@@ -95,6 +96,40 @@ function MovieFood() {
         const page = parseInt(urlParams.get("page")) || 1;
         setCurrentPage(page);
     }, [loadFood, currentPage, navigate]);
+
+    // Global variable for ticket price per seat
+    const seatPrice = 10;
+
+    // Function to calculate the total seat fees
+    const calculateSeatFees = (seats) => {
+        return seats.length * seatPrice;
+    };
+
+    // Function to calculate total order value
+    // const calculateTotal = (numSeats, foods) => {
+    //     const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
+    //     return numSeats * seatPrice + foodTotal;
+    // };
+
+    const calculateTotal = (numSeats, foods) => {
+        if (!foods) {
+            return numSeats * seatPrice;
+        }
+
+        const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
+        return numSeats * seatPrice + foodTotal;
+    };
+
+    // Function to calculate the total final value (after applying the discount)
+    const calculateFinalTotal = (total, discountAmount) => {
+        return total - discountAmount;
+    };
+
+    useEffect(() => {
+        // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
+        const newFinalTotal = calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0);
+        setFinalTotal(newFinalTotal);
+    }, [movieData.selectedSeats, movieData.addFoods]);
 
     return (
         <>
@@ -226,7 +261,7 @@ function MovieFood() {
                                             </h6>
                                             <div className="info">
                                                 <span>{selectedSeats.join(", ")}</span>
-                                                <span>$23</span>
+                                                <span>${calculateSeatFees(movieData.selectedSeats)}</span>
                                             </div>
                                         </li>
                                         <li>
@@ -243,37 +278,25 @@ function MovieFood() {
                                             <h6 className="subtitle">
                                                 <span>FOOD & SOFT DRINK</span>
                                             </h6>
-                                            {addFoods.map((item, index) => (
-                                                <div className="info" key={index}>
-                                                    <span className="text-default">{`${item.foodName} x${item.quantity}`}</span>
-                                                    <span>
-                                                        {`$${item.price * item.quantity}`} <i className="fal fa-trash-alt" onClick={() => handleRemoveItem(index)} style={{ cursor: "pointer" }}></i>
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li>
-                                            <h6 className="subtitle">
-                                                <span>Sub Total</span>
-                                                <span>$200</span>
-                                            </h6>
-                                        </li>
-                                        <li>
-                                            <h6 className="subtitle">
-                                                <span>VAT</span>
-                                                <span>10%</span>
-                                            </h6>
+                                            {addFoods &&
+                                                addFoods.map((item, index) => (
+                                                    <div className="info" key={index}>
+                                                        <span className="text-default">{`${item.foodName} x${item.quantity}`}</span>
+                                                        <span>
+                                                            {`$${item.price * item.quantity}`}{" "}
+                                                            <i className="fal fa-trash-alt" onClick={() => handleRemoveItem(index)} style={{ cursor: "pointer" }}></i>
+                                                        </span>
+                                                    </div>
+                                                ))}
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="proceed-area text-center">
                                     <h6 className="subtitle">
-                                        <span> Pay Amount</span>
-                                        <span>$290</span>
+                                        <span>PAY AMOUNT</span>
+                                        <span>${finalTotal}</span>
                                     </h6>
-                                    <NavLink to="/movie-checkout" className="custom-button">
+                                    <NavLink to="/checkout" className="custom-button">
                                         confirm payment
                                     </NavLink>
                                 </div>
