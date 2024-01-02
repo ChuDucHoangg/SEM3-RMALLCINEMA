@@ -7,15 +7,17 @@ import api from "../../../../services/api";
 import url from "../../../../services/url";
 import { useMovieContext } from "../../../../context/MovieContext";
 function MovieSeat() {
-    const { id } = useParams();
-    const { updateSelectedSeats } = useMovieContext();
+    const { showCode } = useParams();
+    const { movieData, updateSelectedSeats } = useMovieContext();
+    const { movieDetails } = movieData;
+
     const [loading, setLoading] = useState(false);
     const [seat, setSeat] = useState([]);
     const [selectSeats, setSelectSeats] = useState([]);
 
     const loadSeat = useCallback(async () => {
         try {
-            const seatResponse = await api.get(url.SEAT.BY_ROOMID + `/${id}`);
+            const seatResponse = await api.get(url.SEAT.BY_SHOW + `/${showCode}`);
             const seatData = seatResponse.data;
 
             // Use reduce to combine data by rowNumber
@@ -37,7 +39,7 @@ function MovieSeat() {
         } catch (error) {
             console.error("Error loading seats:", error);
         }
-    }, [id]);
+    }, [showCode]);
 
     useEffect(() => {
         loadSeat();
@@ -79,18 +81,18 @@ function MovieSeat() {
                 <section
                     className="details-banner hero-area seat-plan-banner"
                     style={{
-                        backgroundImage: "url('assets/img/banner/banner-movie-details.jpg')",
+                        backgroundImage: `url(${movieDetails.cover_image})`,
                         backgroundSize: "cover",
                     }}
                 >
                     <div className="container">
                         <div className="details-banner-wrapper">
                             <div className="details-banner-content style-two">
-                                <h3 className="title">Irregular</h3>
+                                <h3 className="title">{movieDetails.title}</h3>
                                 <div className="tags">
-                                    <a href="#!">MOVIE</a>
-                                    <a href="#!">2D</a>
-                                    <a href="#!">3D</a>
+                                    {movieDetails.genres.map((genre, genreIndex) => (
+                                        <p key={genreIndex}>{genre.name}</p>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -107,14 +109,6 @@ function MovieSeat() {
                             </div>
                             <div className="item date-item">
                                 <span className="date">FRI 14, 2023</span>
-                                <select className="select-bar">
-                                    <option value="sc1">07:40</option>
-                                    <option value="sc2">09:40</option>
-                                    <option value="sc3">11:40</option>
-                                    <option value="sc4">13:40</option>
-                                    <option value="sc5">15:50</option>
-                                    <option value="sc6">19:50</option>
-                                </select>
                             </div>
                             <div className="item">
                                 <small> TIME LEFT </small>
@@ -258,10 +252,10 @@ function MovieSeat() {
                                     <span>Your Selected Seat</span>
                                     <h3 className="title">{selectSeats.join(", ")}</h3>
                                 </div>
-                                <div className="book-item">
+                                {/* <div className="book-item">
                                     <span>total price</span>
                                     <h3 className="title">${totalPrice}</h3>
-                                </div>
+                                </div> */}
                                 <div className="book-item">
                                     <NavLink to="/movie-food" className="custom-button">
                                         checkout now

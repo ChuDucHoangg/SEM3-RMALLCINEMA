@@ -61,7 +61,7 @@ function MovieDetails() {
                 <section
                     className="details-banner"
                     style={{
-                        backgroundImage: "url('assets/img/banner/banner-movie-details.jpg')",
+                        backgroundImage: `url(${movies.cover_image})`,
                         backgroundSize: "cover",
                     }}
                 >

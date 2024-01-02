@@ -10,7 +10,7 @@ import { useMovieContext } from "../../../../context/MovieContext";
 function MovieFood() {
     const navigate = useNavigate();
     const { movieData, setFoods } = useMovieContext();
-    const { movieDetails, selectedSeats } = movieData;
+    const { movieDetails, selectedSeats, addFoods } = movieData;
 
     const [loading, setLoading] = useState(false);
     const [food, setFood] = useState([]);
@@ -106,19 +106,15 @@ function MovieFood() {
                 <section
                     className="details-banner hero-area seat-plan-banner"
                     style={{
-                        backgroundImage: "url('assets/img/banner/banner-movie-details.jpg')",
+                        backgroundImage: `url(${movieDetails.cover_image})`,
                         backgroundSize: "cover",
                     }}
                 >
                     <div className="container">
                         <div className="details-banner-wrapper">
                             <div className="details-banner-content style-two">
-                                <h3 className="title">Irregular</h3>
-                                <div className="tags">
-                                    <a href="#!">MOVIE</a>
-                                    <a href="#!">2D</a>
-                                    <a href="#!">3D</a>
-                                </div>
+                                <h3 className="title">{movieDetails.title}</h3>
+                                <div className="tags">{movieDetails && movieDetails.genres && movieDetails.genres.map((genre, genreIndex) => <p key={genreIndex}>{genre.name}</p>)}</div>
                             </div>
                         </div>
                     </div>
@@ -134,14 +130,6 @@ function MovieFood() {
                             </div>
                             <div className="item date-item">
                                 <span className="date">FRI 14, 2023</span>
-                                <select className="select-bar">
-                                    <option value="sc1">07:40</option>
-                                    <option value="sc2">09:40</option>
-                                    <option value="sc3">11:40</option>
-                                    <option value="sc4">13:40</option>
-                                    <option value="sc5">15:50</option>
-                                    <option value="sc6">19:50</option>
-                                </select>
                             </div>
                             <div className="item">
                                 <small> TIME LEFT </small>
@@ -176,7 +164,7 @@ function MovieFood() {
                                             <div className="grid-item drink" key={index}>
                                                 <div className="grid-inner">
                                                     <div className="grid-thumb">
-                                                        <img src="assets/img/movie/drink.jpg" alt="movie/popcorn" />
+                                                        <img src="assets/img/movie/drink.jpg" alt={item.name} />
                                                         <div className="offer-tag">${item.price}</div>
                                                         <div className="offer-remainder">
                                                             <h6 className="o-title mt-0">30%</h6>
@@ -227,19 +215,19 @@ function MovieFood() {
                                     <ul>
                                         <li>
                                             <h6 className="subtitle">Movie name</h6>
-                                            <span className="info">
+                                            <div className="info">
                                                 <span>{movieDetails.title}</span>
                                                 <span>Tickets: {selectedSeats.length}</span>
-                                            </span>
+                                            </div>
                                         </li>
                                         <li>
                                             <h6 className="subtitle">
                                                 <span>Number of seats</span>
                                             </h6>
-                                            <span className="info">
+                                            <div className="info">
                                                 <span>{selectedSeats.join(", ")}</span>
                                                 <span>$23</span>
-                                            </span>
+                                            </div>
                                         </li>
                                         <li>
                                             <h6 className="subtitle">
@@ -255,9 +243,9 @@ function MovieFood() {
                                             <h6 className="subtitle">
                                                 <span>FOOD & SOFT DRINK</span>
                                             </h6>
-                                            {orderFood.map((item, index) => (
+                                            {addFoods.map((item, index) => (
                                                 <div className="info" key={index}>
-                                                    <span>{`${item.foodName} x${item.quantity}`}</span>
+                                                    <span className="text-default">{`${item.foodName} x${item.quantity}`}</span>
                                                     <span>
                                                         {`$${item.price * item.quantity}`} <i className="fal fa-trash-alt" onClick={() => handleRemoveItem(index)} style={{ cursor: "pointer" }}></i>
                                                     </span>
