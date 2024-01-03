@@ -239,41 +239,6 @@ function MovieCheckout() {
                                             </p>
                                         </li>
                                     </ul>
-                                    {/* <h6 className="subtitle">Enter Your Card Details</h6> */}
-                                    {/* <form className="payment-card-form">
-                                        <div className="form-group w-100">
-                                            <label htmlFor="card1">Name on the Card</label>
-                                            <input type="text" id="card1" />
-                                            <div className="right-icon">
-                                                <i className="flaticon-lock"></i>
-                                            </div>
-                                        </div>
-                                        <div className="form-group w-100">
-                                            <label htmlFor="card2"> Card Number</label>
-                                            <input type="text" id="card2" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="card3">Expiration</label>
-                                            <input type="text" id="card3" placeholder="MM/YY" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="card4">CVV</label>
-                                            <input type="text" id="card4" placeholder="CVV" />
-                                        </div>
-                                        <div className="form-group check-group">
-                                            <input id="card5" type="checkbox" checked />
-                                            <label htmlFor="card5">
-                                                <span className="title">Save Card Info For Future Payment</span>
-                                                <span className="info">It is a long established fact that a reader will be distracted by the readable content.</span>
-                                            </label>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="submit" className="custom-button" value="confirm payment" />
-                                        </div>
-                                    </form>
-                                    <p className="notice">
-                                        By clicking this payment button you agree with our <a href="#!">terms and conditions</a>.
-                                    </p> */}
                                 </div>
                             </div>
                             <div className="col-lg-4">
@@ -325,7 +290,6 @@ function MovieCheckout() {
                                         <span> Pay Amount</span>
                                         <span>${finalTotal}</span>
                                     </h6>
-
                                     {selectedPaymentMethod === "paypal" && (
                                         <PayPalButton
                                             amount={finalTotal}
@@ -346,7 +310,7 @@ function MovieCheckout() {
                                                         type: "CARD",
                                                         parameters: {
                                                             allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                                                            allowedCardNetworks: ["MASTERCARD", "VISA"],
+                                                            allowedCardNetworks: ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"],
                                                         },
                                                         tokenizationSpecification: {
                                                             type: "PAYMENT_GATEWAY",
@@ -359,12 +323,12 @@ function MovieCheckout() {
                                                 ],
                                                 merchantInfo: {
                                                     merchantId: "BCR2DN4TZKBZLYYZ",
-                                                    merchantName: "NgoManhSon",
+                                                    merchantName: `${movieDetails.title}`,
                                                 },
                                                 transactionInfo: {
                                                     totalPriceStatus: "FINAL",
                                                     totalPriceLabel: "Total",
-                                                    totalPrice: "1",
+                                                    totalPrice: `${finalTotal}`,
                                                     currencyCode: "USD",
                                                     countryCode: "US",
                                                 },
@@ -376,6 +340,9 @@ function MovieCheckout() {
                                             }}
                                             onPaymentAuthorized={(paymentData) => {
                                                 console.log("Payment Authorised Success", paymentData);
+                                                handlePaymentSuccess();
+                                                setMessageContext("Payment Success.");
+                                                navigate("/checkout/result");
                                                 return { transactionState: "SUCCESS" };
                                             }}
                                             onPaymentDataChanged={(paymentData) => {
