@@ -16,10 +16,12 @@ function MovieTicket() {
 
     const [windowWarning, setWindowWarning] = useState(false);
     const [selectedShowCode, setSelectedShowCode] = useState(null);
+    const [selectedShowStartTime, setSelectedShowStartTime] = useState(null);
 
-    const handleShowTimeClick = (showCode) => {
+    const handleShowTimeClick = (showCode, startTime) => {
         setWindowWarning(!windowWarning);
         setSelectedShowCode(showCode);
+        setSelectedShowStartTime(startTime);
     };
 
     const loadShow = useCallback(async () => {
@@ -45,11 +47,12 @@ function MovieTicket() {
                 <title>Ticket | R Mall Cinema</title>
             </Helmet>
             {loading ? <Loading /> : ""}
+
             <Layout>
                 <section className={`window-warning ${windowWarning ? "" : "inActive"}`}>
                     <div className="lay"></div>
                     <div className="warning-item">
-                        <h6 className="subtitle">Show Time : 07:40</h6>
+                        <h6 className="subtitle">Show Time: {selectedShowStartTime}</h6>
                         <h4 className="title">Book Your Seats</h4>
                         <div className="thumb">
                             <img src="assets/img/movie/tt.png" alt="movie" />
@@ -151,31 +154,35 @@ function MovieTicket() {
                     <div className="container">
                         <div className="row justify-content-center">
                             <div className="col-lg-12 mb-5 mb-lg-0">
-                                <ul className="seat-plan-wrapper">
-                                    {show.map((item, index) => {
-                                        return (
-                                            <li key={index}>
-                                                <div className="movie-name">
-                                                    <div className="icons">
-                                                        <i className="far fa-heart"></i>
-                                                        <i className="fas fa-heart"></i>
+                                {show.length > 0 ? (
+                                    <ul className="seat-plan-wrapper">
+                                        {show.map((item, index) => {
+                                            return (
+                                                <li key={index}>
+                                                    <div className="movie-name">
+                                                        <div className="icons">
+                                                            <i className="fal fa-calendar"></i>
+                                                            <i className="fas fa-calendar"></i>
+                                                        </div>
+                                                        <Link to={`/movie-seat/${item.showCode}`} className="name">
+                                                            {format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy")}
+                                                        </Link>
                                                     </div>
-                                                    <Link to={`/movie-seat/${item.showCode}`} className="name">
-                                                        {format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy")}
-                                                    </Link>
-                                                </div>
-                                                <div className="location-icon">
-                                                    <i className="far fa-language"></i> {item.language}
-                                                </div>
-                                                <div className="movie-schedule">
-                                                    <div className="item" onClick={() => handleShowTimeClick(item.showCode)}>
-                                                        Buy
+                                                    <div className="location-icon">
+                                                        <i className="far fa-globe-asia"></i> {item.language}
                                                     </div>
-                                                </div>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
+                                                    <div className="movie-schedule">
+                                                        <div className="item" onClick={() => handleShowTimeClick(item.showCode, format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy"))}>
+                                                            Buy
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                ) : (
+                                    <p>There are currently no shows for this movie. Please come back later.</p>
+                                )}
                             </div>
                         </div>
                     </div>

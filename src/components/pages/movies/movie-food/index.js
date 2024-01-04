@@ -178,22 +178,15 @@ function MovieFood() {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-8">
-                                {/* <div className="section-header-3">
-                                    <span className="cate">Food</span>
+                                <div className="section-header-3">
                                     <h2 className="title">order your food</h2>
                                     <p>
                                         Skip the lines and enjoy a seamless process – your favorite treats will be ready for you at the counter. Make the most of your cinema outing with a hassle-free
                                         food and beverage experience! 🎬🥤🍿
                                     </p>
-                                </div> */}
+                                </div>
 
                                 <div className="grid--area">
-                                    <ul className="filter">
-                                        <li className="active">all</li>
-                                        <li>package</li>
-                                        <li>drink</li>
-                                        <li>popcorn</li>
-                                    </ul>
                                     <div className="grid-area reset-styles">
                                         {currentItemPage.map((item, index) => (
                                             <div className="grid-item drink" key={index}>
@@ -299,10 +292,6 @@ function MovieFood() {
                                     <NavLink to="/checkout" className="custom-button">
                                         confirm payment
                                     </NavLink>
-                                </div>
-                                <div className="note">
-                                    <h5 className="title">Note :</h5>
-                                    <p>It is a long established fact that a reader will be distracted by the readable content</p>
                                 </div>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ import api from "../../../../services/api";
 import url from "../../../../services/url";
 import { useMovieContext } from "../../../../context/MovieContext";
 import Swal from "sweetalert2";
+import NotFound from "../../other/not-found";
 function MovieSeat() {
     const { showCode } = useParams();
     const { movieData, updateSelectedSeats } = useMovieContext();
@@ -67,6 +68,7 @@ function MovieSeat() {
                     icon: "warning",
                     title: "Oops...",
                     text: "You can only select up to 5 seats.",
+                    confirmButtonText: "Agreed, I understand.",
                 });
             }
         }
@@ -82,209 +84,210 @@ function MovieSeat() {
                 <title>Seat | R Mall Cinema</title>
             </Helmet>
             {loading ? <Loading /> : ""}
-            <Layout>
-                <section
-                    className="details-banner hero-area seat-plan-banner"
-                    style={{
-                        backgroundImage: `url(${movieDetails.cover_image})`,
-                        backgroundSize: "cover",
-                    }}
-                >
-                    <div className="container">
-                        <div className="details-banner-wrapper">
-                            <div className="details-banner-content style-two">
-                                <h3 className="title">{movieDetails.title}</h3>
-                                <div className="tags">
-                                    {movieDetails.genres.map((genre, genreIndex) => (
-                                        <p key={genreIndex}>{genre.name}</p>
-                                    ))}
+            {Object.keys(seat).length > 0 ? (
+                <Layout>
+                    <section
+                        className="details-banner hero-area seat-plan-banner"
+                        style={{
+                            backgroundImage: `url(${movieDetails.cover_image})`,
+                            backgroundSize: "cover",
+                        }}
+                    >
+                        <div className="container">
+                            <div className="details-banner-wrapper">
+                                <div className="details-banner-content style-two">
+                                    <h3 className="title">{movieDetails.title}</h3>
+                                    <div className="tags">
+                                        {movieDetails.genres.map((genre, genreIndex) => (
+                                            <p key={genreIndex}>{genre.name}</p>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="page-title bg-one">
+                        <div className="container">
+                            <div className="page-title-area">
+                                <div className="item md-order-1">
+                                    <a href="movie-ticket-plan.html" className="custom-button back-button">
+                                        <i className="far fa-reply"></i> Change Plan
+                                    </a>
+                                </div>
+                                <div className="item date-item">
+                                    <span className="date">FRI 14, 2023</span>
+                                </div>
+                                <div className="item">
+                                    <small> TIME LEFT </small>
+                                    <span className="h3 font-weight-bold"> 09:00 </span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="seat-plan-section padding-bottom padding-top">
+                        <div className="container">
+                            <div className="screen-area">
+                                <h4 className="screen">theater</h4>
+                                <div className="screen-thumb">
+                                    <img src="assets/img/movie/theater.png" alt="movie" />
+                                </div>
+
+                                <h5 className="subtitle">single seat plan</h5>
+                                <div className="screen-wrapper">
+                                    <ul className="seat-area">
+                                        {Object.keys(seat)
+                                            .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 1))
+                                            .map((rowNumber) => (
+                                                <div key={rowNumber}>
+                                                    {seat[rowNumber].length > 0 && (
+                                                        <>
+                                                            <ul className="seat--area">
+                                                                <li className="seat-line">
+                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                    <li className="front-seat">
+                                                                        <ul>
+                                                                            {seat[rowNumber]
+                                                                                .filter((item) => item.seatTypeId === 1)
+                                                                                .map((item, index) => (
+                                                                                    <li key={index} className={`single-seat ${item.isBooked ? "checked" : ""}`}>
+                                                                                        <input
+                                                                                            type="checkbox"
+                                                                                            className="single-seat__custom"
+                                                                                            name="single-seat"
+                                                                                            checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                            onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                            disabled={item.isBooked}
+                                                                                        />
+                                                                                        <span className="sit-num">{item.seatNumber}</span>
+                                                                                    </li>
+                                                                                ))}
+                                                                        </ul>
+                                                                    </li>
+                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            ))}
+                                    </ul>
+                                </div>
+
+                                <h5 className="subtitle">VIP seat plan</h5>
+                                <div className="screen-wrapper">
+                                    <ul className="seat-area">
+                                        {Object.keys(seat)
+                                            .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 2))
+                                            .map((rowNumber) => (
+                                                <div key={rowNumber}>
+                                                    {seat[rowNumber].length > 0 && (
+                                                        <>
+                                                            <ul className="seat--area">
+                                                                <li className="seat-line">
+                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                    <li className="front-seat">
+                                                                        <ul>
+                                                                            {seat[rowNumber]
+                                                                                .filter((item) => item.seatTypeId === 2)
+                                                                                .map((item, index) => (
+                                                                                    <li key={index} className="single-seat">
+                                                                                        <input
+                                                                                            type="checkbox"
+                                                                                            className="single-seat__custom"
+                                                                                            name="single-seat"
+                                                                                            checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                            onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                            disabled={item.isBooked}
+                                                                                        />
+                                                                                        <span className="sit-num">{item.seatNumber}</span>
+                                                                                    </li>
+                                                                                ))}
+                                                                        </ul>
+                                                                    </li>
+                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            ))}
+                                    </ul>
+                                </div>
+
+                                <h5 className="subtitle">double seat plan</h5>
+                                <div className="screen-wrapper">
+                                    <ul className="seat-area couple">
+                                        {Object.keys(seat)
+                                            .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 3))
+                                            .map((rowNumber) => (
+                                                <div key={rowNumber}>
+                                                    {seat[rowNumber].length > 0 && (
+                                                        <>
+                                                            <ul className="seat--area">
+                                                                <li className="seat-line">
+                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                    <li className="front-seat">
+                                                                        <ul>
+                                                                            {seat[rowNumber]
+                                                                                .filter((item) => item.seatTypeId === 3)
+                                                                                .map((item, index) => (
+                                                                                    <li key={index} className="single-seat">
+                                                                                        <input
+                                                                                            type="checkbox"
+                                                                                            className="two-seat__custom"
+                                                                                            name="two-seat"
+                                                                                            checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                            onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                            disabled={item.isBooked}
+                                                                                        />
+                                                                                        <span className="sit-num">{item.seatNumber}</span>
+                                                                                    </li>
+                                                                                ))}
+                                                                        </ul>
+                                                                    </li>
+                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            ))}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="proceed-book" style={{ display: selectSeats.length > 0 ? "block" : "none" }}>
+                                <div className="proceed-to-book">
+                                    <div className="book-item">
+                                        <span>Your Selected Seat</span>
+
+                                        <h3 className="title">
+                                            {selectSeats
+                                                .map((seat) => {
+                                                    const rowNumber = seat.substring(0, 1);
+                                                    const seatNumber = seat.substring(1);
+                                                    const rowLetter = String.fromCharCode(65 + parseInt(rowNumber, 10));
+
+                                                    return `${rowLetter}${seatNumber}`;
+                                                })
+                                                .join(", ")}
+                                        </h3>
+                                    </div>
+
+                                    <div className="book-item">
+                                        <NavLink to="/movie-food" className="custom-button">
+                                            checkout now
+                                        </NavLink>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <section className="page-title bg-one">
-                    <div className="container">
-                        <div className="page-title-area">
-                            <div className="item md-order-1">
-                                <a href="movie-ticket-plan.html" className="custom-button back-button">
-                                    <i className="far fa-reply"></i> Change Plan
-                                </a>
-                            </div>
-                            <div className="item date-item">
-                                <span className="date">FRI 14, 2023</span>
-                            </div>
-                            <div className="item">
-                                <small> TIME LEFT </small>
-                                <span className="h3 font-weight-bold"> 09:00 </span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <div className="seat-plan-section padding-bottom padding-top">
-                    <div className="container">
-                        <div className="screen-area">
-                            <h4 className="screen">theater</h4>
-                            <div className="screen-thumb">
-                                <img src="assets/img/movie/theater.png" alt="movie" />
-                            </div>
-
-                            <h5 className="subtitle">single seat plan</h5>
-                            <div className="screen-wrapper">
-                                <ul className="seat-area">
-                                    {Object.keys(seat)
-                                        .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 1))
-                                        .map((rowNumber) => (
-                                            <div key={rowNumber}>
-                                                {seat[rowNumber].length > 0 && (
-                                                    <>
-                                                        <ul className="seat--area">
-                                                            <li className="seat-line">
-                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
-                                                                <li className="front-seat">
-                                                                    <ul>
-                                                                        {seat[rowNumber]
-                                                                            .filter((item) => item.seatTypeId === 1)
-                                                                            .map((item, index) => (
-                                                                                <li key={index} className={`single-seat ${item.isBooked ? "checked" : ""}`}>
-                                                                                    <input
-                                                                                        type="checkbox"
-                                                                                        className="single-seat__custom"
-                                                                                        name="single-seat"
-                                                                                        checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                        onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                        disabled={item.isBooked}
-                                                                                    />
-                                                                                    <span className="sit-num">{item.seatNumber}</span>
-                                                                                </li>
-                                                                            ))}
-                                                                    </ul>
-                                                                </li>
-                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
-                                                            </li>
-                                                        </ul>
-                                                    </>
-                                                )}
-                                            </div>
-                                        ))}
-                                </ul>
-                            </div>
-
-                            <h5 className="subtitle">VIP seat plan</h5>
-                            <div className="screen-wrapper">
-                                <ul className="seat-area">
-                                    {Object.keys(seat)
-                                        .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 2))
-                                        .map((rowNumber) => (
-                                            <div key={rowNumber}>
-                                                {seat[rowNumber].length > 0 && (
-                                                    <>
-                                                        <ul className="seat--area">
-                                                            <li className="seat-line">
-                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
-                                                                <li className="front-seat">
-                                                                    <ul>
-                                                                        {seat[rowNumber]
-                                                                            .filter((item) => item.seatTypeId === 2)
-                                                                            .map((item, index) => (
-                                                                                <li key={index} className="single-seat">
-                                                                                    <input
-                                                                                        type="checkbox"
-                                                                                        className="single-seat__custom"
-                                                                                        name="single-seat"
-                                                                                        checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                        onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                        disabled={item.isBooked}
-                                                                                    />
-                                                                                    <span className="sit-num">{item.seatNumber}</span>
-                                                                                </li>
-                                                                            ))}
-                                                                    </ul>
-                                                                </li>
-                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
-                                                            </li>
-                                                        </ul>
-                                                    </>
-                                                )}
-                                            </div>
-                                        ))}
-                                </ul>
-                            </div>
-
-                            <h5 className="subtitle">double seat plan</h5>
-                            <div className="screen-wrapper">
-                                <ul className="seat-area couple">
-                                    {Object.keys(seat)
-                                        .filter((rowNumber) => seat[rowNumber].some((item) => item.seatTypeId === 3))
-                                        .map((rowNumber) => (
-                                            <div key={rowNumber}>
-                                                {seat[rowNumber].length > 0 && (
-                                                    <>
-                                                        <ul className="seat--area">
-                                                            <li className="seat-line">
-                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
-                                                                <li className="front-seat">
-                                                                    <ul>
-                                                                        {seat[rowNumber]
-                                                                            .filter((item) => item.seatTypeId === 3)
-                                                                            .map((item, index) => (
-                                                                                <li key={index} className="single-seat">
-                                                                                    <input
-                                                                                        type="checkbox"
-                                                                                        className="two-seat__custom"
-                                                                                        name="two-seat"
-                                                                                        checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                        onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                        disabled={item.isBooked}
-                                                                                    />
-                                                                                    <span className="sit-num">{item.seatNumber}</span>
-                                                                                </li>
-                                                                            ))}
-                                                                    </ul>
-                                                                </li>
-                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
-                                                            </li>
-                                                        </ul>
-                                                    </>
-                                                )}
-                                            </div>
-                                        ))}
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="proceed-book">
-                            <div className="proceed-to-book">
-                                <div className="book-item">
-                                    <span>Your Selected Seat</span>
-                                    {/* <h3 className="title">{selectSeats.join(", ")}</h3> */}
-                                    <h3 className="title">
-                                        {selectSeats
-                                            .map((seat) => {
-                                                const rowNumber = seat.substring(0, 1); // Get the first character from seat
-                                                const seatNumber = seat.substring(1); // Get the rest
-                                                const rowLetter = String.fromCharCode(65 + parseInt(rowNumber, 10)); // Convert row numbers to letters
-
-                                                return `${rowLetter}${seatNumber}`;
-                                            })
-                                            .join(", ")}
-                                    </h3>
-                                </div>
-                                {/* <div className="book-item">
-                                    <span>total price</span>
-                                    <h3 className="title">${totalPrice}</h3>
-                                </div> */}
-                                <div className="book-item">
-                                    <NavLink to="/movie-food" className="custom-button">
-                                        checkout now
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Layout>
+                </Layout>
+            ) : (
+                <NotFound />
+            )}
         </>
     );
 }

@@ -4733,6 +4733,8 @@ input[type="submit"] {
     text-align: center;
     padding: 0 3px;
     width: 56px;
+    transition: opacity visibility;
+    transition-duration: 0.1s;
 }
 
 .seat-area.couple .booked-bg {
@@ -4775,7 +4777,19 @@ input[type="submit"] {
 }
 
 .single-seat:hover .sit-num {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.single-seat:hover .sit-num {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.single-seat input:checked ~ .sit-num {
+    opacity: 1;
+    visibility: visible;
+    cursor: initial;
 }
 
 @media (max-width: 767px) {
@@ -9528,4 +9542,14 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     width: initial;
     margin-top: 50px;
     border: none;
+}
+
+.btn-coming-son {
+    color: #676767;
+    border: 1px solid #dbe2fb;
+    background: #ccc;
+    border-radius: 4px;
+    padding: 5px 0;
+    user-select: none;
+    cursor: not-allowed;
 }
