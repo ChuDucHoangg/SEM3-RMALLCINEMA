@@ -101,7 +101,7 @@ function MovieSeat() {
 
     useEffect(() => {
         updateSelectedSeats(selectSeats);
-    }, [selectSeats]);
+    }, [updateSelectedSeats, selectSeats]);
 
     // const totalPrice = selectSeats.length * 10;
 
