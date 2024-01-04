@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import { useMovieContext } from "../../../../context/MovieContext";
 function MovieTicket() {
     const { id } = useParams();
-    const { movieData } = useMovieContext();
+    const { movieData, updateSelectShow } = useMovieContext();
     const { movieDetails } = movieData;
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState([]);
@@ -28,7 +28,6 @@ function MovieTicket() {
         try {
             const showResponse = await api.get(url.SHOW.BY_MOVIE + `/${id}`);
             setShow(showResponse.data);
-            console.log(showResponse.data);
         } catch (error) {}
     }, [id]);
 
@@ -40,6 +39,10 @@ function MovieTicket() {
             setLoading(false);
         }, 2000);
     }, [loadShow]);
+
+    const handleSelectShow = (showId) => {
+        updateSelectShow(showId);
+    };
 
     return (
         <>
@@ -172,7 +175,16 @@ function MovieTicket() {
                                                         <i className="far fa-globe-asia"></i> {item.language}
                                                     </div>
                                                     <div className="movie-schedule">
-                                                        <div className="item" onClick={() => handleShowTimeClick(item.showCode, format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy"))}>
+                                                        {/* <div className="item" onClick={() => handleShowTimeClick(item.showCode, format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy"))}>
+                                                            Buy
+                                                        </div> */}
+                                                        <div
+                                                            className="item"
+                                                            onClick={() => {
+                                                                handleSelectShow(item.id);
+                                                                handleShowTimeClick(item.showCode, format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy"));
+                                                            }}
+                                                        >
                                                             Buy
                                                         </div>
                                                     </div>
