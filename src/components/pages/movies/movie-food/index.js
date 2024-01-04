@@ -43,7 +43,7 @@ function MovieFood() {
         }));
     };
 
-    const handleAddFood = (foodName, quantity, price) => {
+    const handleAddFood = (id, foodName, quantity, price) => {
         const existingProductIndex = orderFood.findIndex((item) => item.foodName === foodName);
 
         if (existingProductIndex !== -1) {
@@ -58,7 +58,7 @@ function MovieFood() {
             setFoods(updatedOrderFoods);
         } else {
             // If the product doesn't exist, add a new entry to the order
-            const updatedOrderFoods = [...orderFood, { foodName, quantity, price }];
+            const updatedOrderFoods = [...orderFood, { id, foodName, quantity, price }];
             setOrderFood(updatedOrderFoods);
             setFoods(updatedOrderFoods);
         }
@@ -106,10 +106,6 @@ function MovieFood() {
     };
 
     // Function to calculate total order value
-    // const calculateTotal = (numSeats, foods) => {
-    //     const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
-    //     return numSeats * seatPrice + foodTotal;
-    // };
 
     const calculateTotal = (numSeats, foods) => {
         if (!foods) {
@@ -223,7 +219,7 @@ function MovieFood() {
                                                                     +
                                                                 </button>
                                                             </div>
-                                                            <button type="button" className="custom-button" onClick={() => handleAddFood(item.name, quantities[item.id] || 1, item.price)}>
+                                                            <button type="button" className="custom-button" onClick={() => handleAddFood(item.id, item.name, quantities[item.id] || 1, item.price)}>
                                                                 <i className="fal fa-shopping-cart"></i> add
                                                             </button>
                                                         </form>
