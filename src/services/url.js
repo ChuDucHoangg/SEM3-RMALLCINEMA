@@ -36,9 +36,10 @@ const url = {
         LIST: "food/get-all",
     },
 
-    ORDER: {
+    BOOKING: {
         CREATE: "order",
-        MY_ORDER: "order/get-by-user",
+        MY_BOOKING: "order/get-by-user",
+        DETAIL: "order/detail",
     },
 
     FAVORITE: {

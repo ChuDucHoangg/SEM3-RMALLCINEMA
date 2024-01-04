@@ -1,4 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useJwt } from "react-jwt";
+import { getAccessToken } from "./utils/auth.js";
+import { MovieProvider } from "./context/MovieContext.js";
 import Home from "./components/pages/home";
 import Movie from "./components/pages/movies";
 import MovieDetails from "./components/pages/movies/movie-details/index.js";
@@ -14,14 +17,12 @@ import Login from "./components/pages/auth/login.js";
 import Register from "./components/pages/auth/register.js";
 import ForgotPassword from "./components/pages/auth/forgot-password.js";
 import Profile from "./components/pages/profile/index.js";
-import MyOrder from "./components/pages/profile/my-order.js";
 import Favorite from "./components/pages/profile/favorite.js";
 import ChangePassword from "./components/pages/auth/change-password.js";
-import { useJwt } from "react-jwt";
-import { getAccessToken } from "./utils/auth.js";
 import NotFound from "./components/pages/other/not-found.js";
-import { MovieProvider } from "./context/MovieContext.js";
 import Result from "./components/pages/movies/movie-checkout/result.js";
+import MyBooking from "./components/pages/profile/my-booking.js";
+import BookingDetail from "./components/views/booking/booking-detail.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -77,7 +78,8 @@ function App() {
 
                     {/* Profile */}
                     <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
-                    <Route path="/my-order" element={<ProtectedRoute element={<MyOrder />} />} />
+                    <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
+                    <Route path="/my-booking/detail/:id" element={<ProtectedRoute element={<BookingDetail />} />} />
                     <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
 
                     {/* Other */}

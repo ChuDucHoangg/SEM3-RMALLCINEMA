@@ -49,11 +49,15 @@ function LayoutProfile({ children }) {
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="/my-order" className={`profile-menu__link ${activeLink === "my-order" ? "active" : ""}`} onClick={() => handleSetActiveLink("my-order")}>
+                                                    <Link
+                                                        to="/my-booking"
+                                                        className={`profile-menu__link ${activeLink === "my-booking" ? "active" : ""}`}
+                                                        onClick={() => handleSetActiveLink("my-booking")}
+                                                    >
                                                         <span className="profile-menu__icon">
                                                             <img src="./assets/icons/ticket.svg" alt="" className="icon" />
                                                         </span>
-                                                        My Order
+                                                        My booking
                                                     </Link>
                                                 </li>
                                             </ul>
