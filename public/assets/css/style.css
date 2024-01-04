@@ -9470,3 +9470,44 @@ div:where(.swal2-container) div:where(.swal2-actions) {
 button.swal2-confirm.swal2-styled.swal2-default-outline {
     white-space: nowrap;
 }
+
+.message-bottom {
+    margin-top: 30px;
+}
+
+.qrcode-wrapper {
+    width: 50%;
+    margin: 0 auto 50px;
+}
+
+.info-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-user > span {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #9aace5;
+}
+
+.booking-summery ul .mtb-custom {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.booking-summery ul .mtb-custom:last-child {
+    margin-bottom: 30px;
+}
+
+.booking-summery ul .mtb-custom .subtitle {
+    text-transform: lowercase;
+}
+
+.btn-download {
+    width: initial;
+    margin-top: 50px;
+    border: none;
+}
