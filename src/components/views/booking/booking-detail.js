@@ -145,25 +145,29 @@ function BookingDetail() {
                                 <ul>
                                     <li className="mtb-custom">
                                         <h6 className="subtitle">
-                                            <span>total</span>
+                                            <span>Total</span>
                                             <span>${bookingDetail.total}</span>
                                         </h6>
                                     </li>
                                     <li className="mtb-custom">
                                         <h6 className="subtitle">
-                                            <span>tiscount Amount</span>
+                                            <span>Tiscount Amount</span>
                                             <span>${bookingDetail.discountAmount}</span>
                                         </h6>
                                     </li>
                                     <li className="mtb-custom">
                                         <h6 className="subtitle">
-                                            <span>final Amount</span>
+                                            <span>Tinal Amount</span>
                                             <span>${bookingDetail.finalTotal}</span>
                                         </h6>
                                     </li>
                                 </ul>
 
-                                <p className="text-center message-bottom">Thank you for choosing our services. We appreciate your trust in our products.</p>
+                                <div className="text-center message-bottom">
+                                    <p>Thank you for choosing our services. We appreciate your trust in our products.</p>
+                                    <p className="text-danger ">NOTE: Please present your bill at the ticket counter.</p>
+                                </div>
+
                                 <div className="qrcode-wrapper">
                                     <img src="./assets/img/qrcode.png" alt="qrcode" className="img-thumbnail" />
                                 </div>
@@ -171,7 +175,7 @@ function BookingDetail() {
                         </div>
 
                         <div className="d-flex align-item-center justify-content-center">
-                            <button className="custom-button btn-download mx-auto" onClick={captureAndDownload}>
+                            <button className="custom-button btn-download" onClick={captureAndDownload}>
                                 <i className="fal fa-receipt"></i> Download Bill
                             </button>
                         </div>
