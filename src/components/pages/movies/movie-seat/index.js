@@ -6,6 +6,7 @@ import { NavLink, useParams } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
 import { useMovieContext } from "../../../../context/MovieContext";
+import Swal from "sweetalert2";
 function MovieSeat() {
     const { showCode } = useParams();
     const { movieData, updateSelectedSeats } = useMovieContext();
@@ -62,7 +63,11 @@ function MovieSeat() {
                 setSelectSeats([...selectSeats, seat]);
             } else {
                 // If no, show a message or handle it accordingly
-                alert("You can only select up to 5 seats.");
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "You can only select up to 5 seats.",
+                });
             }
         }
 
@@ -137,26 +142,27 @@ function MovieSeat() {
                                                     <>
                                                         <ul className="seat--area">
                                                             <li className="seat-line">
-                                                                <span>{rowNumber}</span>
+                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
                                                                 <li className="front-seat">
                                                                     <ul>
                                                                         {seat[rowNumber]
                                                                             .filter((item) => item.seatTypeId === 1)
                                                                             .map((item, index) => (
-                                                                                <li key={index} className="single-seat">
+                                                                                <li key={index} className={`single-seat ${item.isBooked ? "checked" : ""}`}>
                                                                                     <input
                                                                                         type="checkbox"
                                                                                         className="single-seat__custom"
                                                                                         name="single-seat"
-                                                                                        checked={selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
                                                                                         onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        disabled={item.isBooked}
                                                                                     />
                                                                                     <span className="sit-num">{item.seatNumber}</span>
                                                                                 </li>
                                                                             ))}
                                                                     </ul>
                                                                 </li>
-                                                                <span>{rowNumber}</span>
+                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
                                                             </li>
                                                         </ul>
                                                     </>
@@ -177,7 +183,7 @@ function MovieSeat() {
                                                     <>
                                                         <ul className="seat--area">
                                                             <li className="seat-line">
-                                                                <span>{rowNumber}</span>
+                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
                                                                 <li className="front-seat">
                                                                     <ul>
                                                                         {seat[rowNumber]
@@ -188,15 +194,16 @@ function MovieSeat() {
                                                                                         type="checkbox"
                                                                                         className="single-seat__custom"
                                                                                         name="single-seat"
-                                                                                        checked={selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
                                                                                         onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        disabled={item.isBooked}
                                                                                     />
                                                                                     <span className="sit-num">{item.seatNumber}</span>
                                                                                 </li>
                                                                             ))}
                                                                     </ul>
                                                                 </li>
-                                                                <span>{rowNumber}</span>
+                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
                                                             </li>
                                                         </ul>
                                                     </>
@@ -217,7 +224,7 @@ function MovieSeat() {
                                                     <>
                                                         <ul className="seat--area">
                                                             <li className="seat-line">
-                                                                <span>{rowNumber}</span>
+                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
                                                                 <li className="front-seat">
                                                                     <ul>
                                                                         {seat[rowNumber]
@@ -228,15 +235,16 @@ function MovieSeat() {
                                                                                         type="checkbox"
                                                                                         className="two-seat__custom"
                                                                                         name="two-seat"
-                                                                                        checked={selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
                                                                                         onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
+                                                                                        disabled={item.isBooked}
                                                                                     />
                                                                                     <span className="sit-num">{item.seatNumber}</span>
                                                                                 </li>
                                                                             ))}
                                                                     </ul>
                                                                 </li>
-                                                                <span>{rowNumber}</span>
+                                                                <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
                                                             </li>
                                                         </ul>
                                                     </>
@@ -250,7 +258,18 @@ function MovieSeat() {
                             <div className="proceed-to-book">
                                 <div className="book-item">
                                     <span>Your Selected Seat</span>
-                                    <h3 className="title">{selectSeats.join(", ")}</h3>
+                                    {/* <h3 className="title">{selectSeats.join(", ")}</h3> */}
+                                    <h3 className="title">
+                                        {selectSeats
+                                            .map((seat) => {
+                                                const rowNumber = seat.substring(0, 1); // Get the first character from seat
+                                                const seatNumber = seat.substring(1); // Get the rest
+                                                const rowLetter = String.fromCharCode(65 + parseInt(rowNumber, 10)); // Convert row numbers to letters
+
+                                                return `${rowLetter}${seatNumber}`;
+                                            })
+                                            .join(", ")}
+                                    </h3>
                                 </div>
                                 {/* <div className="book-item">
                                     <span>total price</span>
