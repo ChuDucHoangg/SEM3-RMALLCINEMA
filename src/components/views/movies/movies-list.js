@@ -5,6 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { format } from "date-fns";
 import ReactPlayer from "react-player";
 import Pagination from "../../layouts/pagination";
+import { getAccessToken } from "../../../utils/auth";
+import Loading from "../../layouts/loading";
 
 function MoviesList() {
     const navigate = useNavigate();
@@ -15,6 +17,8 @@ function MoviesList() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
+
+    const [loading, setLoading] = useState(false);
 
     // Call api movies
     const loadMovie = useCallback(async () => {
@@ -48,8 +52,39 @@ function MoviesList() {
         setCurrentPage(page);
     }, [loadMovie, currentPage, navigate]);
 
+    // Config token
+    const userToken = getAccessToken();
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+        },
+    };
+
+    // Add to Favorite
+    const handleAddFavorite = async (movieId) => {
+        try {
+            const favoriteRequest = await api.post(url.FAVORITE.ADD, { movieId }, config);
+            setLoading(true);
+
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+
+            if (favoriteRequest.status === 201) {
+                alert("Added favorite");
+            } else if (favoriteRequest.status === 400) {
+                alert("The movie is already in your favorites list");
+            }
+        } catch (error) {
+            console.error("Error adding to favorites", error);
+        }
+    };
+
     return (
         <>
+            {loading ? <Loading /> : ""}
             <section className="movie-section padding-top padding-bottom">
                 <div className="container">
                     <div className="row flex-wrap-reverse justify-content-center">
@@ -162,7 +197,7 @@ function MoviesList() {
                                                         </Link>
                                                     </div>
                                                     <div className="movie-content bg-one">
-                                                        <h5 className="title">
+                                                        <h5 className="title line-clamp">
                                                             <Link to={`/movie-details/${item.id}`} className="line-clamp">
                                                                 {item.title}
                                                             </Link>
@@ -191,12 +226,12 @@ function MoviesList() {
                                                         <div className="book-area">
                                                             <div className="book-ticket">
                                                                 <div className="react-item">
-                                                                    <a href="#!">
+                                                                    <button onClick={() => handleAddFavorite(item.id)}>
                                                                         <div className="thumb">
                                                                             <i className="fal fa-heart"></i>
                                                                         </div>
                                                                         <span>10k</span>
-                                                                    </a>
+                                                                    </button>
                                                                 </div>
                                                                 <div className="react-item mr-auto">
                                                                     <Link to={`/movie-details/${item.id}`}>
@@ -256,8 +291,12 @@ function MoviesList() {
                                                                 </h5>
                                                                 <ul className="movie-rating-percent">
                                                                     <li>
-                                                                        <i className="fal fa-shopping-cart"></i>
-                                                                        <span className="content">88.8k</span>
+                                                                        <button onClick={() => handleAddFavorite(item.id)} className="favorite-btn__custom">
+                                                                            <div className="thumb">
+                                                                                <i className="fal fa-heart"></i>
+                                                                            </div>
+                                                                            <span>10k</span>
+                                                                        </button>
                                                                     </li>
                                                                     <li>
                                                                         <i className="fal fa-star"></i>

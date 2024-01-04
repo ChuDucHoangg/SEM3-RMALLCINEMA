@@ -3263,6 +3263,7 @@ input[type="submit"] {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
+    align-items: center;
     margin-left: -20px;
     margin-bottom: -15px;
 }
@@ -9439,4 +9440,33 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .text-default {
     text-transform: lowercase;
+}
+
+.favorite-not {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.favorite-btn__custom {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.favorite-btn__custom:hover span,
+.favorite-btn__custom .thumb i {
+    color: #31d7a9;
+}
+
+/* Custom swal  */
+div:where(.swal2-container) div:where(.swal2-actions) {
+    flex-wrap: nowrap !important;
+}
+
+button.swal2-confirm.swal2-styled.swal2-default-outline {
+    white-space: nowrap;
 }

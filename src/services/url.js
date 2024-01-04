@@ -40,6 +40,12 @@ const url = {
         CREATE: "order",
         MY_ORDER: "order/get-by-user",
     },
+
+    FAVORITE: {
+        BY_USER: "favorite/get-by-user",
+        ADD: "favorite/add-to-favorite",
+        REMOVE: "favorite/remove-from-favorite",
+    },
 };
 
 export default url;
