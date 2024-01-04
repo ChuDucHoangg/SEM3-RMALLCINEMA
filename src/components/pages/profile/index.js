@@ -197,7 +197,7 @@ function Profile() {
                                         onChange={(e) => setEditedInfo({ ...editedInfo, birthday: e.target.value })}
                                     />
                                 ) : (
-                                    info.birthday && format(new Date(info.birthday), "dd/MM/yyyy")
+                                    (info.birthday && format(new Date(info.birthday), "dd/MM/yyyy")) || "Unavailable"
                                 )}
                             </p>
                         </div>
@@ -208,7 +208,7 @@ function Profile() {
                                 {isEditing ? (
                                     <input type="tel" className="input-change" value={editedInfo.phone || ""} onChange={(e) => setEditedInfo({ ...editedInfo, phone: e.target.value })} />
                                 ) : (
-                                    info.phone
+                                    info.phone || "Unavailable"
                                 )}
                             </p>
                         </div>

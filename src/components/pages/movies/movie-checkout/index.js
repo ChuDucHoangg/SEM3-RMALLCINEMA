@@ -1,14 +1,14 @@
-import Loading from "../../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import Layout from "../../../layouts/layout";
-import { PayPalButton } from "react-paypal-button-v2";
 import { useMovieContext } from "../../../../context/MovieContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getDecodedToken } from "../../../../utils/auth";
+import { PayPalButton } from "react-paypal-button-v2";
+import GooglePayButton from "@google-pay/button-react";
+import Loading from "../../../layouts/loading";
+import Layout from "../../../layouts/layout";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
-import { getDecodedToken } from "../../../../utils/auth";
-import GooglePayButton from "@google-pay/button-react";
 
 function MovieCheckout() {
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ function MovieCheckout() {
     const decodedToken = getDecodedToken();
 
     const [loading, setLoading] = useState(false);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("paypal");
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("PayPal");
     const [finalTotal, setFinalTotal] = useState(0);
 
     useEffect(() => {
@@ -123,12 +123,41 @@ function MovieCheckout() {
         setFinalTotal(newFinalTotal);
     }, [movieData.selectedSeats, movieData.addFoods]);
 
+    // Check if movieDetails & selectedSeats is available
+    if (!movieDetails || !selectedSeats || selectedSeats.length === 0) {
+        return (
+            <>
+                <Helmet>
+                    <title>Checkout | R Mall Cinema</title>
+                </Helmet>
+                <Layout>
+                    <div className="movie-facility padding-bottom padding-top">
+                        <div className="container">
+                            <div className="col-lg-4 mx-auto">
+                                <div className="d-flex align-item-center justify-content-center flex-column pt-50">
+                                    <img src="./assets/img/broken-robot.svg" alt="" />
+                                    <div className="text-center">
+                                        <p>You haven't chosen any movie yet. Please select a movie and then proceed to payment.</p>
+                                        <Link to="/movies" class="custom-button btn-download mt-0">
+                                            <i class="far fa-reply"></i> Back to movies page
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Layout>
+            </>
+        );
+    }
+
     return (
         <>
             <Helmet>
                 <title>Checkout | R Mall Cinema</title>
             </Helmet>
             {loading ? <Loading /> : ""}
+
             <Layout>
                 <section
                     className="details-banner hero-area seat-plan-banner"
@@ -204,36 +233,36 @@ function MovieCheckout() {
                                 <div className="checkout-widget checkout-card mb-0">
                                     <h5 className="title">Payment Option</h5>
                                     <ul className="payment-option">
-                                        <li className={selectedPaymentMethod === "paypal" ? "active" : ""}>
-                                            <p onClick={() => handlePaymentMethodClick("paypal")}>
+                                        <li className={selectedPaymentMethod === "PayPal" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("PayPal")}>
                                                 <img src="assets/img/payment/paypal.png" alt="" />
                                                 <span> Paypal</span>
                                             </p>
                                         </li>
 
-                                        <li className={selectedPaymentMethod === "applePay" ? "active" : ""}>
-                                            <p onClick={() => handlePaymentMethodClick("applePay")}>
+                                        <li className={selectedPaymentMethod === "Apple Pay" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("Apple Pay")}>
                                                 <img src="assets/img/payment/apple-pay.png" alt="" className="icon" />
                                                 <span>Apple Pay</span>
                                             </p>
                                         </li>
 
-                                        <li className={selectedPaymentMethod === "googlePay" ? "active" : ""}>
-                                            <p onClick={() => handlePaymentMethodClick("googlePay")}>
+                                        <li className={selectedPaymentMethod === "Google Pay" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("Google Pay")}>
                                                 <img src="assets/img/payment/google-pay.png" alt="" />
                                                 <span>Google Pay</span>
                                             </p>
                                         </li>
 
-                                        <li className={selectedPaymentMethod === "zaloPay" ? "active" : ""}>
-                                            <p onClick={() => handlePaymentMethodClick("zaloPay")}>
+                                        <li className={selectedPaymentMethod === "Zalo Pay" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("Zalo Pay")}>
                                                 <img src="assets/img/payment/zalopay.png" alt="" />
                                                 <span>Zalo Pay</span>
                                             </p>
                                         </li>
 
-                                        <li className={selectedPaymentMethod === "momo" ? "active" : ""}>
-                                            <p onClick={() => handlePaymentMethodClick("momo")}>
+                                        <li className={selectedPaymentMethod === "MoMo" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("MoMo")}>
                                                 <img src="assets/img/payment/momo.png" alt="" />
                                                 <span>MoMo</span>
                                             </p>
@@ -290,7 +319,7 @@ function MovieCheckout() {
                                         <span> Pay Amount</span>
                                         <span>${finalTotal}</span>
                                     </h6>
-                                    {selectedPaymentMethod === "paypal" && (
+                                    {selectedPaymentMethod === "PayPal" && (
                                         <PayPalButton
                                             amount={finalTotal}
                                             onSuccess={(details, data) => handlePaymentSuccess(details, data)}
@@ -299,7 +328,9 @@ function MovieCheckout() {
                                         />
                                     )}
 
-                                    {selectedPaymentMethod === "googlePay" && (
+                                    {selectedPaymentMethod === "Apple Pay" && <p className="btn-coming-son mt-3">Coming soon...</p>}
+
+                                    {selectedPaymentMethod === "Google Pay" && (
                                         <GooglePayButton
                                             environment="TEST"
                                             paymentRequest={{
@@ -316,14 +347,13 @@ function MovieCheckout() {
                                                             type: "PAYMENT_GATEWAY",
                                                             parameters: {
                                                                 gateway: "example",
-                                                                gatewayMerchantId: "exampleGatewayMerchantId",
                                                             },
                                                         },
                                                     },
                                                 ],
                                                 merchantInfo: {
                                                     merchantId: "BCR2DN4TZKBZLYYZ",
-                                                    merchantName: `${movieDetails.title}`,
+                                                    merchantName: `for movie tickets ${movieDetails.title}`,
                                                 },
                                                 transactionInfo: {
                                                     totalPriceStatus: "FINAL",
@@ -353,6 +383,10 @@ function MovieCheckout() {
                                             buttonType="Pay"
                                         />
                                     )}
+
+                                    {selectedPaymentMethod === "Zalo Pay" && <p className="btn-coming-son mt-3">Coming soon...</p>}
+
+                                    {selectedPaymentMethod === "MoMo" && <p className="btn-coming-son mt-3">Coming soon...</p>}
                                 </div>
                             </div>
                         </div>
