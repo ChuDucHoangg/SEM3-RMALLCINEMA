@@ -175,9 +175,6 @@ function MovieTicket() {
                                                         <i className="far fa-globe-asia"></i> {item.language}
                                                     </div>
                                                     <div className="movie-schedule">
-                                                        {/* <div className="item" onClick={() => handleShowTimeClick(item.showCode, format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy"))}>
-                                                            Buy
-                                                        </div> */}
                                                         <div
                                                             className="item"
                                                             onClick={() => {

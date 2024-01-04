@@ -42,17 +42,15 @@ function MovieCheckout() {
         setSelectedPaymentMethod(method);
     };
 
-    // Paypal
-    const handlePaymentSuccess = async (details, data) => {
-        // console.log("Payment success:", details);
-        // console.log("Payment data:", data);
+    console.log(movieData.movieDetails.id);
 
+    // Create order
+    const createOrderData = async () => {
         try {
             if (decodedToken) {
-                // Create Order form context
                 const orderData = {
                     orderCode: Math.random().toString(36).substring(2, 10).toUpperCase(),
-                    showId: movieData.movieDetails.id,
+                    showId: movieData.selectShow,
                     userId: userInfo.userId,
                     total: calculateTotal(movieData.selectedSeats.length, movieData.addFoods),
                     discountAmount: 0,
@@ -60,16 +58,21 @@ function MovieCheckout() {
                     finalTotal: calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0),
                     paymentMethod: selectedPaymentMethod,
                     tickets: movieData.selectedSeats.map((seat) => ({ orderId: 0, seatId: seat })),
-                    foods: movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity })),
+                    foods: movieData.addFoods && movieData.addFoods.length > 0 ? movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity })) : [],
                 };
 
-                await api.post(url.ORDER.CREATE, orderData);
+                await api.post(url.BOOKING.CREATE, orderData);
 
-                movieData.setMovieDetails();
+                localStorage.removeItem("movie_data");
             }
         } catch (error) {
-            console.error("Error:", error);
+            console.log("Error:", error);
         }
+    };
+
+    // Paypal
+    const handlePaymentSuccess = async (details, data) => {
+        await createOrderData();
 
         setMessageContext("Payment Success!");
         navigate("/checkout/result");
@@ -98,11 +101,6 @@ function MovieCheckout() {
     };
 
     // Function to calculate total order value
-    // const calculateTotal = (numSeats, foods) => {
-    //     const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
-    //     return numSeats * seatPrice + foodTotal;
-    // };
-
     const calculateTotal = (numSeats, foods) => {
         if (!foods) {
             return numSeats * seatPrice;
@@ -138,8 +136,8 @@ function MovieCheckout() {
                                     <img src="./assets/img/broken-robot.svg" alt="" />
                                     <div className="text-center">
                                         <p>You haven't chosen any movie yet. Please select a movie and then proceed to payment.</p>
-                                        <Link to="/movies" class="custom-button btn-download mt-0">
-                                            <i class="far fa-reply"></i> Back to movies page
+                                        <Link to="/movies" className="custom-button btn-download mt-0">
+                                            <i className="far fa-reply"></i> Back to movies page
                                         </Link>
                                     </div>
                                 </div>
@@ -370,9 +368,6 @@ function MovieCheckout() {
                                             }}
                                             onPaymentAuthorized={(paymentData) => {
                                                 console.log("Payment Authorised Success", paymentData);
-                                                handlePaymentSuccess();
-                                                setMessageContext("Payment Success.");
-                                                navigate("/checkout/result");
                                                 return { transactionState: "SUCCESS" };
                                             }}
                                             onPaymentDataChanged={(paymentData) => {
