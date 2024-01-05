@@ -6,6 +6,7 @@ import { getAccessToken } from "../../../utils/auth";
 import { Helmet } from "react-helmet";
 import Loading from "../../layouts/loading";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
 
 function Promotion() {
     const [loading, setLoading] = useState(false);
@@ -36,6 +37,27 @@ function Promotion() {
             setLoading(false);
         }, 2000);
     }, [loadPromotion]);
+
+    // Save promotion code to account
+    const handleSavePromotion = async (promotionId) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getAccessToken()}`,
+            },
+        };
+
+        try {
+            const savePromotionResponse = await api.post(url.PROMOTION.SAVE_PROMOTION, { promotionId }, config);
+            if (savePromotionResponse.status === 201) {
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Added movie to favorites list successfully.",
+                    icon: "success",
+                });
+            }
+        } catch (error) {}
+    };
 
     const handleConditionClick = (item) => {
         setSelectedDiscount(item);
@@ -99,7 +121,11 @@ function Promotion() {
                                                                     </span>
                                                                 </div>
                                                                 <div className="mt-3 discount-custom__footer">
-                                                                    <span className="d-flex align-items-center discount-custom__desc" style={{ cursor: "pointer" }}>
+                                                                    <span
+                                                                        className="d-flex align-items-center discount-custom__desc"
+                                                                        onClick={() => handleSavePromotion(item.id)}
+                                                                        style={{ cursor: "pointer" }}
+                                                                    >
                                                                         <i className="fal fa-save"></i>
                                                                         Save
                                                                     </span>
@@ -112,7 +138,7 @@ function Promotion() {
                                                                         Condition
                                                                     </span>
                                                                 </div>
-                                                                <div className="modal fade" id="condition" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                                <div className="modal fade" id="condition" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                                     <div className="modal-dialog" role="document">
                                                                         <div className="modal-content">
                                                                             <div className="modal-body">
@@ -158,7 +184,7 @@ function Promotion() {
                                                                                 )}
                                                                             </div>
                                                                             <div className="modal-footer">
-                                                                                <button type="button" className="btn btn-secondary" data-dismiss="modal">
+                                                                                <button type="button" className="custom-button" data-dismiss="modal">
                                                                                     Agree
                                                                                 </button>
                                                                             </div>
