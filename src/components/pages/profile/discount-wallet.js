@@ -56,44 +56,54 @@ function DiscountWallet() {
             <LayoutProfile>
                 <div className="col-12">
                     <h2 className="profile-info__heading">Your discount code</h2>
-                    <div className="row">
-                        {promotion.map((item, index) => {
-                            return (
-                                <div className="col-lg-6 col-md-12 col-12" key={index}>
-                                    <div className="mt-2 mb-2">
-                                        <div className="blog-author d-flex align-items-center discount-custom mt-3">
-                                            <div className="author-thumb my-auto">
-                                                <img src="./assets/icons/discount-svgrepo.svg" alt="blog" />
-                                            </div>
-                                            <div className="author-content">
-                                                <h5 className="title mt-2">
-                                                    <p>{item.promotionName}</p>
-                                                </h5>
-                                                <span
-                                                    className="d-flex align-items-center discount-custom__desc"
-                                                    data-toggle="tooltip"
-                                                    data-placement="right"
-                                                    title="Copy to clipboard"
-                                                    onClick={() => handleCopyClick(item.promotionCode)}
-                                                    style={{ cursor: "pointer" }}
-                                                >
-                                                    <i className="fal fa-copy"></i> {item.promotionCode}
-                                                </span>
-                                            </div>
-                                            <div className="d-flex align-items-center mt-2">
-                                                <span className="d-flex align-items-center  discount-custom__desc">
-                                                    <i className="fal fa-badge-percent"></i> {item.promotionCode}
-                                                </span>
-                                                <span className="d-flex align-items-center ml-3 discount-custom__desc">
-                                                    <i className="fal fa-clock"></i> {item.promotionCode}
-                                                </span>
+                    {promotion.length > 0 ? (
+                        <div className="row">
+                            {promotion.map((item, index) => {
+                                return (
+                                    <div className="col-lg-6 col-md-12 col-12" key={index}>
+                                        <div className="mt-2 mb-2">
+                                            <div className="blog-author d-flex align-items-center discount-custom mt-3">
+                                                <div className="author-thumb my-auto">
+                                                    <img src="./assets/icons/discount-svgrepo.svg" alt="blog" />
+                                                </div>
+                                                <div className="author-content">
+                                                    <h5 className="title mt-2">
+                                                        <p>{item.promotionName}</p>
+                                                    </h5>
+                                                    <span
+                                                        className="d-flex align-items-center discount-custom__desc"
+                                                        data-toggle="tooltip"
+                                                        data-placement="right"
+                                                        title="Copy to clipboard"
+                                                        onClick={() => handleCopyClick(item.promotionCode)}
+                                                        style={{ cursor: "pointer" }}
+                                                    >
+                                                        <i className="fal fa-copy"></i> {item.promotionCode}
+                                                    </span>
+                                                </div>
+                                                <div className="mt-3 discount-custom__footer">
+                                                    <span className="d-flex align-items-center  discount-custom__desc">
+                                                        <i className="fal fa-badge-percent"></i> {item.promotionCode}
+                                                    </span>
+                                                    <span className="d-flex align-items-center discount-custom__desc">
+                                                        <i className="fal fa-clock"></i> {item.promotionCode}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="favorite-not">
+                            <img src="./assets/img/not-found.png" alt="Not Found" style={{ width: "60%" }} />
+                            <p>You currently don't have any discount code.</p>
+                            <a className="custom-button back-button" href="/movies">
+                                <i className="far fa-reply"></i> Book ticket now
+                            </a>
+                        </div>
+                    )}
                 </div>
             </LayoutProfile>
         </>

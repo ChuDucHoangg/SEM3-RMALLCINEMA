@@ -9587,25 +9587,51 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
 }
 
 .discount-custom__desc {
-    color: #001137;
+    color: #777777;
     gap: 8px;
+    font-weight: 400;
     margin-top: auto;
+}
+
+.discount-custom__desc-2 {
+    color: #001137;
+    font-weight: 500;
 }
 
 .discount-custom::before,
 .discount-custom::after {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     background: #032055;
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
 }
 
+.discount-custom-2::before,
+.discount-custom-2::after {
+    background: #001232;
+}
 .discount-custom::after {
     left: -23px;
 }
 
 .discount-custom::before {
     right: -23px;
+}
+
+.discount-custom__footer {
+    border-top: 1px dashed #ccc;
+    width: 100%;
+    margin-right: 20px;
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.discount-custom__link {
+    color: #007bff;
+    cursor: pointer;
+    font-weight: 500;
 }

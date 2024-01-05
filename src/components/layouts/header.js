@@ -19,7 +19,7 @@ function Header() {
                             <li>
                                 <NavLink to="/movies">movies</NavLink>
                             </li>
-                            <li>
+                            {/* <li>
                                 <a href="#!">pages</a>
                                 <ul className="submenu">
                                     <li>
@@ -33,6 +33,10 @@ function Header() {
                                         </NavLink>
                                     </li>
                                 </ul>
+                            </li> */}
+
+                            <li>
+                                <NavLink to="/promotion">Promotion</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/blog-list">blog</NavLink>

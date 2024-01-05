@@ -7,6 +7,7 @@ import ReactPlayer from "react-player";
 import Pagination from "../../layouts/pagination";
 import { getAccessToken } from "../../../utils/auth";
 import Loading from "../../layouts/loading";
+import Swal from "sweetalert2";
 
 function MoviesList() {
     const navigate = useNavigate();
@@ -73,12 +74,24 @@ function MoviesList() {
             }, 2000);
 
             if (favoriteRequest.status === 201) {
-                alert("Added favorite");
-            } else if (favoriteRequest.status === 400) {
-                alert("The movie is already in your favorites list");
+                setTimeout(() => {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Added movie to favorites list successfully.",
+                        icon: "success",
+                    });
+                }, 2000);
             }
         } catch (error) {
-            console.error("Error adding to favorites", error);
+            if (error.response && error.response.status === 400) {
+                Swal.fire({
+                    title: "Oops...",
+                    text: "The movie is already in your favorites list.",
+                    icon: "error",
+                });
+            } else {
+                console.error("Error adding to favorites", error);
+            }
         }
     };
 
