@@ -24,6 +24,7 @@ import Result from "./components/pages/movies/movie-checkout/result.js";
 import MyBooking from "./components/pages/profile/my-booking.js";
 import BookingDetail from "./components/views/booking/booking-detail.js";
 import DiscountWallet from "./components/pages/profile/discount-wallet.js";
+import Promotion from "./components/pages/promotion/index.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -70,6 +71,9 @@ function App() {
                     {/* About and Contact Us */}
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/contact-us" element={<Contact />} />
+
+                    {/* Promotion */}
+                    <Route path="/promotion" element={<Promotion />} />
 
                     {/* Auth */}
                     <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
