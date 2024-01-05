@@ -52,6 +52,7 @@ const url = {
         LIST_FOR_USER: "promotion/get-all-for-user",
         BY_USER: "promotion/get-promotion-by-user",
         SAVE_PROMOTION: "promotion/create-promotion-user",
+        DISCOUNT: "promotion/discounts",
     },
 };
 

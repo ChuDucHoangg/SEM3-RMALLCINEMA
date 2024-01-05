@@ -8,7 +8,7 @@ import url from "../../../services/url";
 import { getAccessToken } from "../../../utils/auth";
 import { format } from "date-fns";
 
-function BookingDetail() {
+function ThankYou() {
     const { id } = useParams();
     const [bookingDetail, setBookingDetail] = useState([]);
 
@@ -36,6 +36,7 @@ function BookingDetail() {
     const foods = bookingDetail.foods || [];
 
     // Capture and download bill
+
     const captureAndDownload = () => {
         const billContent = document.getElementById("billContent");
 
@@ -51,7 +52,7 @@ function BookingDetail() {
     return (
         <>
             <Helmet>
-                <title>Booking Detail | R Mall Cinema</title>
+                <title>Thank You | R Mall Cinema</title>
             </Helmet>
             <Layout>
                 <section
@@ -63,12 +64,12 @@ function BookingDetail() {
                 >
                     <div className="container">
                         <div className="speaker-banner-content">
-                            <h2 className="title">{bookingDetail.movieName}</h2>
+                            <h2 className="title">Thank You</h2>
                             <ul className="breadcrumb">
                                 <li>
-                                    <Link to="/my-booking">Booking</Link>
+                                    <Link to="/checkout">Checkout</Link>
                                 </li>
-                                <li>Booking Detail</li>
+                                <li>Thank You</li>
                             </ul>
                         </div>
                     </div>
@@ -186,4 +187,4 @@ function BookingDetail() {
     );
 }
 
-export default BookingDetail;
+export default ThankYou;

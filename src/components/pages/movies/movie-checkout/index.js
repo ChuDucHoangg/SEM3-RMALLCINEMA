@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useMovieContext } from "../../../../context/MovieContext";
 import { Link, useNavigate } from "react-router-dom";
-import { getDecodedToken } from "../../../../utils/auth";
+import { getAccessToken, getDecodedToken } from "../../../../utils/auth";
 import { PayPalButton } from "react-paypal-button-v2";
 import GooglePayButton from "@google-pay/button-react";
 import Loading from "../../../layouts/loading";
@@ -42,10 +42,14 @@ function MovieCheckout() {
         setSelectedPaymentMethod(method);
     };
 
-    console.log(movieData.movieDetails.id);
-
     // Create order
     const createOrderData = async () => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getAccessToken()}`,
+            },
+        };
         try {
             if (decodedToken) {
                 const orderData = {
@@ -61,8 +65,10 @@ function MovieCheckout() {
                     foods: movieData.addFoods && movieData.addFoods.length > 0 ? movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity })) : [],
                 };
 
-                await api.post(url.BOOKING.CREATE, orderData);
+                const orderResponse = await api.post(url.BOOKING.CREATE, orderData, config);
 
+                // Use orderResponse.data.id instead of order.id
+                navigate(`/checkout/thank-you/${orderResponse.data.id}`);
                 localStorage.removeItem("movie_data");
             }
         } catch (error) {
@@ -73,9 +79,7 @@ function MovieCheckout() {
     // Paypal
     const handlePaymentSuccess = async (details, data) => {
         await createOrderData();
-
         setMessageContext("Payment Success!");
-        navigate("/checkout/result");
     };
 
     const handlePaymentCancel = (data) => {
