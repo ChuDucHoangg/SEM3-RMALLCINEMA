@@ -28,16 +28,14 @@ function Profile() {
     }, []);
 
     const loadProfile = async () => {
-        const userToken = getAccessToken();
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getAccessToken()}`,
+            },
+        };
 
         try {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${userToken}`,
-                },
-            };
-
             const profileResponse = await api.get(url.AUTH.PROFILE, config);
             setInfo(profileResponse.data);
         } catch (error) {}

@@ -47,6 +47,10 @@ const url = {
         ADD: "favorite/add-to-favorite",
         REMOVE: "favorite/remove-from-favorite",
     },
+
+    PROMOTION: {
+        BY_USER: "promotion/get-promotion-by-user",
+    },
 };
 
 export default url;
