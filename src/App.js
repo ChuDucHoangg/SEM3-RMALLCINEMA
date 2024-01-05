@@ -23,6 +23,7 @@ import NotFound from "./components/pages/other/not-found.js";
 import Result from "./components/pages/movies/movie-checkout/result.js";
 import MyBooking from "./components/pages/profile/my-booking.js";
 import BookingDetail from "./components/views/booking/booking-detail.js";
+import DiscountWallet from "./components/pages/profile/discount-wallet.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -81,6 +82,7 @@ function App() {
                     <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
                     <Route path="/my-booking/detail/:id" element={<ProtectedRoute element={<BookingDetail />} />} />
                     <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
+                    <Route path="/discount-wallet" element={<ProtectedRoute element={<DiscountWallet />} />} />
 
                     {/* Other */}
                     <Route path="*" element={<NotFound />} />

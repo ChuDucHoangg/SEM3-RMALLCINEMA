@@ -15,16 +15,14 @@ function MyBooking() {
     const [myBooking, setMyBooking] = useState([]);
 
     const loadOrder = useCallback(async () => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getAccessToken()}`,
+            },
+        };
+
         try {
-            const userToken = getAccessToken();
-
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${userToken}`,
-                },
-            };
-
             const orderResponse = await api.get(url.BOOKING.MY_BOOKING, config);
             setMyBooking(orderResponse.data);
         } catch (error) {}
@@ -51,8 +49,8 @@ function MyBooking() {
                 <title>My Order | R Mall</title>
             </Helmet>
             <LayoutProfile>
-                <div class="col-12">
-                    <h2 class="profile-info__heading">My Order</h2>
+                <div className="col-12">
+                    <h2 className="profile-info__heading">My Order</h2>
                     {currentItemPage.length > 0 ? (
                         currentItemPage.map((item, index) => (
                             <div className="movie-list mb-0" key={index}>
@@ -67,15 +65,15 @@ function MyBooking() {
                                     </h5>
                                     <ul className="movie-rating-percent">
                                         <li>
-                                            <i class="fas fa-barcode-scan"></i>
+                                            <i className="fas fa-barcode-scan"></i>
                                             <span className="content">{item.orderCode}</span>
                                         </li>
                                         <li>
-                                            <i class="fas fa-money-check"></i>
+                                            <i className="fas fa-money-check"></i>
                                             <span className="content">{item.paymentMethod}</span>
                                         </li>
                                         <li>
-                                            <i class="far fa-coins"></i>
+                                            <i className="far fa-coins"></i>
                                             <span className="content">${item.finalTotal}</span>
                                         </li>
                                     </ul>
@@ -98,8 +96,8 @@ function MyBooking() {
                         <div className="favorite-not">
                             <img src="./assets/img/not-found.png" alt="Not Found" style={{ width: "60%" }} />
                             <p>You don't have any booking history yet.</p>
-                            <a class="custom-button back-button" href="/movies">
-                                <i class="far fa-reply"></i> Book ticket now
+                            <a className="custom-button back-button" href="/movies">
+                                <i className="far fa-reply"></i> Book ticket now
                             </a>
                         </div>
                     )}

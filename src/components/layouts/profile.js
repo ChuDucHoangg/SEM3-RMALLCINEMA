@@ -74,6 +74,18 @@ function LayoutProfile({ children }) {
                                                         Favorite
                                                     </Link>
                                                 </li>
+                                                <li>
+                                                    <Link
+                                                        to="/discount-wallet"
+                                                        className={`profile-menu__link ${activeLink === "discount-wallet" ? "active" : ""}`}
+                                                        onClick={() => handleSetActiveLink("discount-wallet")}
+                                                    >
+                                                        <span className="profile-menu__icon">
+                                                            <img src="./assets/icons/discount.svg" alt="" className="icon" />
+                                                        </span>
+                                                        Discount code
+                                                    </Link>
+                                                </li>
                                             </ul>
                                         </div>
 

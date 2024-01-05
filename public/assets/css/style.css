@@ -659,6 +659,8 @@ input[type="submit"] {
 .movie-details .summery-review .tab-menu li::before,
 .screen::after,
 .screen::before,
+.discount-custom::before,
+.discount-custom::after,
 .screen-area .subtitle::after,
 .screen-area .subtitle::before,
 .checkout-widget .payment-option li.active a::after,
@@ -9552,4 +9554,58 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     padding: 5px 0;
     user-select: none;
     cursor: not-allowed;
+}
+
+/* Discount */
+.discount-custom {
+    position: relative;
+    background: #fff;
+    border: none;
+    padding: 15px 15px 15px 30px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.discount-custom .author-thumb {
+    border-color: #001137;
+    width: 70px;
+    height: 70px;
+}
+
+.discount-custom .author-content {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.discount-custom .author-content .title {
+    margin-bottom: 10px;
+}
+
+.discount-custom .author-content .title p {
+    color: #001137;
+    font-size: 16px;
+}
+
+.discount-custom__desc {
+    color: #001137;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.discount-custom::before,
+.discount-custom::after {
+    width: 48px;
+    height: 48px;
+    background: #032055;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.discount-custom::after {
+    left: -23px;
+}
+
+.discount-custom::before {
+    right: -23px;
 }
