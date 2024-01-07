@@ -52,11 +52,19 @@ function Promotion() {
             if (savePromotionResponse.status === 201) {
                 Swal.fire({
                     title: "Good job!",
-                    text: "Added movie to favorites list successfully.",
+                    text: "Saved promotion to account successfully!",
                     icon: "success",
                 });
             }
-        } catch (error) {}
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                Swal.fire({
+                    title: "Oops...",
+                    text: "You already have this discount code!",
+                    icon: "warning",
+                });
+            }
+        }
     };
 
     const handleConditionClick = (item) => {
