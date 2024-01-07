@@ -53,15 +53,15 @@ function MovieSeat() {
     }, [loadSeat]);
 
     // const handleSeatSelect = (seat) => {
-    //     // Check if the seat is already selected
-    //     if (selectSeats.includes(seat)) {
-    //         // If yes, remove it from the selectSeats list
-    //         setSelectSeats(selectSeats.filter((selectedSeat) => selectedSeat !== seat));
-    //     } else {
-    //         // If not, check if the total selected seats is less than 5
-    //         if (selectSeats.length < 5) {
-    //             // If yes, add it to the selectSeats list
-    //             setSelectSeats([...selectSeats, seat]);
+    //     const seatNumber = Number(seat);
+
+    //     if (!isNaN(seatNumber) && Number.isInteger(seatNumber)) {
+    //         if (selectSeats.includes(seatNumber)) {
+    //             // If the seat is already selected, remove it from the selectSeats list
+    //             setSelectSeats(selectSeats.filter((selectedSeat) => selectedSeat !== seatNumber));
+    //         } else if (selectSeats.length < 5) {
+    //             // If the total selected seats are less than 5, add it to the selectSeats list
+    //             setSelectSeats([...selectSeats, seatNumber]);
     //         } else {
     //             // If no, show a message or handle it accordingly
     //             Swal.fire({
@@ -71,39 +71,53 @@ function MovieSeat() {
     //                 confirmButtonText: "Agreed, I understand.",
     //             });
     //         }
+    //     } else {
+    //         console.error("Invalid seat number");
     //     }
-    //     updateSelectedSeats(selectSeats);
     // };
 
-    const handleSeatSelect = (seat) => {
-        const seatNumber = Number(seat);
+    const handleSeatSelect = (rowNumber, seatNumber) => {
+        if (seat && seat[rowNumber] && Array.isArray(seat[rowNumber])) {
+            const selectedSeat = seat[rowNumber].find((item) => item.seatNumber === seatNumber);
 
-        if (!isNaN(seatNumber) && Number.isInteger(seatNumber)) {
-            if (selectSeats.includes(seatNumber)) {
-                // If the seat is already selected, remove it from the selectSeats list
-                setSelectSeats(selectSeats.filter((selectedSeat) => selectedSeat !== seatNumber));
-            } else if (selectSeats.length < 5) {
-                // If the total selected seats are less than 5, add it to the selectSeats list
-                setSelectSeats([...selectSeats, seatNumber]);
+            if (selectedSeat) {
+                const seatId = selectedSeat.id;
+                const seatPrice = selectedSeat.price;
+
+                if (selectSeats.some((s) => s.id === seatId)) {
+                    // If the seat is already selected, remove it from the selectSeats list
+                    setSelectSeats(selectSeats.filter((selectedSeat) => selectedSeat.id !== seatId));
+                } else if (selectSeats.length < 5) {
+                    // If the total number of selected seats is less than 5, add it to the selectSeats list
+                    setSelectSeats([...selectSeats, { id: seatId, price: seatPrice }]);
+                } else {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Oops...",
+                        text: "You can only select a maximum of 5 seats.",
+                        confirmButtonText: "Đồng ý, tôi hiểu.",
+                    });
+                }
             } else {
-                // If no, show a message or handle it accordingly
-                Swal.fire({
-                    icon: "warning",
-                    title: "Oops...",
-                    text: "You can only select up to 5 seats.",
-                    confirmButtonText: "Agreed, I understand.",
-                });
+                console.error("Invalid seat number.");
             }
         } else {
-            console.error("Invalid seat number");
         }
+    };
+
+    // Calculate the total cost of the selected seat
+    const calculateTotalPriceSeat = () => {
+        const totalPrice = selectSeats.reduce((acc, selectedSeat) => {
+            const seatPrice = selectedSeat.price || 0;
+            return acc + seatPrice;
+        }, 0);
+
+        return totalPrice;
     };
 
     useEffect(() => {
         updateSelectedSeats(selectSeats);
     }, [updateSelectedSeats, selectSeats]);
-
-    // const totalPrice = selectSeats.length * 10;
 
     return (
         <>
@@ -183,8 +197,8 @@ function MovieSeat() {
                                                                                             type="checkbox"
                                                                                             className="single-seat__custom"
                                                                                             name="single-seat"
-                                                                                            checked={item.isBooked || selectSeats.includes(item.id)}
-                                                                                            onChange={() => handleSeatSelect(item.id)}
+                                                                                            checked={item.isBooked || selectSeats.some((selectedSeat) => selectedSeat.id === item.id)}
+                                                                                            onChange={() => handleSeatSelect(rowNumber, item.seatNumber)}
                                                                                             disabled={item.isBooked}
                                                                                         />
                                                                                         <span className="sit-num">{item.seatNumber}</span>
@@ -224,10 +238,10 @@ function MovieSeat() {
                                                                                             type="checkbox"
                                                                                             className="single-seat__custom"
                                                                                             name="single-seat"
-                                                                                            // checked={item.isBooked || selectSeats.includes(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                            // onChange={() => handleSeatSelect(`${item.rowNumber}${item.seatNumber}`)}
-                                                                                            checked={item.isBooked || selectSeats.includes(item.id)}
-                                                                                            onChange={() => handleSeatSelect(item.id)}
+                                                                                            // checked={item.isBooked || selectSeats.includes(item.id)}
+                                                                                            // onChange={() => handleSeatSelect(item.id)}
+                                                                                            checked={item.isBooked || selectSeats.some((selectedSeat) => selectedSeat.id === item.id)}
+                                                                                            onChange={() => handleSeatSelect(rowNumber, item.seatNumber)}
                                                                                             disabled={item.isBooked}
                                                                                         />
                                                                                         <span className="sit-num">{item.seatNumber}</span>
@@ -267,8 +281,8 @@ function MovieSeat() {
                                                                                             type="checkbox"
                                                                                             className="two-seat__custom"
                                                                                             name="two-seat"
-                                                                                            checked={item.isBooked || selectSeats.includes(item.id)}
-                                                                                            onChange={() => handleSeatSelect(item.id)}
+                                                                                            checked={item.isBooked || selectSeats.some((selectedSeat) => selectedSeat.id === item.id)}
+                                                                                            onChange={() => handleSeatSelect(rowNumber, item.seatNumber)}
                                                                                             disabled={item.isBooked}
                                                                                         />
                                                                                         <span className="sit-num">{item.seatNumber}</span>
@@ -290,8 +304,12 @@ function MovieSeat() {
                                 <div className="proceed-to-book">
                                     <div className="book-item">
                                         <span>Your Selected Seat</span>
+                                        <h3 className="title">{selectSeats.map((selectedSeat) => selectedSeat.id).join(", ")}</h3>
+                                    </div>
 
-                                        <h3 className="title">{selectSeats.join(", ")}</h3>
+                                    <div className="book-item">
+                                        <span>Total Price</span>
+                                        <h3 className="title">${calculateTotalPriceSeat()}</h3>
                                     </div>
 
                                     <div className="book-item">

@@ -9640,3 +9640,9 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     height: 243px;
     object-fit: cover;
 }
+
+.img-movie {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}

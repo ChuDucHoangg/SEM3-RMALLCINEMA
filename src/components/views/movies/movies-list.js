@@ -215,9 +215,7 @@ function MoviesList() {
                                                                 {item.title}
                                                             </Link>
                                                         </h5>
-                                                        <p className="duration">
-                                                            {item.duration}h {item.duration > 1 ? "hours" : "hour"}
-                                                        </p>
+                                                        <p className="duration">{item.duration} minutes</p>
                                                         <div className="movie-tags">
                                                             {item.genres.map((genre, genreIndex) => (
                                                                 <p key={genreIndex}>{genre.name}</p>

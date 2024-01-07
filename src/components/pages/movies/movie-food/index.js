@@ -97,23 +97,24 @@ function MovieFood() {
         setCurrentPage(page);
     }, [loadFood, currentPage, navigate]);
 
-    // Global variable for ticket price per seat
-    const seatPrice = 10;
-
-    // Function to calculate the total seat fees
+    // Calculate the total cost of the selected seat
     const calculateSeatFees = (seats) => {
-        return seats.length * seatPrice;
+        const totalPrice = seats.reduce((acc, selectedSeat) => {
+            const seatPrice = selectedSeat.price || 0;
+            return acc + seatPrice;
+        }, 0);
+
+        return totalPrice;
     };
 
     // Function to calculate total order value
-
     const calculateTotal = (numSeats, foods) => {
         if (!foods) {
-            return numSeats * seatPrice;
+            return numSeats * calculateSeatFees(selectedSeats);
         }
 
         const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
-        return numSeats * seatPrice + foodTotal;
+        return numSeats * calculateSeatFees(selectedSeats) + foodTotal;
     };
 
     // Function to calculate the total final value (after applying the discount)
@@ -123,9 +124,9 @@ function MovieFood() {
 
     useEffect(() => {
         // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
-        const newFinalTotal = calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0);
+        const newFinalTotal = calculateFinalTotal(calculateTotal(selectedSeats.length, movieData.addFoods), 0);
         setFinalTotal(newFinalTotal);
-    }, [movieData.selectedSeats, movieData.addFoods]);
+    }, [selectedSeats, movieData.addFoods]);
 
     return (
         <>
@@ -241,7 +242,7 @@ function MovieFood() {
                                             <h6 className="subtitle">Movie name</h6>
                                             <div className="info">
                                                 <span>{movieDetails.title}</span>
-                                                <span>Tickets: {selectedSeats.length}</span>
+                                                <span>{`Tickets: ${selectedSeats.length}`}</span>
                                             </div>
                                         </li>
                                         <li>
@@ -249,8 +250,8 @@ function MovieFood() {
                                                 <span>Number of seats</span>
                                             </h6>
                                             <div className="info">
-                                                <span>{selectedSeats.join(", ")}</span>
-                                                <span>${calculateSeatFees(movieData.selectedSeats)}</span>
+                                                <span>{selectedSeats.map((selectedSeat) => selectedSeat.id).join(", ")}</span>
+                                                <span>${calculateSeatFees(selectedSeats)}</span>
                                             </div>
                                         </li>
                                         <li>
