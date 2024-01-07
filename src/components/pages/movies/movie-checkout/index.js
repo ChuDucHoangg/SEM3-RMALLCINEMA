@@ -9,6 +9,10 @@ import Loading from "../../../layouts/loading";
 import Layout from "../../../layouts/layout";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import StripePaymentForm from "../../../../payment/StripePaymentForm";
+const stripePromise = loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1gHTm113njc8xGE3A3YoiJ5WEweMhQizzHnQGtFH0zEw8mXCYFbcB00s9xR5vEC");
 
 function MovieCheckout() {
     const navigate = useNavigate();
@@ -74,6 +78,12 @@ function MovieCheckout() {
         } catch (error) {
             console.log("Error:", error);
         }
+    };
+
+    // Credit Card
+    const handleStripePaymentSuccess = async (paymentMethod) => {
+        await createOrderData();
+        setMessageContext("Payment Success!");
     };
 
     // Paypal
@@ -256,10 +266,10 @@ function MovieCheckout() {
                                             </p>
                                         </li>
 
-                                        <li className={selectedPaymentMethod === "Zalo Pay" ? "active" : ""}>
-                                            <p onClick={() => handlePaymentMethodClick("Zalo Pay")}>
-                                                <img src="assets/img/payment/zalopay.png" alt="" />
-                                                <span>Zalo Pay</span>
+                                        <li className={selectedPaymentMethod === "Credit Card" ? "active" : ""}>
+                                            <p onClick={() => handlePaymentMethodClick("Credit Card")}>
+                                                <img src="assets/img/payment/credit-card.png" alt="" style={{ marginTop: "-20px" }} />
+                                                <span style={{ marginTop: "-10px" }}>Credit Card</span>
                                             </p>
                                         </li>
 
@@ -383,7 +393,11 @@ function MovieCheckout() {
                                         />
                                     )}
 
-                                    {selectedPaymentMethod === "Zalo Pay" && <p className="btn-coming-son mt-3">Coming soon...</p>}
+                                    {selectedPaymentMethod === "Credit Card" && (
+                                        <Elements stripe={stripePromise}>
+                                            <StripePaymentForm onSuccess={handleStripePaymentSuccess} />
+                                        </Elements>
+                                    )}
 
                                     {selectedPaymentMethod === "MoMo" && <p className="btn-coming-son mt-3">Coming soon...</p>}
                                 </div>
