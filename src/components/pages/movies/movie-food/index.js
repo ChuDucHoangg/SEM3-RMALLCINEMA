@@ -188,7 +188,7 @@ function MovieFood() {
                                             <div className="grid-item drink" key={index}>
                                                 <div className="grid-inner">
                                                     <div className="grid-thumb">
-                                                        <img src="assets/img/movie/drink.jpg" alt={item.name} />
+                                                        <img src={item.image} alt={item.name} className="food-img" />
                                                         <div className="offer-tag">${item.price}</div>
                                                         <div className="offer-remainder">
                                                             <h6 className="o-title mt-0">30%</h6>

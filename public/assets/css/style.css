@@ -9635,3 +9635,8 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     cursor: pointer;
     font-weight: 500;
 }
+
+.food-img {
+    height: 243px;
+    object-fit: cover;
+}
