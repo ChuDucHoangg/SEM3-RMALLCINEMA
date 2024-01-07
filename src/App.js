@@ -20,7 +20,6 @@ import Profile from "./components/pages/profile/index.js";
 import Favorite from "./components/pages/profile/favorite.js";
 import ChangePassword from "./components/pages/auth/change-password.js";
 import NotFound from "./components/pages/other/not-found.js";
-import Result from "./components/pages/movies/movie-checkout/result.js";
 import MyBooking from "./components/pages/profile/my-booking.js";
 import BookingDetail from "./components/views/booking/booking-detail.js";
 import DiscountWallet from "./components/pages/profile/discount-wallet.js";
@@ -91,7 +90,6 @@ function App() {
 
                     {/* Other */}
                     <Route path="*" element={<NotFound />} />
-                    <Route path="checkout/result" element={<Result />} />
                     <Route path="checkout/thank-you/:id" element={<ThankYou />} />
                 </Routes>
             </div>

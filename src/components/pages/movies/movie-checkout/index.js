@@ -56,17 +56,20 @@ function MovieCheckout() {
         };
         try {
             if (decodedToken) {
+                const total = calculateTotal(movieData.selectedSeats, movieData.addFoods);
+                const finalTotal = calculateFinalTotal(total, 0);
+
                 const orderData = {
                     orderCode: Math.random().toString(36).substring(2, 10).toUpperCase(),
                     showId: movieData.selectShow,
                     userId: userInfo.userId,
-                    total: calculateTotal(movieData.selectedSeats.length, movieData.addFoods),
+                    total: total,
                     discountAmount: 0,
                     discountCode: "",
-                    finalTotal: calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0),
+                    finalTotal: finalTotal,
                     paymentMethod: selectedPaymentMethod,
-                    tickets: movieData.selectedSeats.map((seat) => ({ orderId: 0, seatId: seat })),
-                    foods: movieData.addFoods && movieData.addFoods.length > 0 ? movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity })) : [],
+                    tickets: movieData.selectedSeats.map((seat) => ({ seatId: seat.id, price: seat.price, quantity: 1 })), // Thêm quantity nếu cần
+                    foods: movieData.addFoods && movieData.addFoods.length > 0 ? movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity, price: food.price })) : [],
                 };
 
                 const orderResponse = await api.post(url.BOOKING.CREATE, orderData, config);
@@ -106,35 +109,6 @@ function MovieCheckout() {
         navigate("/checkout/result");
     };
 
-    // // Global variable for ticket price per seat
-    // const seatPrice = 10;
-
-    // // Function to calculate the total seat fees
-    // const calculateSeatFees = (seats) => {
-    //     return seats.length * seatPrice;
-    // };
-
-    // // Function to calculate total order value
-    // const calculateTotal = (numSeats, foods) => {
-    //     if (!foods) {
-    //         return numSeats * seatPrice;
-    //     }
-
-    //     const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
-    //     return numSeats * seatPrice + foodTotal;
-    // };
-
-    // // Function to calculate the total final value (after applying the discount)
-    // const calculateFinalTotal = (total, discountAmount) => {
-    //     return total - discountAmount;
-    // };
-
-    // useEffect(() => {
-    //     // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
-    //     const newFinalTotal = calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0);
-    //     setFinalTotal(newFinalTotal);
-    // }, [movieData.selectedSeats, movieData.addFoods]);
-
     // Calculate the total cost of the selected seat
     const calculateSeatFees = (seats) => {
         const totalPrice = seats.reduce((acc, selectedSeat) => {
@@ -145,14 +119,15 @@ function MovieCheckout() {
         return totalPrice;
     };
 
-    // Function to calculate total order value
-    const calculateTotal = (numSeats, foods) => {
+    const calculateTotal = (seats, foods) => {
+        const seatFees = calculateSeatFees(seats);
+
         if (!foods) {
-            return numSeats * calculateSeatFees(selectedSeats);
+            return seatFees;
         }
 
         const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
-        return numSeats * calculateSeatFees(selectedSeats) + foodTotal;
+        return seatFees + foodTotal;
     };
 
     // Function to calculate the total final value (after applying the discount)
@@ -162,7 +137,7 @@ function MovieCheckout() {
 
     useEffect(() => {
         // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
-        const newFinalTotal = calculateFinalTotal(calculateTotal(selectedSeats.length, movieData.addFoods), 0);
+        const newFinalTotal = calculateFinalTotal(calculateTotal(selectedSeats, movieData.addFoods), 0);
         setFinalTotal(newFinalTotal);
     }, [selectedSeats, movieData.addFoods]);
 
