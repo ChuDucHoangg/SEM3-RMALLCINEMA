@@ -71,7 +71,7 @@ function MovieDetails() {
                         <div className="container">
                             <div className="details-banner-wrapper">
                                 <div className="details-banner-thumb">
-                                    <img src={movies.movie_image} alt="movie" />
+                                    <img src={movies.movie_image} alt="movie" className="img-movie" />
                                     <button onClick={handleVideoButtonClick} className="video-button" data-toggle="modal" data-target="#videoModal">
                                         <i className="fal fa-play"></i>
                                     </button>
@@ -87,9 +87,7 @@ function MovieDetails() {
                                             </div>
                                             <div className="item">
                                                 <i className="fal fa-clock"></i>
-                                                <span>
-                                                    {movies.duration} {movies.duration > 1 ? "hours" : "hour"}
-                                                </span>
+                                                <span>{movies.duration} minutes</span>
                                             </div>
                                         </div>
                                         <ul className="social-share">

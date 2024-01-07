@@ -106,22 +106,53 @@ function MovieCheckout() {
         navigate("/checkout/result");
     };
 
-    // Global variable for ticket price per seat
-    const seatPrice = 10;
+    // // Global variable for ticket price per seat
+    // const seatPrice = 10;
 
-    // Function to calculate the total seat fees
+    // // Function to calculate the total seat fees
+    // const calculateSeatFees = (seats) => {
+    //     return seats.length * seatPrice;
+    // };
+
+    // // Function to calculate total order value
+    // const calculateTotal = (numSeats, foods) => {
+    //     if (!foods) {
+    //         return numSeats * seatPrice;
+    //     }
+
+    //     const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
+    //     return numSeats * seatPrice + foodTotal;
+    // };
+
+    // // Function to calculate the total final value (after applying the discount)
+    // const calculateFinalTotal = (total, discountAmount) => {
+    //     return total - discountAmount;
+    // };
+
+    // useEffect(() => {
+    //     // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
+    //     const newFinalTotal = calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0);
+    //     setFinalTotal(newFinalTotal);
+    // }, [movieData.selectedSeats, movieData.addFoods]);
+
+    // Calculate the total cost of the selected seat
     const calculateSeatFees = (seats) => {
-        return seats.length * seatPrice;
+        const totalPrice = seats.reduce((acc, selectedSeat) => {
+            const seatPrice = selectedSeat.price || 0;
+            return acc + seatPrice;
+        }, 0);
+
+        return totalPrice;
     };
 
     // Function to calculate total order value
     const calculateTotal = (numSeats, foods) => {
         if (!foods) {
-            return numSeats * seatPrice;
+            return numSeats * calculateSeatFees(selectedSeats);
         }
 
         const foodTotal = foods.reduce((total, food) => total + food.price * food.quantity, 0);
-        return numSeats * seatPrice + foodTotal;
+        return numSeats * calculateSeatFees(selectedSeats) + foodTotal;
     };
 
     // Function to calculate the total final value (after applying the discount)
@@ -131,9 +162,9 @@ function MovieCheckout() {
 
     useEffect(() => {
         // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
-        const newFinalTotal = calculateFinalTotal(calculateTotal(movieData.selectedSeats.length, movieData.addFoods), 0);
+        const newFinalTotal = calculateFinalTotal(calculateTotal(selectedSeats.length, movieData.addFoods), 0);
         setFinalTotal(newFinalTotal);
-    }, [movieData.selectedSeats, movieData.addFoods]);
+    }, [selectedSeats, movieData.addFoods]);
 
     // Check if movieDetails & selectedSeats is available
     if (!movieDetails || !selectedSeats || selectedSeats.length === 0) {
@@ -290,7 +321,7 @@ function MovieCheckout() {
                                             <h6 className="subtitle">MOVIE NAME</h6>
                                             <div className="info">
                                                 <span>{movieDetails.title}</span>
-                                                <span>Tickets: {selectedSeats.length}</span>
+                                                <span>{`Tickets: ${selectedSeats.length}`}</span>
                                             </div>
                                         </li>
                                         <li>
@@ -298,8 +329,8 @@ function MovieCheckout() {
                                                 <span>NUMBER OF SEATS</span>
                                             </h6>
                                             <div className="info">
-                                                <span>{selectedSeats.join(", ")}</span>
-                                                <span>${calculateSeatFees(movieData.selectedSeats)}</span>
+                                                <span>{selectedSeats.map((selectedSeat) => selectedSeat.id).join(", ")}</span>
+                                                <span>${calculateSeatFees(selectedSeats)}</span>
                                             </div>
                                         </li>
                                         <li>
