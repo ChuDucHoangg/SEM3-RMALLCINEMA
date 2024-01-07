@@ -18,7 +18,7 @@ const stripePromise = loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1g
 function MovieCheckout() {
     const navigate = useNavigate();
 
-    const { movieData, setMessageContext } = useMovieContext();
+    const { movieData } = useMovieContext();
     const { movieDetails, selectedSeats, addFoods } = movieData;
 
     const decodedToken = getDecodedToken();
@@ -118,27 +118,23 @@ function MovieCheckout() {
     // Credit Card
     const handleStripePaymentSuccess = async (paymentMethod) => {
         await createOrderData();
-        setMessageContext("Payment Success!");
     };
 
     // Paypal
     const handlePaymentSuccess = async (details, data) => {
         await createOrderData();
-        setMessageContext("Payment Success!");
     };
 
     const handlePaymentCancel = (data) => {
         console.log("Payment canceled:", data);
 
-        setMessageContext("Payment canceled.");
-        navigate("/checkout/result");
+        navigate("/checkout/payment-error");
     };
 
     const handlePaymentError = (err) => {
         console.error("Payment error:", err);
 
-        setMessageContext("Payment encountered an error.");
-        navigate("/checkout/result");
+        navigate("/checkout/payment-error");
     };
 
     // Calculate the total cost of the selected seat
