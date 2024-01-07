@@ -12,6 +12,7 @@ import url from "../../../../services/url";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import StripePaymentForm from "../../../../payment/StripePaymentForm";
+import Swal from "sweetalert2";
 const stripePromise = loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1gHTm113njc8xGE3A3YoiJ5WEweMhQizzHnQGtFH0zEw8mXCYFbcB00s9xR5vEC");
 
 function MovieCheckout() {
@@ -25,6 +26,35 @@ function MovieCheckout() {
     const [loading, setLoading] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("PayPal");
     const [finalTotal, setFinalTotal] = useState(0);
+    const [total, setTotal] = useState(0);
+    const [discountRate, setDiscountRate] = useState({});
+
+    const [formData, setFormData] = useState({
+        promotionCode: "",
+    });
+
+    const [formErrors, setFormErrors] = useState({
+        promotionCode: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        setFormErrors({ ...formErrors, [name]: "" });
+    };
+
+    const validateForm = () => {
+        let valid = true;
+        const newErrors = {};
+
+        if (!formData.promotionCode) {
+            newErrors.promotionCode = "Please enter your promotion code.";
+            valid = false;
+        }
+
+        setFormErrors(newErrors);
+        return valid;
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -64,11 +94,11 @@ function MovieCheckout() {
                     showId: movieData.selectShow,
                     userId: userInfo.userId,
                     total: total,
-                    discountAmount: 0,
-                    discountCode: "",
-                    finalTotal: finalTotal,
+                    discountAmount: total - discountRate.data || 0,
+                    discountCode: formData.promotionCode || "",
+                    finalTotal: discountRate.data ? discountRate.data : finalTotal,
                     paymentMethod: selectedPaymentMethod,
-                    tickets: movieData.selectedSeats.map((seat) => ({ seatId: seat.id, price: seat.price, quantity: 1 })), // Thêm quantity nếu cần
+                    tickets: movieData.selectedSeats.map((seat) => ({ seatId: seat.id, price: seat.price, quantity: 1 })),
                     foods: movieData.addFoods && movieData.addFoods.length > 0 ? movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity, price: food.price })) : [],
                 };
 
@@ -82,6 +112,8 @@ function MovieCheckout() {
             console.log("Error:", error);
         }
     };
+
+    console.log(createOrderData);
 
     // Credit Card
     const handleStripePaymentSuccess = async (paymentMethod) => {
@@ -120,9 +152,15 @@ function MovieCheckout() {
     };
 
     const calculateTotal = (seats, foods) => {
-        const seatFees = calculateSeatFees(seats);
+        const isSeatsArray = Array.isArray(seats);
+
+        const seatFees = isSeatsArray ? calculateSeatFees(seats) : 0;
 
         if (!foods) {
+            return seatFees;
+        }
+
+        if (!isSeatsArray) {
             return seatFees;
         }
 
@@ -136,10 +174,57 @@ function MovieCheckout() {
     };
 
     useEffect(() => {
+        const newTotal = calculateTotal(movieData.selectedSeats, movieData.addFoods);
+        setTotal(newTotal);
+
+        const newFinalTotal = calculateFinalTotal(newTotal, discountRate.data || 0);
+        setFinalTotal(newFinalTotal);
+    }, [movieData.selectedSeats, movieData.addFoods, discountRate]);
+
+    useEffect(() => {
         // When there is a change in the data (e.g. selectedSeats, addFoods), update the finalTotal value
         const newFinalTotal = calculateFinalTotal(calculateTotal(selectedSeats, movieData.addFoods), 0);
         setFinalTotal(newFinalTotal);
     }, [selectedSeats, movieData.addFoods]);
+
+    const handleApplyDiscount = async (e) => {
+        e.preventDefault();
+
+        if (validateForm()) {
+            // Calculate the total based on the promotion code
+            const total = calculateTotal(movieData.selectedSeats, movieData.addFoods);
+
+            // Update formData with the calculated total
+            const updatedFormData = {
+                ...formData,
+                total: total,
+            };
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${getAccessToken()}`,
+                },
+            };
+
+            try {
+                // Construct the URL with query parameters
+                const apiUrl = `${url.PROMOTION.DISCOUNT}?promotionCode=${updatedFormData.promotionCode}&total=${total}`;
+
+                // Use the constructed URL in the API request
+                const discountResponse = await api.post(apiUrl, null, config);
+                console.log(discountResponse.data);
+                if (discountResponse.status === 200) {
+                    setDiscountRate(discountResponse.data);
+                    Swal.fire({
+                        title: "Success",
+                        text: "Apply promotion successfully!",
+                        icon: "success",
+                    });
+                }
+            } catch (error) {}
+        }
+    };
 
     // Check if movieDetails & selectedSeats is available
     if (!movieDetails || !selectedSeats || selectedSeats.length === 0) {
@@ -239,9 +324,10 @@ function MovieCheckout() {
                                 </div>
                                 <div className="checkout-widget checkout-contact">
                                     <h5 className="title">Promo Code</h5>
-                                    <form className="checkout-contact-form">
+                                    <form className="checkout-contact-form" onSubmit={handleApplyDiscount}>
                                         <div className="form-group">
-                                            <input type="text" placeholder="Enter promo code" />
+                                            <input type="text" placeholder="Enter promo code" name="promotionCode" value={formData.promotionCode} onChange={handleChange} />
+                                            {formErrors.promotionCode && <p className="invalid-feedback">{formErrors.promotionCode}</p>}
                                         </div>
                                         <div className="form-group">
                                             <input type="submit" value="Apply" className="custom-button" />
@@ -334,12 +420,22 @@ function MovieCheckout() {
                                 </div>
                                 <div className="proceed-area text-center">
                                     <h6 className="subtitle">
+                                        <span>Total</span>
+                                        <span>${total}</span>
+                                    </h6>
+                                    <h6 className="subtitle">
+                                        <span>Discount</span>
+                                        <span>{`-$${(discountRate.data ? Math.abs(discountRate.data - total) : 0).toFixed(2).toLocaleString()}`}</span>
+                                    </h6>
+                                    <h6 className="subtitle">
                                         <span> Pay Amount</span>
-                                        <span>${finalTotal}</span>
+                                        {/* <span>${finalTotal}</span> */}
+
+                                        <span>${discountRate.data ? discountRate.data : finalTotal}</span>
                                     </h6>
                                     {selectedPaymentMethod === "PayPal" && (
                                         <PayPalButton
-                                            amount={finalTotal}
+                                            amount={discountRate.data ? discountRate.data : finalTotal}
                                             onSuccess={(details, data) => handlePaymentSuccess(details, data)}
                                             onCancel={handlePaymentCancel}
                                             onError={handlePaymentError}
