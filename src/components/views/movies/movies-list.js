@@ -87,7 +87,7 @@ function MoviesList() {
                 Swal.fire({
                     title: "Oops...",
                     text: "The movie is already in your favorites list.",
-                    icon: "error",
+                    icon: "warning",
                 });
             } else {
                 console.error("Error adding to favorites", error);

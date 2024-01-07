@@ -9646,3 +9646,7 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     height: 300px;
     object-fit: cover;
 }
+
+.modal-content__custom {
+    background: #032055;
+}

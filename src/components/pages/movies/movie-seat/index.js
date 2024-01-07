@@ -95,7 +95,7 @@ function MovieSeat() {
                         icon: "warning",
                         title: "Oops...",
                         text: "You can only select a maximum of 5 seats.",
-                        confirmButtonText: "Đồng ý, tôi hiểu.",
+                        confirmButtonText: "Agreed, I understand.",
                     });
                 }
             } else {
