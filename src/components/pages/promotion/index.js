@@ -24,7 +24,6 @@ function Promotion() {
         try {
             const promotionResponse = await api.get(url.PROMOTION.LIST_FOR_USER, config);
             setPromotion(promotionResponse.data);
-            console.log(promotionResponse.data);
         } catch (error) {}
     }, []);
 

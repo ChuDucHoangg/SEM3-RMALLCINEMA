@@ -17,6 +17,7 @@ function MovieDetails() {
 
     const [movies, setMovies] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
+    const [hasLoaded, setHasLoaded] = useState(false);
 
     // Check if you are logged in or not
     const handleBooking = () => {
@@ -34,14 +35,17 @@ function MovieDetails() {
             const movieResponse = await api.get(url.MOVIE.DETAILS + `${id}`);
             setMovies(movieResponse.data);
             setMovieDetails(movieResponse.data);
+            setHasLoaded(true);
         } catch (error) {
             console.log(error);
         }
     }, [id, setMovieDetails]);
 
     useEffect(() => {
-        loadMovie();
-    }, [loadMovie]);
+        if (!hasLoaded) {
+            loadMovie();
+        }
+    }, [hasLoaded, loadMovie]);
 
     const handleVideoButtonClick = () => {
         setModalOpen(true);

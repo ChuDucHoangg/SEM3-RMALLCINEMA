@@ -241,7 +241,7 @@ function MoviesList() {
                                                                         <div className="thumb">
                                                                             <i className="fal fa-heart"></i>
                                                                         </div>
-                                                                        <span>10k</span>
+                                                                        <span>Add to favorite</span>
                                                                     </button>
                                                                 </div>
                                                                 <div className="react-item mr-auto">
