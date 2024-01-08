@@ -6,6 +6,7 @@ import url from "../../../services/url";
 import { getAccessToken } from "../../../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../../layouts/pagination";
+import { format } from "date-fns";
 
 function MyBooking() {
     const navigate = useNavigate();
@@ -46,22 +47,22 @@ function MyBooking() {
     return (
         <>
             <Helmet>
-                <title>My Order | R Mall</title>
+                <title>My Booking | R Mall</title>
             </Helmet>
             <LayoutProfile>
                 <div className="col-12">
-                    <h2 className="profile-info__heading">My Order</h2>
+                    <h2 className="profile-info__heading">My Booking</h2>
                     {currentItemPage.length > 0 ? (
                         currentItemPage.map((item, index) => (
                             <div className="movie-list mb-0" key={index}>
                                 <div className="movie-thumb c-thumb">
                                     <Link to={`/my-booking/detail/${item.id}`} className="w-100 h-100">
-                                        <img src="assets/img/movie/movie-list-4.jpg" alt="movie" />
+                                        <img src={item.imageMovie} alt="movie" />
                                     </Link>
                                 </div>
                                 <div className="movie-content bg-one">
                                     <h5 className="title">
-                                        <Link to={`/my-booking/detail/${item.id}`}>Doraemon</Link>
+                                        <Link to={`/my-booking/detail/${item.id}`}>{item.movieTitle}</Link>
                                     </h5>
                                     <ul className="movie-rating-percent">
                                         <li>
@@ -77,6 +78,9 @@ function MyBooking() {
                                             <span className="content">${item.finalTotal}</span>
                                         </li>
                                     </ul>
+                                    <p>
+                                        Date of purchase: <span className="content"> {format(new Date(item.createdAt), "dd/MM/yyyy")}</span>
+                                    </p>
                                     <div className="book-area">
                                         <div className="book-ticket">
                                             <div className="react-item">

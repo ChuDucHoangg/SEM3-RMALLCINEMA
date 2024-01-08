@@ -7,10 +7,12 @@ import api from "../../../services/api";
 import url from "../../../services/url";
 import { getAccessToken } from "../../../utils/auth";
 import { format } from "date-fns";
+import Loading from "../../layouts/loading";
 
 function BookingDetail() {
     const { id } = useParams();
     const [bookingDetail, setBookingDetail] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const loadBooking = useCallback(async () => {
         const config = {
@@ -28,7 +30,13 @@ function BookingDetail() {
     }, [id]);
 
     useEffect(() => {
+        setLoading(true);
+
         loadBooking();
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     }, [loadBooking]);
 
     // Map ticket & food from API
@@ -53,6 +61,9 @@ function BookingDetail() {
             <Helmet>
                 <title>Booking Detail | R Mall Cinema</title>
             </Helmet>
+
+            {loading ? <Loading /> : ""}
+
             <Layout>
                 <section
                     className="main-page-header speaker-banner"

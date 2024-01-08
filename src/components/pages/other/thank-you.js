@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Layout from "../../layouts/layout";
 import html2canvas from "html2canvas";
 import { Helmet } from "react-helmet";
@@ -8,11 +8,13 @@ import url from "../../../services/url";
 import { getAccessToken } from "../../../utils/auth";
 import { format } from "date-fns";
 import Loading from "../../layouts/loading";
+import NotFound from "./not-found";
 
 function ThankYou() {
     const { id } = useParams();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [bookingDetail, setBookingDetail] = useState([]);
+    const [error, setError] = useState(null);
 
     const loadBooking = useCallback(async () => {
         const config = {
@@ -25,12 +27,18 @@ function ThankYou() {
         try {
             const bookingDetailResponse = await api.get(url.BOOKING.DETAIL + `/${id}`, config);
             setBookingDetail(bookingDetailResponse.data);
-            setLoading(false);
-        } catch (error) {}
+        } catch (error) {
+            setError(true);
+        }
     }, [id]);
 
     useEffect(() => {
+        setLoading(true);
         loadBooking();
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     }, [loadBooking]);
 
     // Map ticket & food from API
@@ -38,7 +46,6 @@ function ThankYou() {
     const foods = bookingDetail.foods || [];
 
     // Capture and download bill
-
     const captureAndDownload = () => {
         const billContent = document.getElementById("billContent");
 
@@ -57,8 +64,10 @@ function ThankYou() {
                 <title>Thank You | R Mall Cinema</title>
             </Helmet>
 
-            {loading ? (
-                <Loading />
+            {loading ? <Loading /> : ""}
+
+            {error ? (
+                <NotFound />
             ) : (
                 <Layout>
                     <section
@@ -71,12 +80,11 @@ function ThankYou() {
                         <div className="container">
                             <div className="speaker-banner-content">
                                 <h2 className="title">Thank You</h2>
-                                <ul className="breadcrumb">
-                                    <li>
-                                        <Link to="/checkout">Checkout</Link>
-                                    </li>
-                                    <li>Thank You</li>
-                                </ul>
+                           
+                                <p className="col-lg-8 text-center mx-auto pt-3">
+                                    We confirm that your payment has been successfully processed and tickets have been booked. A detailed confirmation email will be sent to you shortly, including
+                                    ticket details.
+                                </p>
                             </div>
                         </div>
                     </section>
@@ -94,7 +102,7 @@ function ThankYou() {
                                     <ul>
                                         <li>
                                             <h6 className="subtitle">Movie</h6>
-                                            <div class="info">
+                                            <div className="info">
                                                 <span>{bookingDetail.movieName}</span>
                                             </div>
                                         </li>
@@ -176,7 +184,8 @@ function ThankYou() {
                                     </div>
 
                                     <div className="qrcode-wrapper">
-                                        <img src={bookingDetail.qrCode} alt="qrcode" className="img-thumbnail" />
+                                        <img src={bookingDetail.qrCode} alt="qrcode" className="img-thumbnail" id="qrcode" />
+                                        {/* <img src="/assets/img/qrcode.png" alt="qrcode" className="img-thumbnail" /> */}
                                     </div>
                                 </div>
                             </div>
