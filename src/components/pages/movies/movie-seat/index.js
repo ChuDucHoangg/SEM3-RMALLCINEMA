@@ -49,32 +49,13 @@ function MovieSeat() {
 
         setTimeout(() => {
             setLoading(false);
-        }, 1500);
+        }, 2000);
     }, [loadSeat]);
 
-    // const handleSeatSelect = (seat) => {
-    //     const seatNumber = Number(seat);
-
-    //     if (!isNaN(seatNumber) && Number.isInteger(seatNumber)) {
-    //         if (selectSeats.includes(seatNumber)) {
-    //             // If the seat is already selected, remove it from the selectSeats list
-    //             setSelectSeats(selectSeats.filter((selectedSeat) => selectedSeat !== seatNumber));
-    //         } else if (selectSeats.length < 5) {
-    //             // If the total selected seats are less than 5, add it to the selectSeats list
-    //             setSelectSeats([...selectSeats, seatNumber]);
-    //         } else {
-    //             // If no, show a message or handle it accordingly
-    //             Swal.fire({
-    //                 icon: "warning",
-    //                 title: "Oops...",
-    //                 text: "You can only select up to 5 seats.",
-    //                 confirmButtonText: "Agreed, I understand.",
-    //             });
-    //         }
-    //     } else {
-    //         console.error("Invalid seat number");
-    //     }
-    // };
+    useEffect(() => {
+        updateSelectedSeats(selectSeats);
+        // eslint-disable-next-line
+    }, [selectSeats]);
 
     const handleSeatSelect = (rowNumber, seatNumber) => {
         if (seat && seat[rowNumber] && Array.isArray(seat[rowNumber])) {
@@ -101,8 +82,8 @@ function MovieSeat() {
             } else {
                 console.error("Invalid seat number.");
             }
-        } else {
         }
+        updateSelectedSeats(selectSeats);
     };
 
     // Calculate the total cost of the selected seat
@@ -114,10 +95,6 @@ function MovieSeat() {
 
         return totalPrice;
     };
-
-    useEffect(() => {
-        updateSelectedSeats(selectSeats);
-    }, [updateSelectedSeats, selectSeats]);
 
     return (
         <>
