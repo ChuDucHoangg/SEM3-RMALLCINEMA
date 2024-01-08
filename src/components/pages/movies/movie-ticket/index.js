@@ -5,14 +5,19 @@ import Layout from "../../../layouts/layout";
 import { Link, useParams } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import { useMovieContext } from "../../../../context/MovieContext";
+import Select from "react-select";
+
 function MovieTicket() {
     const { id } = useParams();
     const { movieData, updateSelectShow } = useMovieContext();
     const { movieDetails } = movieData;
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState([]);
+    const [language, setLanguage] = useState([]);
+
+    const [dateOptions, setDateOptions] = useState([]);
 
     const [windowWarning, setWindowWarning] = useState(false);
     const [selectedShowCode, setSelectedShowCode] = useState(null);
@@ -24,12 +29,26 @@ function MovieTicket() {
         setSelectedShowStartTime(startTime);
     };
 
-    const loadShow = useCallback(async () => {
-        try {
-            const showResponse = await api.get(url.SHOW.BY_MOVIE + `/${id}`);
-            setShow(showResponse.data);
-        } catch (error) {}
-    }, [id]);
+    const loadShow = useCallback(
+        async (from, language) => {
+            try {
+                let apiUrl = `${url.SHOW.BY_MOVIE}/${id}`;
+                if (from) {
+                    apiUrl += `?from=${from}`;
+                }
+                if (language) {
+                    apiUrl += `${from ? "&" : "?"}language=${language}`;
+                }
+
+                const showResponse = await api.get(apiUrl);
+                const languageResponse = await api.get(url.LANGUAGE.LIST);
+
+                setShow(showResponse.data);
+                setLanguage(languageResponse.data);
+            } catch (error) {}
+        },
+        [id]
+    );
 
     useEffect(() => {
         loadShow();
@@ -42,6 +61,69 @@ function MovieTicket() {
 
     const handleSelectShow = (showId) => {
         updateSelectShow(showId);
+    };
+
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        const from = event.target.elements.from.value;
+        const language = event.target.elements.language.value;
+
+        if (from || language) {
+            loadShow(from, language);
+        }
+    };
+
+    // Get the current date
+    useEffect(() => {
+        const currentDate = new Date();
+
+        //
+        const newOptions = Array.from({ length: 6 }, (_, index) => {
+            const date = addDays(currentDate, index);
+            return {
+                value: format(date, "yyyy-MM-dd"),
+                label: format(date, "dd/MM/yyyy"),
+            };
+        });
+
+        setDateOptions(newOptions);
+    }, []);
+
+    const customSelectStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            background: "transparent",
+            minWidth: "180px",
+            border: "none",
+            height: "45px",
+            boxShadow: state.isFocused ? "none" : provided.boxShadow,
+        }),
+        indicatorSeparator: (provided, state) => ({
+            ...provided,
+            display: "none",
+        }),
+        input: (provided, state) => ({
+            ...provided,
+            margin: "0",
+            padding: "0",
+            fontWeight: "400",
+        }),
+        valueContainer: (provided, state) => ({
+            ...provided,
+            padding: "0 8px",
+            color: "#fff",
+        }),
+        singleValue: (provided, state) => ({
+            ...provided,
+            color: "#fff",
+        }),
+        menu: (provided, state) => ({
+            ...provided,
+            background: "#001232",
+            color: "#fff",
+            fontWeight: "400",
+            boxShadow: "0px 0 20px 0 rgba(0, 0, 0, 0.5)",
+        }),
     };
 
     return (
@@ -85,63 +167,35 @@ function MovieTicket() {
 
                 <section className="book-section bg-one">
                     <div className="container">
-                        <form className="ticket-search-form two">
-                            <div className="form-group">
-                                <div className="thumb">
-                                    <img src="assets/img/ticket/city.png" alt="ticket" />
-                                </div>
-                                <span className="type">city</span>
-                                <select className="select-bar">
-                                    <option value="london">New York</option>
-                                    <option value="dhaka">California</option>
-                                    <option value="rosario">Texas</option>
-                                    <option value="madrid">Florida</option>
-                                    <option value="koltaka">Nevada</option>
-                                    <option value="rome">Oregon</option>
-                                    <option value="khoksa">Ohio</option>
-                                </select>
-                            </div>
+                        <form className="ticket-search-form two" onSubmit={handleFormSubmit}>
                             <div className="form-group">
                                 <div className="thumb">
                                     <img src="assets/img/ticket/date.png" alt="ticket" />
                                 </div>
                                 <span className="type">date</span>
-                                <select className="select-bar">
-                                    <option value="11/04/2023">11/04/2023</option>
-                                    <option value="10/04/2023">10/04/2023</option>
-                                    <option value="09/04/2023">09/04/2023</option>
-                                    <option value="08/04/2023">08/04/2023</option>
-                                    <option value="07/04/2023">07/04/2023</option>
-                                    <option value="06/04/2023">06/04/2023</option>
-                                    <option value="05/04/2023">05/04/2023</option>
-                                </select>
+                                {/* <input type="date" name="date" className="select-date" /> */}
+
+                                <Select name="from" placeholder="Select date" options={dateOptions} isSearchable={false} styles={customSelectStyles} />
                             </div>
+
                             <div className="form-group">
                                 <div className="thumb">
                                     <img src="assets/img/ticket/cinema.png" alt="ticket" />
                                 </div>
-                                <span className="type">movie</span>
-                                <select className="select-bar">
-                                    <option value="Avatar">Avatar</option>
-                                    <option value="Inception">Inception</option>
-                                    <option value="Parasite">Parasite</option>
-                                    <option value="Joker">Joker</option>
-                                    <option value="Searching">Searching</option>
-                                    <option value="Coco">Coco</option>
-                                    <option value="Lion">Lion</option>
-                                </select>
+                                <span className="type">language</span>
+
+                                <Select
+                                    name="language"
+                                    placeholder="Select language"
+                                    options={language.map((item, index) => ({
+                                        value: item.name,
+                                        label: item.name,
+                                    }))}
+                                    isSearchable={false}
+                                    styles={customSelectStyles}
+                                />
                             </div>
-                            <div className="form-group">
-                                <div className="thumb">
-                                    <img src="assets/img/ticket/experience.png" alt="ticket" />
-                                </div>
-                                <span className="type">Experience</span>
-                                <select className="select-bar">
-                                    <option value="2D">2D</option>
-                                    <option value="3D">3D</option>
-                                    <option value="4D">4D</option>
-                                </select>
-                            </div>
+
                             <div className="form-group">
                                 <div className="thumb">
                                     <button type="submit" className="filter-btn">
@@ -182,7 +236,7 @@ function MovieTicket() {
                                                                 handleShowTimeClick(item.showCode, format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy"));
                                                             }}
                                                         >
-                                                            Buy
+                                                            Book
                                                         </div>
                                                     </div>
                                                 </li>

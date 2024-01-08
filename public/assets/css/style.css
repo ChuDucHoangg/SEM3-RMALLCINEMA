@@ -9650,3 +9650,10 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
 .modal-content__custom {
     background: #032055;
 }
+
+.ticket-search-form .form-group input.select-date {
+    width: initial;
+    border-width: 1px;
+    padding-right: 14px;
+    border: none;
+}
