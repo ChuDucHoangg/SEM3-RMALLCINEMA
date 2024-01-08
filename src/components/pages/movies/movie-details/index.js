@@ -9,12 +9,14 @@ import { format } from "date-fns";
 import ReactPlayer from "react-player";
 import { useMovieContext } from "../../../../context/MovieContext";
 import NotFound from "../../other/not-found";
+import Loading from "../../../layouts/loading";
 
 function MovieDetails() {
     const { id } = useParams();
     const { setMovieDetails } = useMovieContext();
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
     const [movies, setMovies] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [hasLoaded, setHasLoaded] = useState(false);
@@ -44,7 +46,13 @@ function MovieDetails() {
     useEffect(() => {
         if (!hasLoaded) {
             loadMovie();
+
+            setLoading(true);
         }
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     }, [hasLoaded, loadMovie]);
 
     const handleVideoButtonClick = () => {
@@ -60,6 +68,8 @@ function MovieDetails() {
             <Helmet>
                 <title>{movies.title}</title>
             </Helmet>
+
+            {loading ? <Loading /> : ""}
 
             {movies.length === 0 ? (
                 <NotFound />
