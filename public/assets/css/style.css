@@ -9657,3 +9657,20 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     padding-right: 14px;
     border: none;
 }
+
+.filter-select {
+    background: transparent;
+    border: none;
+    height: inherit;
+    margin-left: 5px;
+}
+
+.filter-main .left.left-custom {
+    align-items: baseline;
+}
+
+.filter-main .left .item-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
