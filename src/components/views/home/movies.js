@@ -1,44 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import api from "../../../services/api";
 import url from "../../../services/url";
 import { Link } from "react-router-dom";
 
 function Movies() {
     const [movies, setMovies] = useState([]);
-    const [sortBy, setSortBy] = useState("latest-showing");
+
+    const loadMovie = useCallback(async () => {
+        try {
+            const moviesResponse = await api.get(url.MOVIE.LIST);
+
+            const limitedMovies = moviesResponse.data.slice(0, 6);
+
+            setMovies(limitedMovies);
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
     useEffect(() => {
-        // Initial load
-        loadData(url.MOVIE.LATEST_SHOWING);
-    }, []); // Empty dependency array to run once on mount
-
-    const handleSortChange = async (event) => {
-        const selectedSortOption = event.target.value;
-        setSortBy(selectedSortOption);
-
-        switch (selectedSortOption) {
-            case "latest-showing":
-                await loadData(url.MOVIE.LATEST_SHOWING);
-                break;
-            case "best-showing":
-                await loadData(url.MOVIE.BEST_SHOWING);
-                break;
-            case "coming-soon":
-                await loadData(url.MOVIE.COMING_SOON);
-                break;
-            default:
-                break;
-        }
-    };
-
-    const loadData = async (url) => {
-        try {
-            const response = await api.get(url);
-            setMovies(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+        loadMovie();
+    }, [loadMovie]);
 
     return (
         <>
@@ -47,21 +29,12 @@ function Movies() {
                     <div className="row flex-wrap-reverse justify-content-center">
                         <div className="col-lg-12">
                             <div className="article-section padding-bottom">
-                                <div className="section-header-2">
+                                <div className="section-header-1">
                                     <h2 className="title">movies</h2>
 
-                                    <ul className="tab-menu">
-                                        <li className={sortBy === "latest-showing" ? "active" : ""} onClick={() => handleSortChange({ target: { value: "latest-showing" } })}>
-                                            latest showing
-                                        </li>
-
-                                        <li className={sortBy === "best-showing" ? "active" : ""} onClick={() => handleSortChange({ target: { value: "best-showing" } })}>
-                                            best showing
-                                        </li>
-                                        <li className={sortBy === "coming-soon" ? "active" : ""} onClick={() => handleSortChange({ target: { value: "coming-soon" } })}>
-                                            coming soon
-                                        </li>
-                                    </ul>
+                                    <Link to="/movies" class="view-more">
+                                        View More <i class="fal fa-long-arrow-alt-right"></i>
+                                    </Link>
                                 </div>
                                 <div className="row mb-30-none justify-content-center">
                                     {movies.map((item, index) => {
