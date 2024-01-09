@@ -295,7 +295,7 @@ function MovieFood() {
                                                 <span>Number of seats</span>
                                             </h6>
                                             <div className="info">
-                                                <span>{selectedSeats.map((selectedSeat) => selectedSeat.id).join(", ")}</span>
+                                                <span>{selectedSeats.map((selectedSeat) => selectedSeat.seatName).join(", ")}</span>
                                                 <span>${calculateSeatFees(selectedSeats)}</span>
                                             </div>
                                         </li>
