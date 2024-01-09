@@ -13,6 +13,9 @@ const url = {
     MOVIE: {
         LIST: "movie",
         DETAILS: "movie/",
+        LATEST_SHOWING: "movie/last-showing",
+        BEST_SHOWING: "movie/best-showing",
+        COMING_SOON: "movie/comming-soon",
     },
 
     LANGUAGE: {
