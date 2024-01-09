@@ -7,6 +7,7 @@ import api from "../../../../services/api";
 import url from "../../../../services/url";
 import Pagination from "../../../layouts/pagination";
 import { useMovieContext } from "../../../../context/MovieContext";
+import Swal from "sweetalert2";
 function MovieFood() {
     const navigate = useNavigate();
     const { movieData, setFoods } = useMovieContext();
@@ -46,20 +47,51 @@ function MovieFood() {
     const handleAddFood = (id, foodName, quantity, price) => {
         const existingProductIndex = orderFood.findIndex((item) => item.foodName === foodName);
 
+        // Assuming 'food' is an array containing objects with 'quantity' property
+        const selectedFood = food.find((item) => item.id === id);
+
+        if (!selectedFood) {
+            // Handle the case where the selected food is not found
+            console.error(`Food with id ${id} not found.`);
+            return;
+        }
+
+        const availableQuantity = selectedFood.quantity || 0;
+        const totalQuantity = quantity + (existingProductIndex !== -1 ? orderFood[existingProductIndex].quantity : 0);
+
+        if (totalQuantity > availableQuantity) {
+            Swal.fire({
+                icon: "warning",
+                title: "Oops...",
+                text: `You can't add more than ${availableQuantity} items.`,
+                confirmButtonText: "Agreed, I understand.",
+            });
+            return;
+        }
+
         if (existingProductIndex !== -1) {
             // If the product exists, update the quantity
             const updatedOrderFoods = [...orderFood];
             updatedOrderFoods[existingProductIndex] = {
                 ...updatedOrderFoods[existingProductIndex],
-                quantity: quantity,
+                quantity: totalQuantity,
             };
             setOrderFood(updatedOrderFoods);
             setFoods(updatedOrderFoods);
         } else {
             // If the product doesn't exist, add a new entry to the order
-            const updatedOrderFoods = [...orderFood, { id, foodName, quantity, price }];
-            setOrderFood(updatedOrderFoods);
-            setFoods(updatedOrderFoods);
+            if (quantity <= availableQuantity) {
+                const updatedOrderFoods = [...orderFood, { id, foodName, quantity, price }];
+                setOrderFood(updatedOrderFoods);
+                setFoods(updatedOrderFoods);
+            } else {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: `You can't add more than ${availableQuantity} items.`,
+                    confirmButtonText: "Agreed, I understand.",
+                });
+            }
         }
     };
 
@@ -192,14 +224,21 @@ function MovieFood() {
                                                         <img src={item.image} alt={item.name} className="food-img" />
                                                         <div className="offer-tag">${item.price}</div>
                                                         <div className="offer-remainder">
-                                                            <h6 className="o-title mt-0">30%</h6>
-                                                            <span>off</span>
+                                                            {item.quantity === 0 ? (
+                                                                <span>out stock</span>
+                                                            ) : (
+                                                                <>
+                                                                    <h6 className="o-title mt-0">{item.quantity}</h6>
+                                                                    <span>qty</span>
+                                                                </>
+                                                            )}
                                                         </div>
                                                     </div>
                                                     <div className="grid-content">
                                                         <h5 className="subtitle">
                                                             <p>{item.name}</p>
                                                         </h5>
+
                                                         <form className="cart-button">
                                                             <div className="cart-plus-minus">
                                                                 <button
@@ -220,9 +259,15 @@ function MovieFood() {
                                                                     +
                                                                 </button>
                                                             </div>
-                                                            <button type="button" className="custom-button" onClick={() => handleAddFood(item.id, item.name, quantities[item.id] || 1, item.price)}>
-                                                                <i className="fal fa-shopping-cart"></i> add
-                                                            </button>
+                                                            {item.quantity === 0 ? (
+                                                                <button type="button" className="custom-button disabled-btn">
+                                                                    <i className="fal fa-shopping-cart"></i> add
+                                                                </button>
+                                                            ) : (
+                                                                <button type="button" className="custom-button" onClick={() => handleAddFood(item.id, item.name, quantities[item.id] || 1, item.price)}>
+                                                                    <i className="fal fa-shopping-cart"></i> add
+                                                                </button>
+                                                            )}
                                                         </form>
                                                     </div>
                                                 </div>

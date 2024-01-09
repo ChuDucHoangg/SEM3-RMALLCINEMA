@@ -9679,3 +9679,14 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     height: 200px;
     object-fit: cover;
 }
+
+.grid--area .grid-item .grid-inner .grid-content .cart-button .custom-button.disabled-btn {
+    background: #6f1020 !important;
+    color: #ccc;
+    user-select: none;
+    cursor: default;
+}
+
+.grid--area .grid-item .grid-inner .grid-content .cart-button .custom-button.disabled-btn:hover {
+    box-shadow: none;
+}
