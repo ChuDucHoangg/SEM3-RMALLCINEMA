@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { isLoggedIn } from "../../../../utils/auth";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
@@ -264,19 +264,37 @@ function MovieDetails() {
                                                         <p>{movies.describe}</p>
 
                                                         <div className="widget-tags mt-5">
-                                                            <p>Tags :</p>
+                                                            <p>Director:</p>
+                                                            <ul>
+                                                                <li>
+                                                                    <Link to="">{movies.director}</Link>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div className="widget-tags mt-5">
+                                                            <p>Tags:</p>
                                                             <ul>
                                                                 {movies &&
                                                                     movies.genres &&
                                                                     movies.genres.map((genre, genreIndex) => (
                                                                         <li key={genreIndex}>
-                                                                            <a href="#!">{genre.name}</a>
+                                                                            <Link to="">{genre.name}</Link>
                                                                         </li>
                                                                     ))}
                                                             </ul>
                                                         </div>
+
+                                                        <div className="widget-tags mt-5">
+                                                            <p>Actor:</p>
+                                                            <ul>
+                                                                <li>
+                                                                    <Link to="">{movies.actor}</Link>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                    <div className="item">
+                                                    {/* <div className="item">
                                                         <div className="header">
                                                             <h5 className="sub-title">movie cast</h5>
                                                             <div className="navigation">
@@ -413,7 +431,7 @@ function MovieDetails() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 <div className="tab-item">
                                                     <div className="movie-review-item">
