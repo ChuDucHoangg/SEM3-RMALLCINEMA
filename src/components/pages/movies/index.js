@@ -2,7 +2,6 @@ import Loading from "../../layouts/loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../layouts/layout";
-import SearchTicket from "../../views/movies/search-ticket";
 import MoviesList from "../../views/movies/movies-list";
 function Movie() {
     const [loading, setLoading] = useState(false);
@@ -36,7 +35,6 @@ function Movie() {
                         </div>
                     </div>
                 </section>
-                <SearchTicket />
                 <MoviesList />
             </Layout>
         </>
