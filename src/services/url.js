@@ -8,6 +8,7 @@ const url = {
         PROFILE: "auth/profile",
         UPDATE_PROFILE: "auth/update-profile",
         CHANGE_PASSWORD: "auth/change-password",
+        RESET_PASSWORD: "auth/reset-password",
     },
 
     MOVIE: {
