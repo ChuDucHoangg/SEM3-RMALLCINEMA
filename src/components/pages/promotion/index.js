@@ -111,98 +111,104 @@ function Promotion() {
                                     <div className="section-header-3 left-style mt-5">
                                         <h4 className="title">Explore Now and Get Exciting Deals!</h4>
                                         <div className="row">
-                                            {promotion.map((item, index) => {
-                                                return (
-                                                    <div className="col-lg-6 col-md-12 col-12" key={index}>
-                                                        <div className="mt-2 mb-2">
-                                                            <div className="blog-author d-flex align-items-center discount-custom discount-custom-2 mt-3">
-                                                                <div className="author-thumb my-auto">
-                                                                    <img src="./assets/icons/discount-svgrepo.svg" alt="blog" />
-                                                                </div>
-                                                                <div className="author-content">
-                                                                    <h5 className="title mt-2">
-                                                                        <p>{item.name}</p>
-                                                                    </h5>
-                                                                    <span className="d-flex align-items-center  discount-custom__desc">
-                                                                        <i className="fal fa-badge-percent"></i> {item.discountPercentage}%
-                                                                    </span>
-                                                                </div>
-                                                                <div className="mt-3 discount-custom__footer">
-                                                                    <span
-                                                                        className="d-flex align-items-center discount-custom__desc"
-                                                                        onClick={() => handleSavePromotion(item.id)}
-                                                                        style={{ cursor: "pointer" }}
-                                                                    >
-                                                                        <i className="fal fa-save"></i>
-                                                                        Save
-                                                                    </span>
-                                                                    <span
-                                                                        className="d-flex align-items-center discount-custom__link"
-                                                                        data-toggle="modal"
-                                                                        data-target="#condition"
-                                                                        onClick={() => handleConditionClick(item)}
-                                                                    >
-                                                                        Condition
-                                                                    </span>
-                                                                </div>
-                                                                <div className="modal fade" id="condition" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                                    <div className="modal-dialog" role="document">
-                                                                        <div className="modal-content">
-                                                                            <div className="modal-body">
-                                                                                {selectedDiscount && (
-                                                                                    <div className="p-2">
-                                                                                        <h5 className="title discount-custom__desc text-center pl-3 pr-3">{selectedDiscount.name}</h5>
-                                                                                        <p className="discount-custom__desc discount-custom__desc-2 mb-2">
-                                                                                            Endow
-                                                                                            <span className="discount-custom__desc d-block">
-                                                                                                {selectedDiscount.discountPercentage}% discount for minimum bill of $
-                                                                                                {selectedDiscount.minPurchaseAmount}
-                                                                                            </span>
-                                                                                        </p>
-                                                                                        <p className="discount-custom__desc discount-custom__desc-2 mb-2">
-                                                                                            Effective date
-                                                                                            <span className="discount-custom__desc d-block">
-                                                                                                {selectedDiscount &&
-                                                                                                    selectedDiscount.startDate &&
-                                                                                                    format(new Date(selectedDiscount.startDate), "HH:mm:ss dd/MM/yyyy")}
-                                                                                            </span>
-                                                                                        </p>
-                                                                                        <p className="discount-custom__desc discount-custom__desc-2 mb-2">
-                                                                                            Code expiration date
-                                                                                            <span className="discount-custom__desc d-block">
-                                                                                                {selectedDiscount &&
-                                                                                                    selectedDiscount.endDate &&
-                                                                                                    format(new Date(selectedDiscount.endDate), "HH:mm:ss dd/MM/yyyy")}
-                                                                                            </span>
-                                                                                        </p>
-                                                                                        <p className="discount-custom__desc discount-custom__desc-2 mb-2">
-                                                                                            See details
-                                                                                            <span className="discount-custom__desc d-block">
-                                                                                                {selectedDiscount.discountPercentage}% discount for orders from ${selectedDiscount.minPurchaseAmount}.
-                                                                                                Applicable until{" "}
-                                                                                                {selectedDiscount &&
-                                                                                                    selectedDiscount.endDate &&
-                                                                                                    format(new Date(selectedDiscount.endDate), "dd/MM/yyyy")}
-                                                                                                . Each account can only be used once. Discount codes are issued by the Seller and will not be refunded
-                                                                                                for any reason.
-                                                                                            </span>
-                                                                                        </p>
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-                                                                            <div className="modal-footer">
-                                                                                <button type="button" className="custom-button" data-dismiss="modal">
-                                                                                    Agree
-                                                                                </button>
+                                            {promotion.length === 0 ? (
+                                                <h6 className="text-start" style={{ paddingLeft: "15px" }}>
+                                                    There are currently no promotions. Please come back later!
+                                                </h6>
+                                            ) : (
+                                                promotion.map((item, index) => {
+                                                    return (
+                                                        <div className="col-lg-6 col-md-12 col-12" key={index}>
+                                                            <div className="mt-2 mb-2">
+                                                                <div className="blog-author d-flex align-items-center discount-custom discount-custom-2 mt-3">
+                                                                    <div className="author-thumb my-auto">
+                                                                        <img src="./assets/icons/discount-svgrepo.svg" alt="blog" />
+                                                                    </div>
+                                                                    <div className="author-content">
+                                                                        <h5 className="title mt-2">
+                                                                            <p>{item.name}</p>
+                                                                        </h5>
+                                                                        <span className="d-flex align-items-center  discount-custom__desc">
+                                                                            <i className="fal fa-badge-percent"></i> {item.discountPercentage}%
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="mt-3 discount-custom__footer">
+                                                                        <span
+                                                                            className="d-flex align-items-center discount-custom__desc"
+                                                                            onClick={() => handleSavePromotion(item.id)}
+                                                                            style={{ cursor: "pointer" }}
+                                                                        >
+                                                                            <i className="fal fa-save"></i>
+                                                                            Save
+                                                                        </span>
+                                                                        <span
+                                                                            className="d-flex align-items-center discount-custom__link"
+                                                                            data-toggle="modal"
+                                                                            data-target="#condition"
+                                                                            onClick={() => handleConditionClick(item)}
+                                                                        >
+                                                                            Condition
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="modal fade" id="condition" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                                        <div className="modal-dialog" role="document">
+                                                                            <div className="modal-content">
+                                                                                <div className="modal-body">
+                                                                                    {selectedDiscount && (
+                                                                                        <div className="p-2">
+                                                                                            <h5 className="title discount-custom__desc text-center pl-3 pr-3">{selectedDiscount.name}</h5>
+                                                                                            <p className="discount-custom__desc discount-custom__desc-2 mb-2">
+                                                                                                Endow
+                                                                                                <span className="discount-custom__desc d-block">
+                                                                                                    {selectedDiscount.discountPercentage}% discount for minimum bill of $
+                                                                                                    {selectedDiscount.minPurchaseAmount}
+                                                                                                </span>
+                                                                                            </p>
+                                                                                            <p className="discount-custom__desc discount-custom__desc-2 mb-2">
+                                                                                                Effective date
+                                                                                                <span className="discount-custom__desc d-block">
+                                                                                                    {selectedDiscount &&
+                                                                                                        selectedDiscount.startDate &&
+                                                                                                        format(new Date(selectedDiscount.startDate), "HH:mm:ss dd/MM/yyyy")}
+                                                                                                </span>
+                                                                                            </p>
+                                                                                            <p className="discount-custom__desc discount-custom__desc-2 mb-2">
+                                                                                                Code expiration date
+                                                                                                <span className="discount-custom__desc d-block">
+                                                                                                    {selectedDiscount &&
+                                                                                                        selectedDiscount.endDate &&
+                                                                                                        format(new Date(selectedDiscount.endDate), "HH:mm:ss dd/MM/yyyy")}
+                                                                                                </span>
+                                                                                            </p>
+                                                                                            <p className="discount-custom__desc discount-custom__desc-2 mb-2">
+                                                                                                See details
+                                                                                                <span className="discount-custom__desc d-block">
+                                                                                                    {selectedDiscount.discountPercentage}% discount for orders from $
+                                                                                                    {selectedDiscount.minPurchaseAmount}. Applicable until{" "}
+                                                                                                    {selectedDiscount &&
+                                                                                                        selectedDiscount.endDate &&
+                                                                                                        format(new Date(selectedDiscount.endDate), "dd/MM/yyyy")}
+                                                                                                    . Each account can only be used once. Discount codes are issued by the Seller and will not be
+                                                                                                    refunded for any reason.
+                                                                                                </span>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    )}
+                                                                                </div>
+                                                                                <div className="modal-footer">
+                                                                                    <button type="button" className="custom-button" data-dismiss="modal">
+                                                                                        Agree
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                );
-                                            })}
+                                                    );
+                                                })
+                                            )}
                                         </div>
                                     </div>
                                 </div>

@@ -76,7 +76,7 @@ function App() {
                     <Route path="/contact-us" element={<Contact />} />
 
                     {/* Promotion */}
-                    <Route path="/promotion" element={<Promotion />} />
+                    <Route path="/promotion" element={<ProtectedRoute element={<Promotion />} />} />
 
                     {/* Auth */}
                     <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
