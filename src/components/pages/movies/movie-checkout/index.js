@@ -109,7 +109,7 @@ function MovieCheckout() {
                 const orderResponse = await api.post(url.BOOKING.CREATE, orderData, config);
 
                 // Use orderResponse.data.id instead of order.id
-                navigate(`/checkout/thank-you/${orderResponse.data.id}`);
+                navigate(`/checkout/thank-you/${orderResponse.data.orderCode}`);
                 localStorage.removeItem("movie_data");
             }
         } catch (error) {

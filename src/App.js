@@ -85,13 +85,13 @@ function App() {
                     {/* Profile */}
                     <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
                     <Route path="/my-booking" element={<ProtectedRoute element={<MyBooking />} />} />
-                    <Route path="/my-booking/detail/:id" element={<ProtectedRoute element={<BookingDetail />} />} />
+                    <Route path="/my-booking/detail/:orderCode" element={<ProtectedRoute element={<BookingDetail />} />} />
                     <Route path="/favorite" element={<ProtectedRoute element={<Favorite />} />} />
                     <Route path="/discount-wallet" element={<ProtectedRoute element={<DiscountWallet />} />} />
 
                     {/* Other */}
                     <Route path="*" element={<NotFound />} />
-                    <Route path="checkout/thank-you/:id" element={<ProtectedRoute element={<ThankYou />} />} />
+                    <Route path="checkout/thank-you/:orderCode" element={<ProtectedRoute element={<ThankYou />} />} />
                     <Route path="checkout/payment-error" element={<ProtectedRoute element={<PaymentError />} />} />
                 </Routes>
             </div>
