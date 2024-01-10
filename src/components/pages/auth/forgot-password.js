@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../../services/api";
 import url from "../../../services/url";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 function ForgotPassword() {
     const navigate = useNavigate();
@@ -69,6 +70,9 @@ function ForgotPassword() {
 
     return (
         <>
+            <Helmet>
+                <title>Forgot Password | R Mall Cinema</title>
+            </Helmet>
             <section className="account-section center-item">
                 <div className="container">
                     <div className="account-area">
