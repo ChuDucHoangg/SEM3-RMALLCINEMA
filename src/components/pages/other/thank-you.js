@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import Layout from "../../layouts/layout";
-import html2canvas from "html2canvas";
 import { Helmet } from "react-helmet";
 import { useCallback, useEffect, useState } from "react";
 import api from "../../../services/api";
@@ -9,9 +8,11 @@ import { getAccessToken } from "../../../utils/auth";
 import { format } from "date-fns";
 import Loading from "../../layouts/loading";
 import NotFound from "./not-found";
+import { saveAs } from "file-saver";
+import domtoimage from "dom-to-image";
 
 function ThankYou() {
-    const { id } = useParams();
+    const { orderCode } = useParams();
     const [loading, setLoading] = useState(false);
     const [bookingDetail, setBookingDetail] = useState([]);
     const [error, setError] = useState(null);
@@ -25,12 +26,12 @@ function ThankYou() {
         };
 
         try {
-            const bookingDetailResponse = await api.get(url.BOOKING.DETAIL + `/${id}`, config);
+            const bookingDetailResponse = await api.get(url.BOOKING.DETAIL + `/${orderCode}`, config);
             setBookingDetail(bookingDetailResponse.data);
         } catch (error) {
             setError(true);
         }
-    }, [id]);
+    }, [orderCode]);
 
     useEffect(() => {
         setLoading(true);
@@ -46,18 +47,18 @@ function ThankYou() {
     const foods = bookingDetail.foods || [];
 
     // Capture and download bill
-    const captureAndDownload = () => {
+    const handleDownloadBill = () => {
         const billContent = document.getElementById("billContent");
 
-        html2canvas(billContent).then((canvas) => {
-            const image = canvas.toDataURL("image/png");
-            const link = document.createElement("a");
-            link.href = image;
-            link.download = "bill.png";
-            link.click();
-        });
+        domtoimage
+            .toBlob(billContent)
+            .then((blob) => {
+                saveAs(blob, "bill.png");
+            })
+            .catch((error) => {
+                console.error("Error capturing screenshot:", error);
+            });
     };
-
     return (
         <>
             <Helmet>
@@ -80,7 +81,7 @@ function ThankYou() {
                         <div className="container">
                             <div className="speaker-banner-content">
                                 <h2 className="title">Thank You</h2>
-                           
+
                                 <p className="col-lg-8 text-center mx-auto pt-3">
                                     We confirm that your payment has been successfully processed and tickets have been booked. A detailed confirmation email will be sent to you shortly, including
                                     ticket details.
@@ -90,8 +91,8 @@ function ThankYou() {
                     </section>
                     <section className="movie-facility padding-bottom pt-5">
                         <div className="container">
-                            <div className="col-lg-5 mx-auto p-0" id="billContent">
-                                <div className="booking-summery bg-one side-shape">
+                            <div className="col-lg-5 mx-auto p-0">
+                                <div className="booking-summery bg-one side-shape" id="billContent">
                                     <h4 className="title">
                                         Cinema ticket
                                         <div className="info info-user">
@@ -101,15 +102,19 @@ function ThankYou() {
                                     </h4>
                                     <ul>
                                         <li>
-                                            <h6 className="subtitle">Movie</h6>
+                                            <h6 className="subtitle">
+                                                <span>Movie</span>
+                                                <span>Room</span>
+                                            </h6>
                                             <div className="info">
                                                 <span>{bookingDetail.movieName}</span>
+                                                <span>{bookingDetail.roomName}</span>
                                             </div>
                                         </li>
                                     </ul>
 
                                     <ul>
-                                        <li>
+                                        <li className="mtb-custom">
                                             <h6 className="subtitle">
                                                 <span>Tickets</span>
                                                 <span>Quantity: {tickets.length}</span>
@@ -147,12 +152,14 @@ function ThankYou() {
                                     ) : null}
 
                                     <ul>
-                                        <li>
+                                        <li className="mtb-custom">
                                             <h6 className="subtitle">
                                                 <span>booking time</span>
+                                                <span>Start date</span>
                                             </h6>
                                             <span className="info">
                                                 <span>{bookingDetail && bookingDetail.createdAt && format(new Date(bookingDetail.createdAt), "HH:mm:ss dd/MM/yyyy")}</span>
+                                                <span>{bookingDetail && bookingDetail.startDate && format(new Date(bookingDetail.startDate), "HH:mm:ss dd/MM/yyyy")}</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -160,19 +167,19 @@ function ThankYou() {
                                     <ul>
                                         <li className="mtb-custom">
                                             <h6 className="subtitle">
-                                                <span>Total</span>
+                                                <span>Sub Total</span>
                                                 <span>${bookingDetail.total}</span>
                                             </h6>
                                         </li>
                                         <li className="mtb-custom">
                                             <h6 className="subtitle">
-                                                <span>Tiscount Amount</span>
+                                                <span>Discount Amount</span>
                                                 <span>${bookingDetail.discountAmount}</span>
                                             </h6>
                                         </li>
                                         <li className="mtb-custom">
                                             <h6 className="subtitle">
-                                                <span>Tinal Amount</span>
+                                                <span>Final Amount</span>
                                                 <span>${bookingDetail.finalTotal}</span>
                                             </h6>
                                         </li>
@@ -191,7 +198,7 @@ function ThankYou() {
                             </div>
 
                             <div className="d-flex align-item-center justify-content-center">
-                                <button className="custom-button btn-download" onClick={captureAndDownload}>
+                                <button className="custom-button btn-download" onClick={handleDownloadBill}>
                                     <i className="fal fa-receipt"></i> Download Bill
                                 </button>
                             </div>

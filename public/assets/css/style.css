@@ -4788,11 +4788,11 @@ input[type="submit"] {
     visibility: hidden;
 }
 
-.single-seat input:checked ~ .sit-num {
+/* .single-seat input:checked ~ .sit-num {
     opacity: 1;
     visibility: visible;
     cursor: initial;
-}
+} */
 
 @media (max-width: 767px) {
     .screen-wrapper {
@@ -9518,6 +9518,7 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
 }
 
 .info-user > span {
@@ -9537,7 +9538,7 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
 }
 
 .booking-summery ul .mtb-custom .subtitle {
-    text-transform: lowercase;
+    white-space: nowrap;
 }
 
 .btn-download {

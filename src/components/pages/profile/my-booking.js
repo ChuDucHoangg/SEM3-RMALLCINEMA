@@ -56,13 +56,13 @@ function MyBooking() {
                         currentItemPage.map((item, index) => (
                             <div className="movie-list mb-0" key={index}>
                                 <div className="movie-thumb c-thumb">
-                                    <Link to={`/my-booking/detail/${item.id}`} className="w-100 h-100">
+                                    <Link to={`/my-booking/detail/${item.orderCode}`} className="w-100 h-100">
                                         <img src={item.imageMovie} alt="movie" />
                                     </Link>
                                 </div>
                                 <div className="movie-content bg-one">
                                     <h5 className="title">
-                                        <Link to={`/my-booking/detail/${item.id}`}>{item.movieTitle}</Link>
+                                        <Link to={`/my-booking/detail/${item.orderCode}`}>{item.movieTitle}</Link>
                                     </h5>
                                     <ul className="movie-rating-percent">
                                         <li>
@@ -84,7 +84,7 @@ function MyBooking() {
                                     <div className="book-area">
                                         <div className="book-ticket">
                                             <div className="react-item">
-                                                <Link to={`/my-booking/detail/${item.id}`}>
+                                                <Link to={`/my-booking/detail/${item.orderCode}`}>
                                                     <div className="thumb">
                                                         <i className="fal fa-ticket"></i>
                                                     </div>
