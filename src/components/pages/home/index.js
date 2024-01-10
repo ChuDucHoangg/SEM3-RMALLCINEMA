@@ -4,8 +4,6 @@ import { Helmet } from "react-helmet";
 import SearchTicket from "../../views/home/search-ticket";
 import Layout from "../../layouts/layout";
 import Movies from "../../views/home/movies";
-import Events from "../../views/home/events";
-import Blog from "../../views/home/blog";
 function Home() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -218,8 +216,6 @@ function Home() {
                 </section>
                 <SearchTicket />
                 <Movies />
-                <Events />
-                <Blog />
             </Layout>
         </>
     );
