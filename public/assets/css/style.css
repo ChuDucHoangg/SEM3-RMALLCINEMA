@@ -9691,3 +9691,9 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
 .grid--area .grid-item .grid-inner .grid-content .cart-button .custom-button.disabled-btn:hover {
     box-shadow: none;
 }
+
+.center-item {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}

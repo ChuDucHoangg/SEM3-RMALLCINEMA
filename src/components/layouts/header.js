@@ -39,7 +39,19 @@ function Header() {
                                 <NavLink to="/promotion">Promotion</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/blog-list">blog</NavLink>
+                                <NavLink to="/faq">Utilities</NavLink>
+                                <ul className="submenu">
+                                    <li>
+                                        <NavLink to="/faq">
+                                            <i className="fal fa-long-arrow-alt-right"></i>FAQ
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/terms-conditions">
+                                            <i className="fal fa-long-arrow-alt-right"></i>Terms & Conditions
+                                        </NavLink>
+                                    </li>
+                                </ul>
                             </li>
 
                             {isLoggedIn() ? (

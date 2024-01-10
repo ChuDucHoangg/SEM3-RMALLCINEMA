@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import url from "../../../services/url";
 import api from "../../../services/api";
 import { Helmet } from "react-helmet";
@@ -94,58 +94,56 @@ function Register() {
                 <title>Register | RMall</title>
             </Helmet>
             {loading ? <Loading /> : ""}
-            <section className="account-section bg_img" data-background="assets/images/account/account-bg.html">
+            <section className="account-section bg_img center-item" data-background="assets/images/account/account-bg.html">
                 <div className="container">
-                    <div className="padding-top padding-bottom">
-                        <div className="account-area">
-                            <div className="section-header-3">
-                                <span className="cate">welcome !</span>
-                                <h2 className="title">Create Account</h2>
+                    <div className="account-area">
+                        <div className="section-header-3">
+                            <span className="cate">welcome !</span>
+                            <h2 className="title">Create Account</h2>
+                        </div>
+                        <form className="account-form" onSubmit={handleRegister}>
+                            <div className="form-group">
+                                <label htmlFor="fullname">
+                                    Name<span>*</span>
+                                </label>
+                                <input type="text" placeholder="Enter Your Name" id="fullname" name="fullname" value={formData.fullname} onChange={handleChange} autoFocus />
+                                {formErrors.fullname && <p className="invalid-feedback">{formErrors.fullname}</p>}
                             </div>
-                            <form className="account-form" onSubmit={handleRegister}>
-                                <div className="form-group">
-                                    <label htmlFor="fullname">
-                                        Name<span>*</span>
-                                    </label>
-                                    <input type="text" placeholder="Enter Your Name" id="fullname" name="fullname" value={formData.fullname} onChange={handleChange} autoFocus />
-                                    {formErrors.fullname && <p className="invalid-feedback">{formErrors.fullname}</p>}
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="email">
-                                        Email<span>*</span>
-                                    </label>
-                                    <input type="email" placeholder="Enter Your Email" id="email" name="email" value={formData.email} onChange={handleChange} />
-                                    {formErrors.email && <p className="invalid-feedback">{formErrors.email}</p>}
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password">
-                                        Password<span>*</span>
-                                    </label>
-                                    <div className="input-wrapper">
-                                        <input type={showPassword ? "text" : "password"} placeholder="Password" id="password" name="password" value={formData.password} onChange={handleChange} />
+                            <div className="form-group">
+                                <label htmlFor="email">
+                                    Email<span>*</span>
+                                </label>
+                                <input type="email" placeholder="Enter Your Email" id="email" name="email" value={formData.email} onChange={handleChange} />
+                                {formErrors.email && <p className="invalid-feedback">{formErrors.email}</p>}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">
+                                    Password<span>*</span>
+                                </label>
+                                <div className="input-wrapper">
+                                    <input type={showPassword ? "text" : "password"} placeholder="Password" id="password" name="password" value={formData.password} onChange={handleChange} />
 
-                                        <div className="input-group-append">
-                                            <span className="show-pass" onClick={handleTogglePassword}>
-                                                {showPassword ? <i className="fa fa-eye-slash"></i> : <i className="fa fa-eye"></i>}
-                                            </span>
-                                        </div>
+                                    <div className="input-group-append">
+                                        <span className="show-pass" onClick={handleTogglePassword}>
+                                            {showPassword ? <i className="fa fa-eye-slash"></i> : <i className="fa fa-eye"></i>}
+                                        </span>
                                     </div>
-                                    {formErrors.password && <p className="invalid-feedback">{formErrors.password}</p>}
                                 </div>
-
-                                <div className="form-group checkgroup">
-                                    <input type="checkbox" id="agree" required defaultChecked />
-                                    <label htmlFor="agree">
-                                        I agree with this <a href="#!">Terms </a> and <a href="#!"> Privacy Policy</a>.
-                                    </label>
-                                </div>
-                                <div className="form-group text-center">
-                                    <input type="submit" value="Register" />
-                                </div>
-                            </form>
-                            <div className="option">
-                                Already have an account? <NavLink to="/login">Login</NavLink>.
+                                {formErrors.password && <p className="invalid-feedback">{formErrors.password}</p>}
                             </div>
+
+                            <div className="form-group checkgroup">
+                                <input type="checkbox" id="agree" required defaultChecked />
+                                <label htmlFor="agree">
+                                    I agree with this <Link to="/terms-conditions">Terms and Privacy Policy</Link>.
+                                </label>
+                            </div>
+                            <div className="form-group text-center">
+                                <input type="submit" value="Register" />
+                            </div>
+                        </form>
+                        <div className="option">
+                            Already have an account? <NavLink to="/login">Login</NavLink>.
                         </div>
                     </div>
                 </div>
