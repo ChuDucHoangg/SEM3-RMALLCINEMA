@@ -26,6 +26,8 @@ import DiscountWallet from "./components/pages/profile/discount-wallet.js";
 import Promotion from "./components/pages/promotion/index.js";
 import ThankYou from "./components/pages/other/thank-you.js";
 import PaymentError from "./components/pages/other/payment-error.js";
+import FAQ from "./components/pages/other/faq.js";
+import TermsConditions from "./components/pages/other/terms-conditions.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -93,6 +95,8 @@ function App() {
                     <Route path="*" element={<NotFound />} />
                     <Route path="checkout/thank-you/:orderCode" element={<ProtectedRoute element={<ThankYou />} />} />
                     <Route path="checkout/payment-error" element={<ProtectedRoute element={<PaymentError />} />} />
+                    <Route path="faq" element={<FAQ />} />
+                    <Route path="terms-conditions" element={<TermsConditions />} />
                 </Routes>
             </div>
         </MovieProvider>

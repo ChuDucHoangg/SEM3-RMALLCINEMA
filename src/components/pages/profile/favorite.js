@@ -77,23 +77,14 @@ function Favorite() {
                             <div className="movie-list mb-0" key={index}>
                                 <div className="movie-thumb c-thumb">
                                     <Link to={`/movie-details/${item.movieId}`} className="w-100 h-100">
-                                        <img src="assets/img/movie/movie-list-1.jpg" alt="movie" />
+                                        <img src={item.movieImage} alt="movie" />
                                     </Link>
                                 </div>
                                 <div className="movie-content bg-one">
                                     <h5 className="title">
-                                        <Link to="">{item.movieName}</Link>
+                                        <Link to={`/movie-details/${item.movieId}`}>{item.movieName}</Link>
                                     </h5>
-                                    <ul className="movie-rating-percent">
-                                        <li>
-                                            <i className="fal fa-shopping-cart"></i>
-                                            <span className="content">88.8k</span>
-                                        </li>
-                                        <li>
-                                            <i className="fal fa-star"></i>
-                                            <span className="content">5.0</span>
-                                        </li>
-                                    </ul>
+
                                     <div className="book-area">
                                         <div className="book-ticket">
                                             <div className="react-item">

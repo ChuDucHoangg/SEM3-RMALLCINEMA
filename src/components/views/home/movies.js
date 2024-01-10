@@ -32,8 +32,8 @@ function Movies() {
                                 <div className="section-header-1">
                                     <h2 className="title">movies</h2>
 
-                                    <Link to="/movies" class="view-more">
-                                        View More <i class="fal fa-long-arrow-alt-right"></i>
+                                    <Link to="/movies" className="view-more">
+                                        View More <i className="fal fa-long-arrow-alt-right"></i>
                                     </Link>
                                 </div>
                                 <div className="row mb-30-none justify-content-center">

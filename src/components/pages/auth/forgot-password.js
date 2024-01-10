@@ -69,34 +69,32 @@ function ForgotPassword() {
 
     return (
         <>
-            <section className="account-section">
+            <section className="account-section center-item">
                 <div className="container">
-                    <div className="padding-top padding-bottom">
-                        <div className="account-area">
-                            <div className="section-header-3">
-                                <span className="cate">hello !</span>
-                                <h2 className="title">don't worry</h2>
-                            </div>
-                            <form className="account-form" onSubmit={handleForgotPassword}>
-                                <div className="form-group">
-                                    <label htmlFor="email">
-                                        Email<span>*</span>
-                                    </label>
-                                    <input type="email" placeholder="Enter Your Email" id="email" name="email" value={formData.email} onChange={handleChange} />
-                                    {formErrors.email && <p className="invalid-feedback">{formErrors.email}</p>}
-                                </div>
-                                <div className="form-group text-center">
-                                    {!submitting ? (
-                                        <input type="submit" value="reset link" />
-                                    ) : (
-                                        <button type="button" className="btn-custom" disabled>
-                                            <i className="fa fa-spinner fa-spin"></i> Submitting...
-                                        </button>
-                                    )}
-                                </div>
-                            </form>
-                            <div className="option">We send a password reset link to your email.</div>
+                    <div className="account-area">
+                        <div className="section-header-3">
+                            <span className="cate">hello !</span>
+                            <h2 className="title">don't worry</h2>
                         </div>
+                        <form className="account-form" onSubmit={handleForgotPassword}>
+                            <div className="form-group">
+                                <label htmlFor="email">
+                                    Email<span>*</span>
+                                </label>
+                                <input type="email" placeholder="Enter Your Email" id="email" name="email" value={formData.email} onChange={handleChange} />
+                                {formErrors.email && <p className="invalid-feedback">{formErrors.email}</p>}
+                            </div>
+                            <div className="form-group text-center">
+                                {!submitting ? (
+                                    <input type="submit" value="reset link" />
+                                ) : (
+                                    <button type="button" className="btn-custom" disabled>
+                                        <i className="fa fa-spinner fa-spin"></i> Submitting...
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                        <div className="option">We send a password reset link to your email.</div>
                     </div>
                 </div>
             </section>

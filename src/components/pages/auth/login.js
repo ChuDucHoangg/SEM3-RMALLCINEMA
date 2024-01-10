@@ -98,72 +98,70 @@ function Login() {
                 <title>Login | RMall Cinema</title>
             </Helmet>
             {loading ? <Loading /> : ""}
-            <section className="account-section" style={{ height: "100vh" }}>
+            <section className="account-section center-item">
                 <div className="container">
-                    <div className="padding-top padding-bottom">
-                        <div className="account-area">
-                            <div className="section-header-3">
-                                <span className="cate">hello !</span>
-                                <h2 className="title">welcome back</h2>
-                            </div>
-                            <form className="account-form" onSubmit={handleLogin}>
-                                <div className="form-group">
-                                    <label htmlFor="email">
-                                        Email<span>*</span>
-                                    </label>
-                                    <input type="text" placeholder="Enter Your Email" id="email" name="email" value={formData.email} onChange={handleChange} />
-                                    {formErrors.email && <p className="invalid-feedback">{formErrors.email}</p>}
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password">
-                                        Password<span>*</span>
-                                    </label>
-                                    <div className="input-wrapper">
-                                        <input type={showPassword ? "text" : "password"} placeholder="Password" id="password" name="password" value={formData.password} onChange={handleChange} />
-
-                                        <div className="input-group-append">
-                                            <span className="show-pass" onClick={handleTogglePassword}>
-                                                {showPassword ? <i className="fa fa-eye-slash"></i> : <i className="fa fa-eye"></i>}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    {formErrors.password && <p className="invalid-feedback">{formErrors.password}</p>}
-                                </div>
-                                <div className="form-group checkgroup">
-                                    <input type="checkbox" id="bal2" defaultChecked />
-                                    <label htmlFor="bal2">remember me</label>
-                                    <NavLink to="/forgot-password" className="forget-pass">
-                                        Forgot Password?
-                                    </NavLink>
-                                </div>
-                                <div className="form-group text-center">
-                                    <input type="submit" value="log in" />
-                                </div>
-                            </form>
-                            <div className="option">
-                                Don't have an account? <NavLink to="/register">register now</NavLink>.
-                            </div>
-                            <div className="or">
-                                <span>Or</span>
-                            </div>
-                            <ul className="social-icons">
-                                <li>
-                                    <a href="#!">
-                                        <i className="fab fa-facebook-f"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#!">
-                                        <i className="fab fa-google"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#!">
-                                        <i className="fab fa-twitter"></i>
-                                    </a>
-                                </li>
-                            </ul>
+                    <div className="account-area">
+                        <div className="section-header-3">
+                            <span className="cate">hello !</span>
+                            <h2 className="title">welcome back</h2>
                         </div>
+                        <form className="account-form" onSubmit={handleLogin}>
+                            <div className="form-group">
+                                <label htmlFor="email">
+                                    Email<span>*</span>
+                                </label>
+                                <input type="text" placeholder="Enter Your Email" id="email" name="email" value={formData.email} onChange={handleChange} autoFocus />
+                                {formErrors.email && <p className="invalid-feedback">{formErrors.email}</p>}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">
+                                    Password<span>*</span>
+                                </label>
+                                <div className="input-wrapper">
+                                    <input type={showPassword ? "text" : "password"} placeholder="Password" id="password" name="password" value={formData.password} onChange={handleChange} />
+
+                                    <div className="input-group-append">
+                                        <span className="show-pass" onClick={handleTogglePassword}>
+                                            {showPassword ? <i className="fa fa-eye-slash"></i> : <i className="fa fa-eye"></i>}
+                                        </span>
+                                    </div>
+                                </div>
+                                {formErrors.password && <p className="invalid-feedback">{formErrors.password}</p>}
+                            </div>
+                            <div className="form-group checkgroup">
+                                <input type="checkbox" id="bal2" defaultChecked />
+                                <label htmlFor="bal2">remember me</label>
+                                <NavLink to="/forgot-password" className="forget-pass">
+                                    Forgot Password?
+                                </NavLink>
+                            </div>
+                            <div className="form-group text-center">
+                                <input type="submit" value="log in" />
+                            </div>
+                        </form>
+                        <div className="option">
+                            Don't have an account? <NavLink to="/register">register now</NavLink>.
+                        </div>
+                        <div className="or">
+                            <span>Or</span>
+                        </div>
+                        <ul className="social-icons">
+                            <li>
+                                <a href="#!">
+                                    <i className="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <i className="fab fa-google"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <i className="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </section>

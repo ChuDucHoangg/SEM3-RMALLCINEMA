@@ -10,6 +10,7 @@ import Loading from "../../layouts/loading";
 import NotFound from "../../pages/other/not-found";
 import { saveAs } from "file-saver";
 import domtoimage from "dom-to-image";
+import Swal from "sweetalert2";
 
 function BookingDetail() {
     const { orderCode } = useParams();
@@ -56,7 +57,11 @@ function BookingDetail() {
                 saveAs(blob, "bill.png");
             })
             .catch((error) => {
-                console.error("Error capturing screenshot:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "An error occurred during the download process. Please try again later!",
+                });
             });
     };
     return (
@@ -104,7 +109,7 @@ function BookingDetail() {
                                         <li>
                                             <h6 className="subtitle">
                                                 <span>Movie</span>
-                                                <span>Room</span>
+                                                <span>Screen</span>
                                             </h6>
                                             <div className="info">
                                                 <span>{bookingDetail.movieName}</span>
@@ -132,7 +137,7 @@ function BookingDetail() {
 
                                     {foods.length > 0 ? (
                                         <ul>
-                                            <li>
+                                            <li className="mtb-custom">
                                                 <h6 className="subtitle">
                                                     <span>food & drinks</span>
                                                 </h6>

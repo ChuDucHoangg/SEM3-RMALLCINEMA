@@ -93,23 +93,23 @@ function LayoutProfile({ children }) {
                                             <h3 className="profile-menu__title">Customer Service</h3>
                                             <ul className="profile-menu__list">
                                                 <li>
-                                                    <Link to="/help" className={`profile-menu__link ${activeLink === "help" ? "active" : ""}`} onClick={() => handleSetActiveLink("help")}>
+                                                    <Link to="/faq" className={`profile-menu__link ${activeLink === "faq" ? "active" : ""}`} onClick={() => handleSetActiveLink("faq")}>
                                                         <span className="profile-menu__icon">
                                                             <img src="./assets/icons/info.svg" alt="" className="icon" />
                                                         </span>
-                                                        Help
+                                                        FAQ
                                                     </Link>
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        to="/terms-of-use"
-                                                        className={`profile-menu__link ${activeLink === "terms-of-use" ? "active" : ""}`}
-                                                        onClick={() => handleSetActiveLink("terms-of-use")}
+                                                        to="/terms-conditions"
+                                                        className={`profile-menu__link ${activeLink === "terms-conditions" ? "active" : ""}`}
+                                                        onClick={() => handleSetActiveLink("terms-conditions")}
                                                     >
                                                         <span className="profile-menu__icon">
                                                             <img src="./assets/icons/danger.svg" alt="" className="icon" />
                                                         </span>
-                                                        Terms of Use
+                                                        Terms Conditions
                                                     </Link>
                                                 </li>
                                             </ul>
