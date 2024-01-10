@@ -3,6 +3,7 @@ import api from "../../../services/api";
 import url from "../../../services/url";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import Swal from "sweetalert2";
 
 function ForgotPassword() {
     const navigate = useNavigate();
@@ -48,6 +49,13 @@ function ForgotPassword() {
                 if (response.status === 200) {
                     setSubmitting(true);
                     setTimeout(() => setCountdown((prevCountdown) => prevCountdown - 1), 1000);
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: "Successfully!",
+                            text: "Reset password successfully!",
+                            icon: "success",
+                        });
+                    }, 2000);
                 }
             } catch (error) {
                 setFormErrors({ email: "Email address does not exist." });

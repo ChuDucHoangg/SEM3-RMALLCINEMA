@@ -28,6 +28,7 @@ import ThankYou from "./components/pages/other/thank-you.js";
 import PaymentError from "./components/pages/other/payment-error.js";
 import FAQ from "./components/pages/other/faq.js";
 import TermsConditions from "./components/pages/other/terms-conditions.js";
+import ResetPassword from "./components/pages/auth/reset-password.js";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -83,6 +84,7 @@ function App() {
                     <Route path="/register" element={<ProtectedLoginRoute element={<Register />} />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/change-password" element={<ProtectedRoute element={<ChangePassword />} />} />
+                    <Route path="/reset-password/:resetToken" element={<ProtectedLoginRoute element={<ResetPassword />} />} />
 
                     {/* Profile */}
                     <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />

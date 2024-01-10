@@ -5,7 +5,7 @@ import Layout from "../../../layouts/layout";
 import { Link, useParams } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
-import { format, addDays } from "date-fns";
+import { format, addDays, isBefore, subMinutes } from "date-fns";
 import { useMovieContext } from "../../../../context/MovieContext";
 import Select from "react-select";
 
@@ -22,6 +22,7 @@ function MovieTicket() {
     const [windowWarning, setWindowWarning] = useState(false);
     const [selectedShowCode, setSelectedShowCode] = useState(null);
     const [selectedShowStartTime, setSelectedShowStartTime] = useState(null);
+    const currentDateTime = new Date();
 
     const handleShowTimeClick = (showCode, startTime) => {
         setWindowWarning(!windowWarning);
@@ -173,7 +174,6 @@ function MovieTicket() {
                                     <img src="assets/img/ticket/date.png" alt="ticket" />
                                 </div>
                                 <span className="type">date</span>
-                                {/* <input type="date" name="date" className="select-date" /> */}
 
                                 <Select name="from" placeholder="Select date" options={dateOptions} isSearchable={false} styles={customSelectStyles} />
                             </div>
@@ -210,7 +210,7 @@ function MovieTicket() {
                 <div className="ticket-plan-section padding-bottom padding-top">
                     <div className="container">
                         <div className="row justify-content-center">
-                            <div className="col-lg-12 mb-5 mb-lg-0">
+                            {/* <div className="col-lg-12 mb-5 mb-lg-0">
                                 {show.length > 0 ? (
                                     <ul className="seat-plan-wrapper">
                                         {show.map((item, index) => {
@@ -238,6 +238,61 @@ function MovieTicket() {
                                                         >
                                                             Book
                                                         </div>
+                                                    </div>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                ) : (
+                                    <p>There are currently no shows for this movie. Please come back later.</p>
+                                )}
+                            </div> */}
+                            <div className="col-lg-12 mb-5 mb-lg-0">
+                                {show.length > 0 ? (
+                                    <ul className="seat-plan-wrapper">
+                                        {show.map((item, index) => {
+                                            const showStartDate = new Date(item.startDate);
+
+                                            // Kiểm tra nếu showStartDate là trước 30 phút so với thời điểm hiện tại
+                                            const isShowClosed = isBefore(currentDateTime, subMinutes(showStartDate, 30));
+
+                                            return (
+                                                <li key={index}>
+                                                    {isShowClosed ? (
+                                                        <div className="movie-name">
+                                                            <div className="icons">
+                                                                <i className="fal fa-calendar"></i>
+                                                                <i className="fas fa-calendar"></i>
+                                                            </div>
+                                                            <Link to={`/movie-seat/${item.showCode}`} className="name">
+                                                                {format(showStartDate, "HH:mm:ss dd/MM/yyyy")}
+                                                            </Link>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="movie-name">
+                                                            <div className="icons">
+                                                                <i className="fal fa-calendar"></i>
+                                                            </div>
+                                                            <p className="name">{format(showStartDate, "HH:mm:ss dd/MM/yyyy")}</p>
+                                                        </div>
+                                                    )}
+                                                    <div className="location-icon">
+                                                        <i className="far fa-globe-asia"></i> {item.language}
+                                                    </div>
+                                                    <div className="movie-schedule">
+                                                        {isShowClosed ? (
+                                                            <div
+                                                                className="item"
+                                                                onClick={() => {
+                                                                    handleSelectShow(item.id);
+                                                                    handleShowTimeClick(item.showCode, format(showStartDate, "HH:mm:ss dd/MM/yyyy"));
+                                                                }}
+                                                            >
+                                                                Book
+                                                            </div>
+                                                        ) : (
+                                                            <div>Show has closed</div>
+                                                        )}
                                                     </div>
                                                 </li>
                                             );
