@@ -9697,3 +9697,8 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     align-items: center;
     height: 100vh;
 }
+
+.widget-1-body {
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.3s ease;
+}
