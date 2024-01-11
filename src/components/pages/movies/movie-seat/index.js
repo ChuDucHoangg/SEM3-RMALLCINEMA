@@ -8,6 +8,7 @@ import url from "../../../../services/url";
 import { useMovieContext } from "../../../../context/MovieContext";
 import Swal from "sweetalert2";
 import NotFound from "../../other/not-found";
+import { getAccessToken } from "../../../../utils/auth";
 function MovieSeat() {
     const { showCode } = useParams();
     const { movieData, updateSelectedSeats } = useMovieContext();
@@ -18,8 +19,14 @@ function MovieSeat() {
     const [selectSeats, setSelectSeats] = useState([]);
 
     const loadSeat = useCallback(async () => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getAccessToken()}`,
+            },
+        };
         try {
-            const seatResponse = await api.get(url.SEAT.BY_SHOW + `/${showCode}`);
+            const seatResponse = await api.get(url.SEAT.BY_SHOW + `/${showCode}`, config);
             const seatData = seatResponse.data;
 
             // Use reduce to combine data by rowNumber
@@ -57,34 +64,6 @@ function MovieSeat() {
         // eslint-disable-next-line
     }, [selectSeats]);
 
-    // const handleSeatSelect = (rowNumber, seatNumber) => {
-    //     if (seat && seat[rowNumber] && Array.isArray(seat[rowNumber])) {
-    //         const selectedSeat = seat[rowNumber].find((item) => item.seatNumber === seatNumber);
-
-    //         if (selectedSeat) {
-    //             const seatId = selectedSeat.id;
-    //             const seatPrice = selectedSeat.price;
-
-    //             if (selectSeats.some((s) => s.id === seatId)) {
-    //                 // If the seat is already selected, remove it from the selectSeats list
-    //                 setSelectSeats(selectSeats.filter((selectedSeat) => selectedSeat.id !== seatId));
-    //             } else if (selectSeats.length < 5) {
-    //                 // If the total number of selected seats is less than 5, add it to the selectSeats list
-    //                 setSelectSeats([...selectSeats, { id: seatId, price: seatPrice }]);
-    //             } else {
-    //                 Swal.fire({
-    //                     icon: "warning",
-    //                     title: "Oops...",
-    //                     text: "You can only select a maximum of 5 seats.",
-    //                     confirmButtonText: "Agreed, I understand.",
-    //                 });
-    //             }
-    //         } else {
-    //             console.error("Invalid seat number.");
-    //         }
-    //     }
-    //     updateSelectedSeats(selectSeats);
-    // };
     const handleSeatSelect = (rowNumber, seatNumber) => {
         if (seat && seat[rowNumber] && Array.isArray(seat[rowNumber])) {
             const selectedSeat = seat[rowNumber].find((item) => item.seatNumber === seatNumber);
@@ -192,7 +171,7 @@ function MovieSeat() {
                                                         <>
                                                             <ul className="seat--area">
                                                                 <li className="seat-line">
-                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10) - (rowNumber > 0 ? 1 : 0))}</span>
+                                                                    <span>{String.fromCharCode(64 + parseInt(rowNumber, 10))}</span>
                                                                     <li className="front-seat">
                                                                         <ul>
                                                                             {seat[rowNumber]
@@ -212,7 +191,7 @@ function MovieSeat() {
                                                                                 ))}
                                                                         </ul>
                                                                     </li>
-                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10) - (rowNumber > 0 ? 1 : 0))}</span>
+                                                                    <span>{String.fromCharCode(64 + parseInt(rowNumber, 10))}</span>
                                                                 </li>
                                                             </ul>
                                                         </>
@@ -233,7 +212,7 @@ function MovieSeat() {
                                                         <>
                                                             <ul className="seat--area">
                                                                 <li className="seat-line">
-                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                    <span>{String.fromCharCode(64 + parseInt(rowNumber, 10))}</span>
                                                                     <li className="front-seat">
                                                                         <ul>
                                                                             {seat[rowNumber]
@@ -255,7 +234,7 @@ function MovieSeat() {
                                                                                 ))}
                                                                         </ul>
                                                                     </li>
-                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10))}</span>
+                                                                    <span>{String.fromCharCode(64 + parseInt(rowNumber, 10))}</span>
                                                                 </li>
                                                             </ul>
                                                         </>
@@ -276,7 +255,7 @@ function MovieSeat() {
                                                         <>
                                                             <ul className="seat--area">
                                                                 <li className="seat-line">
-                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10) - (rowNumber > 0 ? 1 : 0))}</span>
+                                                                    <span>{String.fromCharCode(64 + parseInt(rowNumber, 10))}</span>
 
                                                                     <li className="front-seat">
                                                                         <ul>
@@ -297,7 +276,7 @@ function MovieSeat() {
                                                                                 ))}
                                                                         </ul>
                                                                     </li>
-                                                                    <span>{String.fromCharCode(65 + parseInt(rowNumber, 10) - (rowNumber > 0 ? 1 : 0))}</span>
+                                                                    <span>{String.fromCharCode(64 + parseInt(rowNumber, 10))}</span>
                                                                 </li>
                                                             </ul>
                                                         </>
