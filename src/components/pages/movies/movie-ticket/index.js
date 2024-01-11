@@ -2,7 +2,7 @@ import Loading from "../../../layouts/loading";
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
 import { format, addDays, isBefore, subMinutes } from "date-fns";
@@ -16,13 +16,25 @@ function MovieTicket() {
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState([]);
     const [language, setLanguage] = useState([]);
-
     const [dateOptions, setDateOptions] = useState([]);
-
     const [windowWarning, setWindowWarning] = useState(false);
     const [selectedShowCode, setSelectedShowCode] = useState(null);
     const [selectedShowStartTime, setSelectedShowStartTime] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedLanguage, setSelectedLanguage] = useState(null);
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const from = queryParams.get("from");
+    const languageParam = queryParams.get("language");
+
+    const navigate = useNavigate();
     const currentDateTime = new Date();
+
+    useEffect(() => {
+        setSelectedDate(from ? { value: from, label: format(new Date(from), "dd/MM/yyyy") } : null);
+        setSelectedLanguage(languageParam ? { value: languageParam, label: languageParam } : null);
+    }, [from, languageParam]);
 
     const handleShowTimeClick = (showCode, startTime) => {
         setWindowWarning(!windowWarning);
@@ -30,26 +42,25 @@ function MovieTicket() {
         setSelectedShowStartTime(startTime);
     };
 
-    const loadShow = useCallback(
-        async (from, language) => {
-            try {
-                let apiUrl = `${url.SHOW.BY_MOVIE}/${id}`;
-                if (from) {
-                    apiUrl += `?from=${from}`;
-                }
-                if (language) {
-                    apiUrl += `${from ? "&" : "?"}language=${language}`;
-                }
+    const loadShow = useCallback(async () => {
+        try {
+            let apiUrl = `${url.SHOW.BY_MOVIE}/${id}`;
+            if (from) {
+                apiUrl += `?from=${from}`;
+            }
+            if (languageParam) {
+                apiUrl += `${from ? "&" : "?"}language=${languageParam}`;
+            }
 
-                const showResponse = await api.get(apiUrl);
-                const languageResponse = await api.get(url.LANGUAGE.LIST);
+            const showResponse = await api.get(apiUrl);
+            const languageResponse = await api.get(url.LANGUAGE.LIST);
 
-                setShow(showResponse.data);
-                setLanguage(languageResponse.data);
-            } catch (error) {}
-        },
-        [id]
-    );
+            setShow(showResponse.data);
+            setLanguage(languageResponse.data);
+        } catch (error) {
+            console.error("Error loading shows:", error);
+        }
+    }, [id, from, languageParam]);
 
     useEffect(() => {
         loadShow();
@@ -64,21 +75,24 @@ function MovieTicket() {
         updateSelectShow(showId);
     };
 
-    const handleFormSubmit = (event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
-        const from = event.target.elements.from.value;
-        const language = event.target.elements.language.value;
+        const from = selectedDate ? `from=${selectedDate.value}` : "";
+        const language = selectedLanguage ? `language=${selectedLanguage.value}` : "";
 
         if (from || language) {
-            loadShow(from, language);
+            try {
+                await loadShow();
+                const queryParams = [from, language].filter(Boolean).join("&");
+                navigate(`/movie-ticket/${id}${queryParams ? `?${queryParams}` : ""}`);
+            } catch (error) {
+                console.error("Error loading shows:", error);
+            }
         }
     };
 
-    // Get the current date
     useEffect(() => {
         const currentDate = new Date();
-
-        //
         const newOptions = Array.from({ length: 6 }, (_, index) => {
             const date = addDays(currentDate, index);
             return {
@@ -165,7 +179,6 @@ function MovieTicket() {
                         </div>
                     </div>
                 </section>
-
                 <section className="book-section bg-one">
                     <div className="container">
                         <form className="ticket-search-form two" onSubmit={handleFormSubmit}>
@@ -175,7 +188,15 @@ function MovieTicket() {
                                 </div>
                                 <span className="type">date</span>
 
-                                <Select name="from" placeholder="Select date" options={dateOptions} isSearchable={false} styles={customSelectStyles} />
+                                <Select
+                                    name="from"
+                                    placeholder="Select date"
+                                    options={dateOptions}
+                                    isSearchable={false}
+                                    styles={customSelectStyles}
+                                    value={selectedDate}
+                                    onChange={(selectedOption) => setSelectedDate(selectedOption)}
+                                />
                             </div>
 
                             <div className="form-group">
@@ -193,6 +214,8 @@ function MovieTicket() {
                                     }))}
                                     isSearchable={false}
                                     styles={customSelectStyles}
+                                    value={selectedLanguage}
+                                    onChange={(selectedOption) => setSelectedLanguage(selectedOption)}
                                 />
                             </div>
 
@@ -210,50 +233,12 @@ function MovieTicket() {
                 <div className="ticket-plan-section padding-bottom padding-top">
                     <div className="container">
                         <div className="row justify-content-center">
-                            {/* <div className="col-lg-12 mb-5 mb-lg-0">
-                                {show.length > 0 ? (
-                                    <ul className="seat-plan-wrapper">
-                                        {show.map((item, index) => {
-                                            return (
-                                                <li key={index}>
-                                                    <div className="movie-name">
-                                                        <div className="icons">
-                                                            <i className="fal fa-calendar"></i>
-                                                            <i className="fas fa-calendar"></i>
-                                                        </div>
-                                                        <Link to={`/movie-seat/${item.showCode}`} className="name">
-                                                            {format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy")}
-                                                        </Link>
-                                                    </div>
-                                                    <div className="location-icon">
-                                                        <i className="far fa-globe-asia"></i> {item.language}
-                                                    </div>
-                                                    <div className="movie-schedule">
-                                                        <div
-                                                            className="item"
-                                                            onClick={() => {
-                                                                handleSelectShow(item.id);
-                                                                handleShowTimeClick(item.showCode, format(new Date(item.startDate), "HH:mm:ss dd/MM/yyyy"));
-                                                            }}
-                                                        >
-                                                            Book
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                ) : (
-                                    <p>There are currently no shows for this movie. Please come back later.</p>
-                                )}
-                            </div> */}
                             <div className="col-lg-12 mb-5 mb-lg-0">
                                 {show.length > 0 ? (
                                     <ul className="seat-plan-wrapper">
                                         {show.map((item, index) => {
                                             const showStartDate = new Date(item.startDate);
 
-                                            // Kiểm tra nếu showStartDate là trước 30 phút so với thời điểm hiện tại
                                             const isShowClosed = isBefore(currentDateTime, subMinutes(showStartDate, 30));
 
                                             return (
@@ -271,7 +256,7 @@ function MovieTicket() {
                                                     ) : (
                                                         <div className="movie-name">
                                                             <div className="icons">
-                                                                <i className="fal fa-calendar"></i>
+                                                                <i className="fas fa-calendar"></i>
                                                             </div>
                                                             <p className="name">{format(showStartDate, "HH:mm:ss dd/MM/yyyy")}</p>
                                                         </div>
@@ -291,7 +276,7 @@ function MovieTicket() {
                                                                 Book
                                                             </div>
                                                         ) : (
-                                                            <div>Show has closed</div>
+                                                            <div>Show has closed.</div>
                                                         )}
                                                     </div>
                                                 </li>
@@ -309,4 +294,5 @@ function MovieTicket() {
         </>
     );
 }
+
 export default MovieTicket;

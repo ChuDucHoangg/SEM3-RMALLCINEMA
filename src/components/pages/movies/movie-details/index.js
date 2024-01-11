@@ -20,14 +20,16 @@ function MovieDetails() {
     const [movies, setMovies] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [hasLoaded, setHasLoaded] = useState(false);
-
+    const currentDateTime = new Date();
+    const formattedCurrentDateTime = format(currentDateTime, "yyyy-MM-dd");
+    console.log(formattedCurrentDateTime);
     // Check if you are logged in or not
     const handleBooking = () => {
         if (!isLoggedIn()) {
             localStorage.setItem("redirectPath", window.location.pathname);
             navigate("/login");
         } else {
-            navigate(`/movie-ticket/${id}`);
+            navigate(`/movie-ticket/${id}?from=${formattedCurrentDateTime}`);
         }
     };
 
