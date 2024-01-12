@@ -221,8 +221,8 @@ function MovieTicket() {
 
                             <div className="form-group">
                                 <div className="thumb">
-                                    <button type="submit" className="filter-btn">
-                                        <i className="far fa-search"></i>
+                                    <button type="submit" className="filter-btn filter-btn__custom">
+                                        <i className="fal fa-filter"></i> Filter
                                     </button>
                                 </div>
                             </div>

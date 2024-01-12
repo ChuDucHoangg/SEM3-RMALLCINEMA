@@ -247,7 +247,6 @@ function MovieCheckout() {
         try {
             const promotionResponse = await api.get(url.PROMOTION.BY_USER, config);
             setPromotion(promotionResponse.data);
-            console.log(promotionResponse.data);
         } catch (error) {}
     }, []);
 
@@ -256,7 +255,6 @@ function MovieCheckout() {
     }, [loadPromotion]);
 
     const handleDivClick = (promotionCode) => {
-        // Đặt giá trị promotionCode vào trạng thái
         setFormData({
             ...formData,
             promotionCode: promotionCode,
@@ -520,7 +518,7 @@ function MovieCheckout() {
                                     <h4 className="title">booking summery</h4>
                                     <ul>
                                         <li>
-                                            <h6 className="subtitle">MOVIE NAME</h6>
+                                            <h6 className="subtitle">MOVIE </h6>
                                             <div className="info">
                                                 <span>{movieDetails.title}</span>
                                                 <span>{`Tickets: ${selectedSeats.length}`}</span>

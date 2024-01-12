@@ -16,7 +16,7 @@ const authMiddleware = (Component) => {
                     const token = getDecodedToken();
 
                     if (token) {
-                        console.log("Decoded Token:", token);
+                        // console.log("Decoded Token:", token);
 
                         // Check if the token has expired
                         const isTokenExpired = token && token.exp ? token.exp * 1000 < Date.now() : true;
