@@ -2,7 +2,7 @@ import Loading from "../../../layouts/loading";
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
 import Pagination from "../../../layouts/pagination";
@@ -21,6 +21,8 @@ function MovieFood() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(4);
+
+    const [showDescription, setShowDescription] = useState(false);
 
     const loadFood = useCallback(async () => {
         try {
@@ -160,6 +162,10 @@ function MovieFood() {
         setFinalTotal(newFinalTotal);
     }, [selectedSeats, movieData.addFoods, calculateFinalTotal, calculateTotal]);
 
+    const handleToggleDescription = (index) => {
+        setShowDescription((prev) => (prev === index ? null : index));
+    };
+
     return (
         <>
             <Helmet>
@@ -239,6 +245,14 @@ function MovieFood() {
                                                             <p>{item.name}</p>
                                                         </h5>
 
+                                                        <div className="mt-3 mb-3">
+                                                            <Link to="" style={{ color: "#fff" }} onClick={() => handleToggleDescription(index)}>
+                                                                {showDescription === index ? "view less" : "view more"}
+                                                            </Link>{" "}
+                                                            <i className={`fal ${showDescription === index ? "fa-chevron-circle-up" : "fa-chevron-circle-down"}`}></i>
+                                                        </div>
+                                                        {showDescription === index && <p>{item.description}</p>}
+
                                                         <form className="cart-button">
                                                             <div className="cart-plus-minus">
                                                                 <button
@@ -284,7 +298,7 @@ function MovieFood() {
                                     <h4 className="title">booking summery</h4>
                                     <ul>
                                         <li>
-                                            <h6 className="subtitle">Movie name</h6>
+                                            <h6 className="subtitle">Movie</h6>
                                             <div className="info">
                                                 <span>{movieDetails.title}</span>
                                                 <span>{`Tickets: ${selectedSeats.length}`}</span>

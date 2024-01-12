@@ -9702,3 +9702,18 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
     transform: translate3d(0, 0, 0);
     transition: transform 0.3s ease;
 }
+
+.ticket-search-form .form-group .filter-btn.filter-btn__custom {
+    width: 100px;
+    background: #31d7a9;
+    color: #fff;
+}
+
+.ticket-search-form .form-group .filter-btn.filter-btn__custom:hover {
+    color: #041f52;
+}
+
+.btn-payment {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
