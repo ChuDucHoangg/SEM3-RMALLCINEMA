@@ -52,8 +52,7 @@ function MovieTicket() {
                 apiUrl += `${from ? "&" : "?"}language=${languageParam}`;
             }
 
-            const showResponse = await api.get(apiUrl);
-            const languageResponse = await api.get(url.LANGUAGE.LIST);
+            const [showResponse, languageResponse] = await Promise.all([api.get(apiUrl), api.get(url.LANGUAGE.LIST)]);
 
             setShow(showResponse.data);
             setLanguage(languageResponse.data);
@@ -75,15 +74,24 @@ function MovieTicket() {
         updateSelectShow(showId);
     };
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        const from = selectedDate ? `from=${selectedDate.value}` : "";
-        const language = selectedLanguage ? `language=${selectedLanguage.value}` : "";
+    const handleSelectDate = async (selectedOption) => {
+        setSelectedDate(selectedOption);
+        await handleFormSubmit(selectedOption, selectedLanguage);
+    };
 
-        if (from || language) {
+    const handleSelectLanguage = async (selectedOption) => {
+        setSelectedLanguage(selectedOption);
+        await handleFormSubmit(selectedDate, selectedOption);
+    };
+
+    const handleFormSubmit = async (date, language) => {
+        const from = date ? `from=${date.value}` : "";
+        const lang = language ? `language=${language.value}` : "";
+
+        if (from || lang) {
             try {
                 await loadShow();
-                const queryParams = [from, language].filter(Boolean).join("&");
+                const queryParams = [from, lang].filter(Boolean).join("&");
                 navigate(`/movie-ticket/${id}${queryParams ? `?${queryParams}` : ""}`);
             } catch (error) {
                 console.error("Error loading shows:", error);
@@ -146,7 +154,7 @@ function MovieTicket() {
             <Helmet>
                 <title>Ticket | R Mall Cinema</title>
             </Helmet>
-            {loading ? <Loading /> : ""}
+            {loading && <Loading />}
 
             <Layout>
                 <section className={`window-warning ${windowWarning ? "" : "inActive"}`}>
@@ -181,22 +189,14 @@ function MovieTicket() {
                 </section>
                 <section className="book-section bg-one">
                     <div className="container">
-                        <form className="ticket-search-form two" onSubmit={handleFormSubmit}>
+                        <form className="ticket-search-form two justify-content-around">
                             <div className="form-group">
                                 <div className="thumb">
                                     <img src="assets/img/ticket/date.png" alt="ticket" />
                                 </div>
                                 <span className="type">date</span>
 
-                                <Select
-                                    name="from"
-                                    placeholder="Select date"
-                                    options={dateOptions}
-                                    isSearchable={false}
-                                    styles={customSelectStyles}
-                                    value={selectedDate}
-                                    onChange={(selectedOption) => setSelectedDate(selectedOption)}
-                                />
+                                <Select name="from" placeholder="Select date" options={dateOptions} isSearchable={false} styles={customSelectStyles} value={selectedDate} onChange={handleSelectDate} />
                             </div>
 
                             <div className="form-group">
@@ -215,16 +215,8 @@ function MovieTicket() {
                                     isSearchable={false}
                                     styles={customSelectStyles}
                                     value={selectedLanguage}
-                                    onChange={(selectedOption) => setSelectedLanguage(selectedOption)}
+                                    onChange={handleSelectLanguage}
                                 />
-                            </div>
-
-                            <div className="form-group">
-                                <div className="thumb">
-                                    <button type="submit" className="filter-btn filter-btn__custom">
-                                        <i className="fal fa-filter"></i> Filter
-                                    </button>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -276,7 +268,7 @@ function MovieTicket() {
                                                                 Book
                                                             </div>
                                                         ) : (
-                                                            <div>Show has closed.</div>
+                                                            <div className="item item-disable">Book</div>
                                                         )}
                                                     </div>
                                                 </li>
