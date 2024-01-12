@@ -5,6 +5,7 @@ import url from "../../../services/url";
 import { getAccessToken } from "../../../utils/auth";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import { format } from "date-fns";
 
 function DiscountWallet() {
     const [promotion, setPromotion] = useState([]);
@@ -83,10 +84,10 @@ function DiscountWallet() {
                                                 </div>
                                                 <div className="mt-3 discount-custom__footer">
                                                     <span className="d-flex align-items-center  discount-custom__desc">
-                                                        <i className="fal fa-badge-percent"></i> {item.promotionCode}
+                                                        <i className="fal fa-badge-percent"></i> {item.discountPercentage}%
                                                     </span>
                                                     <span className="d-flex align-items-center discount-custom__desc">
-                                                        <i className="fal fa-clock"></i> {item.promotionCode}
+                                                        <i className="fal fa-clock"></i> {item && item.endDate && format(new Date(item.endDate), "HH:mm:ss dd/MM/yyyy")}
                                                     </span>
                                                 </div>
                                             </div>

@@ -29,19 +29,10 @@ import PaymentError from "./components/pages/other/payment-error.js";
 import FAQ from "./components/pages/other/faq.js";
 import TermsConditions from "./components/pages/other/terms-conditions.js";
 import ResetPassword from "./components/pages/auth/reset-password.js";
+import authMiddleware from "./context/authMiddleware.js";
 
 function App() {
-    const ProtectedRoute = ({ element }) => {
-        const token = getAccessToken();
-        const { isExpired, isInvalid } = useJwt(token);
-
-        if (!token || isExpired || isInvalid) {
-            localStorage.removeItem("access_token");
-            return <Navigate to="/login" />;
-        }
-
-        return element;
-    };
+    const ProtectedRoute = authMiddleware(({ element }) => element);
 
     const ProtectedLoginRoute = ({ element }) => {
         const token = getAccessToken();
@@ -53,6 +44,7 @@ function App() {
 
         return element;
     };
+
     return (
         <MovieProvider>
             <div className="App">

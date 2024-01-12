@@ -13,7 +13,19 @@ export const getAccessToken = () => {
 // Check if the user is logged in
 export const isLoggedIn = () => {
     const token = getAccessToken();
-    return !!token;
+    if (token) {
+        const decodedToken = getDecodedToken();
+        if (decodedToken) {
+            const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+            if (isTokenExpired) {
+                // If the token expires, delete the token and return false
+                removeAccessToken();
+                return false;
+            }
+            return true;
+        }
+    }
+    return false;
 };
 
 // Remove token from localStorage when logging out
