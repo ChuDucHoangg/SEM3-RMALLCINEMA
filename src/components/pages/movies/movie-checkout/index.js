@@ -14,8 +14,15 @@ import { loadStripe } from "@stripe/stripe-js";
 import StripePaymentForm from "../../../../payment/StripePaymentForm";
 import Swal from "sweetalert2";
 import { useCallback } from "react";
-const stripePromise = loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1gHTm113njc8xGE3A3YoiJ5WEweMhQizzHnQGtFH0zEw8mXCYFbcB00s9xR5vEC");
-
+// const stripePromise = loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1gHTm113njc8xGE3A3YoiJ5WEweMhQizzHnQGtFH0zEw8mXCYFbcB00s9xR5vEC");
+const stripePromise = (async () => {
+    try {
+        return await loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1gHTm113njc8xGE3A3YoiJ5WEweMhQizzHnQGtFH0zEw8mXCYFbcB00s9xR5vEC");
+    } catch (err) {
+        console.error(err);
+        window.location.reload();
+    }
+})();
 function MovieCheckout() {
     const navigate = useNavigate();
 
