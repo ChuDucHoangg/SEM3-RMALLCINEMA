@@ -22,7 +22,6 @@ function MovieDetails() {
     const [hasLoaded, setHasLoaded] = useState(false);
     const currentDateTime = new Date();
     const formattedCurrentDateTime = format(currentDateTime, "yyyy-MM-dd");
-    console.log(formattedCurrentDateTime);
     // Check if you are logged in or not
     const handleBooking = () => {
         if (!isLoggedIn()) {
