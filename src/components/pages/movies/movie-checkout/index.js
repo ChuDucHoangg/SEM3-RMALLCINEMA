@@ -14,6 +14,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import StripePaymentForm from "../../../../payment/StripePaymentForm";
 import Swal from "sweetalert2";
 import { useCallback } from "react";
+import { format } from "date-fns";
 // const stripePromise = loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1gHTm113njc8xGE3A3YoiJ5WEweMhQizzHnQGtFH0zEw8mXCYFbcB00s9xR5vEC");
 const stripePromise = (async () => {
     try {
@@ -227,7 +228,15 @@ function MovieCheckout() {
                         icon: "success",
                     });
                 }
-            } catch (error) {}
+            } catch (error) {
+                if (error.response && error.response.status === 400) {
+                    Swal.fire({
+                        title: "Oops...",
+                        text: "The discount code is incorrect, or has expired!",
+                        icon: "warning",
+                    });
+                }
+            }
         }
     };
 
@@ -270,7 +279,7 @@ function MovieCheckout() {
         }
 
         // Invoke the function immediately
-    }, [formData.promotionCode, selectedPromotion, handleApplyDiscount]);
+    }, [selectedPromotion, handleApplyDiscount]);
 
     // Check if movieDetails & selectedSeats is available
     if (!movieDetails || !selectedSeats || selectedSeats.length === 0) {
@@ -370,15 +379,18 @@ function MovieCheckout() {
                                 </div>
                                 <div className="checkout-widget checkout-contact">
                                     <h5 className="title">Promo Code</h5>
-                                    <form className="checkout-contact-form" onSubmit={handleApplyDiscount}>
+                                    <div className="checkout-contact-form">
                                         <div className="form-group">
                                             <input type="text" placeholder="Enter promo code" name="promotionCode" value={formData.promotionCode} onChange={handleChange} required />
                                             {formErrors.promotionCode && <p className="invalid-feedback">{formErrors.promotionCode}</p>}
                                         </div>
                                         <div className="form-group">
-                                            <input type="submit" value="Apply" className="custom-button" />
+                                            <button className="custom-button btn-apply" onClick={handleApplyDiscount}>
+                                                Apply
+                                            </button>
                                         </div>
-                                    </form>
+                                    </div>
+
                                     <div className="mt-3" data-toggle="modal" data-target="#promotion" style={{ cursor: "pointer", fontSize: "14px" }}>
                                         R Mall Discount <i className="fal fa-chevron-right"></i>
                                     </div>
@@ -412,10 +424,10 @@ function MovieCheckout() {
                                                                             </div>
                                                                             <div className="mt-3 discount-custom__footer">
                                                                                 <span className="d-flex align-items-center  discount-custom__desc">
-                                                                                    <i className="fal fa-badge-percent"></i> {item.promotionCode}
+                                                                                    <i className="fal fa-badge-percent"></i> {item.discountPercentage}%
                                                                                 </span>
                                                                                 <span className="d-flex align-items-center discount-custom__desc">
-                                                                                    <i className="fal fa-clock"></i> {item.promotionCode}
+                                                                                    <i className="fal fa-clock"></i> {item && item.endDate && format(new Date(item.endDate), "HH:mm:ss dd/MM/yyyy")}
                                                                                 </span>
                                                                             </div>
                                                                         </div>

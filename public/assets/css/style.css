@@ -5510,7 +5510,8 @@ input[type="submit"] {
     color: #9aace5;
 }
 
-.checkout-contact-form .form-group input[type="submit"] {
+.checkout-contact-form .form-group input[type="submit"],
+.checkout-contact-form .form-group button {
     width: auto;
     padding: 0 40px;
     border-radius: 50px;
@@ -5519,6 +5520,10 @@ input[type="submit"] {
     border: none;
     -webkit-transition: all ease 0.3s;
     transition: all ease 0.3s;
+}
+
+.checkout-contact-form .form-group button {
+    background: #9aace5;
 }
 
 @media (max-width: 575px) {
@@ -9716,4 +9721,13 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
 .btn-payment {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.seat-plan-wrapper li .movie-schedule .item.item-disable {
+    cursor: not-allowed;
+    color: #ccc;
+}
+
+.seat-plan-wrapper li .movie-schedule .item.item-disable:hover {
+    background: #162f5f;
 }

@@ -41,7 +41,6 @@ const authMiddleware = (Component) => {
             checkToken();
         }, [navigate, decodedToken]);
 
-        // // Render component nếu cần
         return <Component {...props} />;
     };
 
