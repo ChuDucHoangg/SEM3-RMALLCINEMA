@@ -3770,6 +3770,10 @@ input[type="submit"] {
         position: relative;
         z-index: 9;
     }
+
+    .search-ticket-section__custom {
+        margin-top: -85px;
+    }
 }
 
 /*Movie-Page-Section Starts Here*/
@@ -9744,4 +9748,8 @@ button.swal2-confirm.swal2-styled.swal2-default-outline {
 
 .seat-plan-wrapper li .movie-schedule .item.item-disable:hover {
     background: #162f5f;
+}
+
+.ticket-search-form .form-group.large__custom {
+    width: 100%;
 }
