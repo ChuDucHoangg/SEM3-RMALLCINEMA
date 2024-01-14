@@ -1,16 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../../../services/api";
 import url from "../../../services/url";
 import { useCallback, useEffect, useState } from "react";
 import { format } from "date-fns";
 import ReactPlayer from "react-player";
-import Pagination from "../../layouts/pagination";
 import { getAccessToken } from "../../../utils/auth";
 import Loading from "../../layouts/loading";
 import Swal from "sweetalert2";
+import Pagination from "../../layouts/pagination";
 
 function MoviesList() {
-    const navigate = useNavigate();
     const [movies, setMovies] = useState([]);
     const [languages, setLanguages] = useState([]);
     const [genres, setGenres] = useState([]);
@@ -20,22 +19,63 @@ function MoviesList() {
     const [expandedLanguage, setExpandedLanguage] = useState(false);
     const [expandedGenre, setExpandedGenre] = useState(false);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(5);
-
     const [loading, setLoading] = useState(false);
     const [sortBy, setSortBy] = useState("all-movies");
-    const [selectedLanguages, setSelectedLanguages] = useState([]);
-    const [selectedGenres, setSelectedGenres] = useState([]);
 
-    const [searchKeyword, setSearchKeyword] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-    const shouldShowFilteredResults = searchKeyword !== "";
+    // Search and Filter
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedLanguageIds, setSelectedLanguageIds] = useState([]);
+    const [selectedGenreIds, setSelectedGenreIds] = useState([]);
 
-    // Call api movies
+    const handleInputChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const handleLanguageCheckboxChange = (languageId) => {
+        const updatedSelectedLanguages = [...selectedLanguageIds];
+        if (updatedSelectedLanguages.includes(languageId)) {
+            updatedSelectedLanguages.splice(updatedSelectedLanguages.indexOf(languageId), 1);
+        } else {
+            updatedSelectedLanguages.push(languageId);
+        }
+        setSelectedLanguageIds(updatedSelectedLanguages);
+    };
+
+    const handleGenreCheckboxChange = (genreId) => {
+        const updatedSelectedGenres = [...selectedGenreIds];
+        if (updatedSelectedGenres.includes(genreId)) {
+            updatedSelectedGenres.splice(updatedSelectedGenres.indexOf(genreId), 1);
+        } else {
+            updatedSelectedGenres.push(genreId);
+        }
+        setSelectedGenreIds(updatedSelectedGenres);
+    };
+
     const loadMovie = useCallback(async () => {
         try {
-            const moviesResponse = await api.get(url.MOVIE.LIST);
+            // Handle single filters
+            const singleFilters = [];
+            if (searchQuery) singleFilters.push(`searchTerm=${searchQuery}`);
+            if (selectedLanguageIds.length === 1) singleFilters.push(`languageIds=${selectedLanguageIds[0]}`);
+            if (selectedGenreIds.length === 1) singleFilters.push(`genreIds=${selectedGenreIds[0]}`);
+
+            const singleFiltersParam = singleFilters.length > 0 ? `?${singleFilters.join("&")}` : "";
+
+            // Handle combined filters
+            const combinedFilters = [];
+            if (searchQuery && (selectedLanguageIds.length > 1 || selectedGenreIds.length > 1)) {
+                combinedFilters.push(`searchTerm=${searchQuery}`);
+            }
+            if (selectedLanguageIds.length > 1) combinedFilters.push(`languageIds=${selectedLanguageIds.join("&languageIds=")}`);
+            if (selectedGenreIds.length > 1) combinedFilters.push(`genreIds=${selectedGenreIds.join("&genreIds=")}`);
+
+            const combinedFiltersParam = combinedFilters.length > 0 ? `?${combinedFilters.join("&")}` : "";
+
+            // Construct the final API request URL
+            const apiRequestURL = `${url.MOVIE.LIST}${combinedFiltersParam || singleFiltersParam}`;
+
+            // console.log("API Request URL:", apiRequestURL);
+            const moviesResponse = await api.get(apiRequestURL);
             const languagesResponse = await api.get(url.LANGUAGE.LIST);
             const genresResponse = await api.get(url.GENRE.LIST);
 
@@ -45,13 +85,9 @@ function MoviesList() {
         } catch (error) {
             console.log(error);
         }
-    }, []);
+    }, [searchQuery, selectedLanguageIds, selectedGenreIds]);
 
-    // Pagination
-    const indexOfLastCourse = currentPage * itemsPerPage;
-    const indexOfFirstCourse = indexOfLastCourse - itemsPerPage;
-    const currentItemPage = shouldShowFilteredResults ? searchResults.slice(indexOfFirstCourse, indexOfLastCourse) : movies.slice(indexOfFirstCourse, indexOfLastCourse);
-
+    // View more
     const handleViewMoreClickLanguage = () => {
         setVisibleLanguages(languages.length);
         setExpandedLanguage(true);
@@ -67,24 +103,17 @@ function MoviesList() {
         setExpandedGenre(true);
     };
 
+    // View less
     const handleViewLessClickGenre = () => {
         setVisibleGenres(5);
         setExpandedGenre(false);
     };
 
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
-        navigate(`/movies?page=${pageNumber}`);
-    };
-
     useEffect(() => {
         loadMovie();
-        const urlParams = new URLSearchParams(window.location.search);
-        const page = parseInt(urlParams.get("page")) || 1;
-        setCurrentPage(page);
 
         window.scrollTo({ top: 800, left: 0, behavior: "smooth" });
-    }, [loadMovie, currentPage, navigate]);
+    }, [loadMovie, selectedLanguageIds, selectedGenreIds, searchQuery]);
 
     // Config token
     const userToken = getAccessToken();
@@ -171,60 +200,25 @@ function MoviesList() {
         }
     };
 
-    const handleLanguageChange = async (languageName) => {
-        setLoading(true);
-        try {
-            const updatedLanguages = selectedLanguages.includes(languageName) ? selectedLanguages.filter((lang) => lang !== languageName) : [...selectedLanguages, languageName];
+    // Pagination
 
-            setSelectedLanguages(updatedLanguages);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(6);
 
-            // Simulate a delay (loading) for 2 seconds before fetching updated data
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const indexOfLastCourse = currentPage * itemsPerPage;
+    const indexOfFirstCourse = indexOfLastCourse - itemsPerPage;
+    const currentItemPage = movies.slice(indexOfFirstCourse, indexOfLastCourse);
 
-    const handleGenreChange = async (genreName) => {
-        setLoading(true);
-        try {
-            const updatedGenres = selectedGenres.includes(genreName) ? selectedGenres.filter((genre) => genre !== genreName) : [...selectedGenres, genreName];
-
-            setSelectedGenres(updatedGenres);
-
-            // Simulate a delay (loading) for 2 seconds before fetching updated data
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const filteredMovies = movies.filter((movie) => {
-        const languageFilter = selectedLanguages.length === 0 || (movie.languages && movie.languages.some((lang) => selectedLanguages.includes(lang.name)));
-        const genreFilter = selectedGenres.length === 0 || (movie.genres && movie.genres.some((genre) => selectedGenres.includes(genre.name)));
-        return languageFilter && genreFilter;
-    });
-
-    const handleSearch = (e) => {
-        const keyword = e.target.value;
-        setSearchKeyword(keyword);
-
-        const filteredCourses = movies.filter((movie) => {
-            return movie && movie.title && movie.title.toLowerCase().includes(keyword.toLowerCase());
-        });
-
-        setSearchResults(filteredCourses);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 20, left: 0, behavior: "smooth" });
     };
 
     return (
         <>
             {loading ? <Loading /> : ""}
 
-            <section className="search-ticket-section padding-top pt-lg-0">
+            <section className="search-ticket-section search-ticket-section__custom padding-top pt-lg-0">
                 <div className="container">
                     <div className="search-tab">
                         <div className="row align-items-center mb--20">
@@ -235,223 +229,25 @@ function MoviesList() {
                                 </div>
                             </div>
                             <div className="col-lg-6 mb-20">
-                                <ul className="tab-menu ticket-tab-menu">
-                                    <li className="active">
-                                        <div className="tab-thumb">
-                                            <img src="assets/img/ticket/movie.png" alt="ticket" />
-                                        </div>
-                                        <span>movie</span>
-                                    </li>
-                                    <li>
-                                        <div className="tab-thumb">
-                                            <img src="assets/img/ticket/event.png" alt="ticket" />
-                                        </div>
-                                        <span>events</span>
-                                    </li>
-                                    <li>
-                                        <div className="tab-thumb">
-                                            <img src="assets/img/ticket/sport.png" alt="ticket" />
-                                        </div>
-                                        <span>sports</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="tab-area">
-                            <div className="tab-item active">
-                                <form className="ticket-search-form">
-                                    <div className="form-group large">
-                                        <input type="text" placeholder="Search for Movies" value={searchKeyword} onChange={handleSearch} required />
-                                        <button type="button">
-                                            <i className="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/city.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">city</span>
-                                        <select className="select-bar">
-                                            <option value="london">New York</option>
-                                            <option value="dhaka">California</option>
-                                            <option value="rosario">Texas</option>
-                                            <option value="madrid">Florida</option>
-                                            <option value="koltaka">Nevada</option>
-                                            <option value="rome">Oregon</option>
-                                            <option value="khoksa">Ohio</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/date.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">date</span>
-                                        <select className="select-bar">
-                                            <option value="11/04/2023">11/04/2023</option>
-                                            <option value="10/04/2023">10/04/2023</option>
-                                            <option value="09/04/2023">09/04/2023</option>
-                                            <option value="08/04/2023">08/04/2023</option>
-                                            <option value="07/04/2023">07/04/2023</option>
-                                            <option value="06/04/2023">06/04/2023</option>
-                                            <option value="05/04/2023">05/04/2023</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/cinema.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">movie</span>
-                                        <select className="select-bar">
-                                            <option value="Avatar">Avatar</option>
-                                            <option value="Inception">Inception</option>
-                                            <option value="Parasite">Parasite</option>
-                                            <option value="Joker">Joker</option>
-                                            <option value="Searching">Searching</option>
-                                            <option value="Coco">Coco</option>
-                                            <option value="Lion">Lion</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <button type="submit" className="filter-btn">
-                                                <i className="far fa-search"></i>
-                                            </button>
+                                <div className="tab-area mt-0">
+                                    <div className="tab-item active">
+                                        <div className="ticket-search-form">
+                                            <div className="form-group large__custom">
+                                                <input type="text" value={searchQuery} onChange={handleInputChange} placeholder="Search for Movies" required />
+                                                <button type="button">
+                                                    <i className="fas fa-search"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-
-                            <div className="tab-item">
-                                <form className="ticket-search-form">
-                                    <div className="form-group large">
-                                        <input type="text" placeholder="Search for Events" />
-                                        <button type="submit">
-                                            <i className="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/city.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">city</span>
-                                        <select className="select-bar">
-                                            <option value="london">New York</option>
-                                            <option value="dhaka">California</option>
-                                            <option value="rosario">Texas</option>
-                                            <option value="madrid">Florida</option>
-                                            <option value="koltaka">Nevada</option>
-                                            <option value="rome">Oregon</option>
-                                            <option value="khoksa">Ohio</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/date.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">date</span>
-                                        <select className="select-bar">
-                                            <option value="11/04/2023">11/04/2023</option>
-                                            <option value="10/04/2023">10/04/2023</option>
-                                            <option value="09/04/2023">09/04/2023</option>
-                                            <option value="08/04/2023">08/04/2023</option>
-                                            <option value="07/04/2023">07/04/2023</option>
-                                            <option value="06/04/2023">06/04/2023</option>
-                                            <option value="05/04/2023">05/04/2023</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/event-2.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">event</span>
-                                        <select className="select-bar">
-                                            <option value="Design">Design</option>
-                                            <option value="Development">Development</option>
-                                            <option value="Software">Software</option>
-                                            <option value="Digital">Digital</option>
-                                            <option value="Festival">Festival</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Seo">Seo</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <button type="submit" className="filter-btn">
-                                                <i className="far fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div className="tab-item">
-                                <form className="ticket-search-form">
-                                    <div className="form-group large">
-                                        <input type="text" placeholder="Search fo Sports" />
-                                        <button type="submit">
-                                            <i className="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/city.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">city</span>
-                                        <select className="select-bar">
-                                            <option value="london">New York</option>
-                                            <option value="dhaka">California</option>
-                                            <option value="rosario">Texas</option>
-                                            <option value="madrid">Florida</option>
-                                            <option value="koltaka">Nevada</option>
-                                            <option value="rome">Oregon</option>
-                                            <option value="khoksa">Ohio</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/date.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">date</span>
-                                        <select className="select-bar">
-                                            <option value="11/04/2023">11/04/2023</option>
-                                            <option value="10/04/2023">10/04/2023</option>
-                                            <option value="09/04/2023">09/04/2023</option>
-                                            <option value="08/04/2023">08/04/2023</option>
-                                            <option value="07/04/2023">07/04/2023</option>
-                                            <option value="06/04/2023">06/04/2023</option>
-                                            <option value="05/04/2023">05/04/2023</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <img src="assets/img/ticket/sport-2.png" alt="ticket" />
-                                        </div>
-                                        <span className="type">sport</span>
-                                        <select className="select-bar">
-                                            <option value="Cricket">Cricket</option>
-                                            <option value="Football">Football</option>
-                                            <option value="Basketball">Basketball</option>
-                                            <option value="Baseball">Baseball</option>
-                                            <option value="Golf">Golf</option>
-                                            <option value="Running">Running</option>
-                                            <option value="Badminton">Badminton</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="thumb">
-                                            <button type="submit" className="filter-btn">
-                                                <i className="far fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="movie-section padding-top padding-bottom">
+            <section className="movie-section pt-5 padding-bottom">
                 <div className="container">
                     <div className="row flex-wrap-reverse justify-content-center">
                         <div className="col-sm-10 col-md-8 col-lg-3">
@@ -466,8 +262,15 @@ function MoviesList() {
                                                         type="checkbox"
                                                         name="language"
                                                         id={item.name}
-                                                        checked={selectedLanguages.includes(item.name)}
-                                                        onChange={() => handleLanguageChange(item.name)}
+                                                        checked={selectedLanguageIds.includes(item.id)}
+                                                        onChange={() => {
+                                                            handleLanguageCheckboxChange(item.id);
+                                                            setLoading(true);
+
+                                                            setTimeout(() => {
+                                                                setLoading(false);
+                                                            }, 2000);
+                                                        }}
                                                     />
                                                     <label htmlFor={item.name}>{item.name}</label>
                                                 </div>
@@ -490,7 +293,20 @@ function MoviesList() {
                                         {genres.slice(0, visibleGenres).map((item, index) => {
                                             return (
                                                 <div className="form-group" key={index}>
-                                                    <input type="checkbox" name="genre" id={item.name} checked={selectedGenres.includes(item.name)} onChange={() => handleGenreChange(item.name)} />
+                                                    <input
+                                                        type="checkbox"
+                                                        name="genre"
+                                                        id={item.name}
+                                                        checked={selectedGenreIds.includes(item.id)}
+                                                        onChange={() => {
+                                                            handleGenreCheckboxChange(item.id);
+                                                            setLoading(true);
+
+                                                            setTimeout(() => {
+                                                                setLoading(false);
+                                                            }, 2000);
+                                                        }}
+                                                    />
                                                     <label htmlFor={item.name}>{item.name}</label>
                                                 </div>
                                             );
@@ -511,7 +327,7 @@ function MoviesList() {
                                     <div className="filter-main">
                                         <div className="left left-custom">
                                             <div className="item">
-                                                <span className="show">Show: 05</span>
+                                                <span className="show">Show: 06</span>
                                             </div>
                                             <div className="item-custom">
                                                 <span className="show" style={{ whiteSpace: "nowrap" }}>
@@ -538,101 +354,12 @@ function MoviesList() {
                                 <div className="tab-area">
                                     <div className="tab-item active">
                                         <div className="movie-area mb-10">
-                                            {shouldShowFilteredResults ? (
-                                                filteredMovies ? (
-                                                    filteredMovies.length === 0 ? (
-                                                        <div className="col-lg-8 mt-5">
-                                                            <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
-                                                        </div>
-                                                    ) : currentItemPage.length > 0 ? (
-                                                        currentItemPage.map((item, index) => (
-                                                            <div className="movie-list" key={index}>
-                                                                <div className="movie-thumb c-thumb">
-                                                                    <Link to={`/movie-details/${item.id}`} className="w-100 h-100">
-                                                                        <img src={item.movie_image} alt="movie" className="movie-thumb__custom" />
-                                                                    </Link>
-                                                                </div>
-                                                                <div className="movie-content bg-one">
-                                                                    <h5 className="title line-clamp">
-                                                                        <Link to={`/movie-details/${item.id}`} className="line-clamp">
-                                                                            {item.title}
-                                                                        </Link>
-                                                                    </h5>
-                                                                    <p className="duration">{item.duration} minutes</p>
-                                                                    <div className="movie-tags">{item.genres && item.genres.map((genre, genreIndex) => <p key={genreIndex}>{genre.name}</p>)}</div>
-                                                                    <div className="release">
-                                                                        <span>Release Date : </span> <a href="#!">{format(new Date(item.release_date), "dd/MM/yyyy")}</a>
-                                                                    </div>
-                                                                    <ul className="movie-rating-percent">
-                                                                        <li>
-                                                                            <i className="fal fa-shopping-cart"></i>
-                                                                            <span className="content">{item.totalTicket}</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i className="fal fa-heart"></i>
-                                                                            <span className="content">{item.favoriteCount}</span>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <div className="book-area">
-                                                                        <div className="book-ticket">
-                                                                            <div className="react-item">
-                                                                                <button onClick={() => handleAddFavorite(item.id)}>
-                                                                                    <div className="thumb">
-                                                                                        <i className="fal fa-heart"></i>
-                                                                                    </div>
-                                                                                    <span>Add to favorite</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div className="react-item mr-auto">
-                                                                                <Link to={`/movie-details/${item.id}`}>
-                                                                                    <div className="thumb">
-                                                                                        <i className="fal fa-ticket"></i>
-                                                                                    </div>
-                                                                                    <span>Book Ticket</span>
-                                                                                </Link>
-                                                                            </div>
-                                                                            <div className="react-item">
-                                                                                <button
-                                                                                    className="popup-video video-popup"
-                                                                                    data-toggle="modal"
-                                                                                    data-target="#trailerModal"
-                                                                                    onClick={() => setCurrentTrailerUrl(item.trailer)}
-                                                                                >
-                                                                                    <div className="thumb">
-                                                                                        <i className="fal fa-play-circle"></i>
-                                                                                    </div>
-                                                                                    <span>Watch Trailer</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div
-                                                                                className="modal fade"
-                                                                                id="trailerModal"
-                                                                                tabIndex="-1"
-                                                                                role="dialog"
-                                                                                aria-labelledby="exampleModalLabel"
-                                                                                aria-hidden="true"
-                                                                            >
-                                                                                <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                                    <div className="modal-content modal-content__custom-movie">
-                                                                                        <div className="modal-body d-flex justify-content-center align-items-center">
-                                                                                            <ReactPlayer url={currentTrailerUrl} controls />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        ))
-                                                    ) : (
-                                                        <div className="col-lg-8 mt-5 mx-auto">
-                                                            <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
-                                                        </div>
-                                                    )
-                                                ) : null
-                                            ) : filteredMovies.length > 0 ? (
-                                                filteredMovies.map((item, index) => (
+                                            {!movies.length ? (
+                                                <div className="col-lg-8 mt-5 mx-auto">
+                                                    <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
+                                                </div>
+                                            ) : (
+                                                currentItemPage.map((item, index) => (
                                                     <div className="movie-list" key={index}>
                                                         <div className="movie-thumb c-thumb">
                                                             <Link to={`/movie-details/${item.id}`} className="w-100 h-100">
@@ -705,63 +432,18 @@ function MoviesList() {
                                                         </div>
                                                     </div>
                                                 ))
-                                            ) : (
-                                                <div className="col-lg-8 mt-5 mx-auto">
-                                                    <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
-                                                </div>
                                             )}
                                         </div>
                                     </div>
                                     <div className="tab-item">
                                         <div className="row mb-10 justify-content-center custom-gy">
                                             <div className="row mb-10 justify-content-center custom-gy">
-                                                {shouldShowFilteredResults ? (
-                                                    filteredMovies ? (
-                                                        filteredMovies.length === 0 ? (
-                                                            <div className="col-lg-8 mt-5">
-                                                                <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
-                                                            </div>
-                                                        ) : currentItemPage.length > 0 ? (
-                                                            currentItemPage.map((item, index) => (
-                                                                <div className="col-sm-6 col-lg-6" key={index}>
-                                                                    <div className="movie-grid">
-                                                                        <div className="movie-thumb c-thumb">
-                                                                            <Link to={`/movie-details/${item.id}`}>
-                                                                                <img src={item.movie_image} alt="movie" className="c-thumb__custom" />
-                                                                            </Link>
-                                                                        </div>
-                                                                        <div className="movie-content">
-                                                                            <h5 className="title m-0">
-                                                                                <Link to={`/movie-details/${item.id}`} className="line-clamp">
-                                                                                    {item.title}
-                                                                                </Link>
-                                                                            </h5>
-                                                                            <ul className="movie-rating-percent">
-                                                                                <li>
-                                                                                    <i className="fal fa-shopping-cart"></i>
-                                                                                    <span className="content">{item.totalTicket}</span>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <button onClick={() => handleAddFavorite(item.id)} className="favorite-btn__custom">
-                                                                                        <div className="thumb">
-                                                                                            <i className="fal fa-heart"></i>
-                                                                                        </div>
-                                                                                        <span>{item.favoriteCount}</span>
-                                                                                    </button>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            ))
-                                                        ) : (
-                                                            <div className="col-lg-8 mt-5 mx-auto">
-                                                                <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
-                                                            </div>
-                                                        )
-                                                    ) : null
-                                                ) : filteredMovies.length > 0 ? (
-                                                    filteredMovies.map((item, index) => (
+                                                {!movies.length ? (
+                                                    <div className="col-lg-8 mt-5 mx-auto">
+                                                        <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
+                                                    </div>
+                                                ) : (
+                                                    currentItemPage.map((item, index) => (
                                                         <div className="col-sm-6 col-lg-6" key={index}>
                                                             <div className="movie-grid">
                                                                 <div className="movie-thumb c-thumb">
@@ -793,21 +475,13 @@ function MoviesList() {
                                                             </div>
                                                         </div>
                                                     ))
-                                                ) : (
-                                                    <div className="col-lg-8 mt-5 mx-auto">
-                                                        <p className="text-center">Sorry, there are no movies that match the filter you selected. Please try again with other conditions.</p>
-                                                    </div>
                                                 )}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {movies.length > 0 && currentItemPage.length > 0 && filteredMovies.length > 0 ? (
-                                    // <Pagination perPage={itemsPerPage} totalPage={movies.length} paginate={paginate} currentPage={currentPage} />
-                                    <Pagination perPage={itemsPerPage} totalPage={shouldShowFilteredResults ? searchResults.length : movies.length} paginate={paginate} currentPage={currentPage} />
-                                ) : (
-                                    ""
-                                )}
+
+                                {movies.length <= 6 ? "" : <Pagination perPage={itemsPerPage} totalPage={movies.length} paginate={paginate} currentPage={currentPage} />}
                             </div>
                         </div>
                     </div>
