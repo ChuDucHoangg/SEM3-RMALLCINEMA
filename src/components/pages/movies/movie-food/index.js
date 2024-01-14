@@ -2,7 +2,7 @@ import Loading from "../../../layouts/loading";
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "../../../layouts/layout";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../../../services/api";
 import url from "../../../../services/url";
 import Pagination from "../../../layouts/pagination";
@@ -10,8 +10,8 @@ import { useMovieContext } from "../../../../context/MovieContext";
 import Swal from "sweetalert2";
 function MovieFood() {
     const navigate = useNavigate();
-    const { movieData, setFoods } = useMovieContext();
-    const { movieDetails, selectedSeats, addFoods } = movieData;
+    const { movieData, setFoods, updateSelectedSeats, setHoldingSeat } = useMovieContext();
+    const { movieDetails, selectedSeats, addFoods, selectShow } = movieData;
 
     const [loading, setLoading] = useState(false);
     const [food, setFood] = useState([]);
@@ -23,6 +23,8 @@ function MovieFood() {
     const [itemsPerPage] = useState(4);
 
     const [showDescription, setShowDescription] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [countdown, setCountdown] = useState(2);
 
     const loadFood = useCallback(async () => {
         try {
@@ -165,6 +167,67 @@ function MovieFood() {
     const handleToggleDescription = (index) => {
         setShowDescription((prev) => (prev === index ? null : index));
     };
+
+    const handleCheckSeatReservation = async () => {
+        const seatSelection = selectedSeats.map((seats) => seats.id);
+        setSubmitting(true);
+        try {
+            const seatReservation = await api.post(url.SEAT.SEAT_RESERVATION + `/${selectShow.id}`, seatSelection);
+            const responseData = seatReservation.data;
+
+            if (responseData.status === true) {
+                setHoldingSeat(responseData.expiresat);
+                navigate("/checkout");
+            } else if (responseData.status === false) {
+                updateSelectedSeats([]);
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Sorry",
+                    text: "The seat you selected is already reserved. Please choose another seat. Thank you!",
+                    footer: `<a href="/movie-seat/${selectShow.showCode}">Go back to seat selection page?</a>`,
+                });
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    useEffect(() => {
+        let countdownTimer;
+        if (submitting && countdown > 0) countdownTimer = setInterval(() => setCountdown((prevCountdown) => prevCountdown - 1), 1000);
+        return () => clearInterval(countdownTimer);
+    }, [submitting, countdown]);
+
+    // Check if movieDetails & selectedSeats is available
+    if (!movieDetails || !selectedSeats || selectedSeats.length === 0) {
+        return (
+            <>
+                <Helmet>
+                    <title>Checkout | R Mall Cinema</title>
+                </Helmet>
+                <Layout>
+                    <div className="movie-facility padding-bottom padding-top">
+                        <div className="container">
+                            <div className="col-lg-4 mx-auto">
+                                <div className="d-flex align-item-center justify-content-center flex-column pt-50">
+                                    <img src="./assets/img/broken-robot.svg" alt="" />
+                                    <div className="text-center">
+                                        <p>You haven't chosen any seats yet. Please select your seat before making payment.</p>
+                                        <Link to={`/movie-seat/${selectShow.showCode}`} className="custom-button btn-download mt-0">
+                                            <i className="far fa-reply"></i> Back to seat selection
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Layout>
+            </>
+        );
+    }
 
     return (
         <>
@@ -345,9 +408,15 @@ function MovieFood() {
                                         <span>PAY AMOUNT</span>
                                         <span>${finalTotal}</span>
                                     </h6>
-                                    <NavLink to="/checkout" className="custom-button">
-                                        confirm payment
-                                    </NavLink>
+                                    {!submitting ? (
+                                        <button type="button" className="custom-button" onClick={handleCheckSeatReservation}>
+                                            confirm payment
+                                        </button>
+                                    ) : (
+                                        <button type="button" className="custom-button btn-payment" disabled>
+                                            <i className="fa fa-spinner fa-spin"></i> Checking...
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

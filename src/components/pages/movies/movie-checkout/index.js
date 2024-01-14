@@ -14,7 +14,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import StripePaymentForm from "../../../../payment/StripePaymentForm";
 import Swal from "sweetalert2";
 import { useCallback } from "react";
-import { format } from "date-fns";
+import { format, subMinutes } from "date-fns";
 // const stripePromise = loadStripe("pk_test_51OVqT0DQZzhwaulm9QNS20I55bgkpOt6eQa1gHTm113njc8xGE3A3YoiJ5WEweMhQizzHnQGtFH0zEw8mXCYFbcB00s9xR5vEC");
 const stripePromise = (async () => {
     try {
@@ -27,8 +27,8 @@ const stripePromise = (async () => {
 function MovieCheckout() {
     const navigate = useNavigate();
 
-    const { movieData } = useMovieContext();
-    const { movieDetails, selectedSeats, addFoods } = movieData;
+    const { movieData, updateSelectedSeats, setHoldingSeat } = useMovieContext();
+    const { movieDetails, selectedSeats, addFoods, holdingSeat, selectShow } = movieData;
 
     const decodedToken = getDecodedToken();
 
@@ -281,6 +281,42 @@ function MovieCheckout() {
         // Invoke the function immediately
     }, [selectedPromotion, handleApplyDiscount]);
 
+    const [time, setTime] = useState({ minutes: 5, seconds: 0 });
+
+    const handleTimeout = () => {
+        updateSelectedSeats([]);
+        setHoldingSeat(null);
+        Swal.fire({
+            title: "Oops...",
+            text: "The time to hold the seat has expired. Please try again or choose another seat.!",
+            icon: "error",
+        });
+
+        navigate(`/movie-seat/${selectShow.showCode}`);
+    };
+
+    useEffect(() => {
+        const expiryTimeFromApi = holdingSeat;
+        const expiryDate = new Date(expiryTimeFromApi);
+
+        const intervalId = setInterval(() => {
+            const currentTime = new Date();
+            const difference = Math.floor((expiryDate - currentTime) / 1000);
+
+            const newMinutes = Math.floor(difference / 60);
+            const newSeconds = difference % 60;
+
+            if (difference <= 0) {
+                clearInterval(intervalId);
+                handleTimeout();
+            } else {
+                setTime({ minutes: newMinutes, seconds: newSeconds });
+            }
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
     // Check if movieDetails & selectedSeats is available
     if (!movieDetails || !selectedSeats || selectedSeats.length === 0) {
         return (
@@ -296,7 +332,7 @@ function MovieCheckout() {
                                     <img src="./assets/img/broken-robot.svg" alt="" />
                                     <div className="text-center">
                                         <p>You haven't chosen any movie yet. Please select a movie and then proceed to payment.</p>
-                                        <Link to="/movies" className="custom-button btn-download mt-0">
+                                        <Link to={`/movie-seat/${selectShow.showCode}`} className="custom-button btn-download mt-0">
                                             <i className="far fa-reply"></i> Back to movies page
                                         </Link>
                                     </div>
@@ -342,12 +378,15 @@ function MovieCheckout() {
                                     <i className="far fa-reply"></i> Change Plan
                                 </a>
                             </div>
-                            <div className="item date-item">
+                            {/* <div className="item date-item">
                                 <span className="date">FRI 14, 2023</span>
-                            </div>
+                            </div> */}
                             <div className="item">
-                                <small> TIME LEFT </small>
-                                <span className="h3 font-weight-bold"> 09:00 </span>
+                                <small> Seat holding time </small>
+                                <span className="h3 font-weight-bold">
+                                    {" "}
+                                    {time.minutes.toString().padStart(2, "0")}:{time.seconds.toString().padStart(2, "0")}{" "}
+                                </span>
                             </div>
                         </div>
                     </div>

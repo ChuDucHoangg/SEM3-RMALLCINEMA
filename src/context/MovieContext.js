@@ -5,7 +5,7 @@ const MovieContext = createContext();
 export const MovieProvider = ({ children }) => {
     const [movieData, setMovieDataInternal] = useState(() => {
         const storedData = localStorage.getItem("movie_data");
-        return storedData ? JSON.parse(storedData) : { movieDetails: null, selectShow: null, selectedSeats: null, addFoods: null };
+        return storedData ? JSON.parse(storedData) : { movieDetails: null, selectShow: null, selectedSeats: null, addFoods: null, holdingSeat: null };
     });
 
     const [message, setMessage] = useState("");
@@ -15,7 +15,7 @@ export const MovieProvider = ({ children }) => {
     }, [movieData]);
 
     const setMovieDetails = (details) => {
-        setMovieDataInternal({ movieDetails: details, selectShow: null, selectedSeats: null, addFoods: null });
+        setMovieDataInternal({ movieDetails: details, selectShow: null, selectedSeats: null, addFoods: null, holdingSeat: null });
     };
 
     const updateSelectShow = (show) => {
@@ -30,11 +30,17 @@ export const MovieProvider = ({ children }) => {
         setMovieDataInternal((prevData) => ({ ...prevData, addFoods: foods }));
     };
 
+    const setHoldingSeat = (holdingSeat) => {
+        setMovieDataInternal((prevData) => ({ ...prevData, holdingSeat: holdingSeat }));
+    };
+
     const setMessageContext = (newMessage) => {
         setMessage(newMessage);
     };
 
-    return <MovieContext.Provider value={{ movieData, setMovieDetails, updateSelectShow, updateSelectedSeats, setFoods, message, setMessageContext }}>{children}</MovieContext.Provider>;
+    return (
+        <MovieContext.Provider value={{ movieData, setMovieDetails, updateSelectShow, updateSelectedSeats, setFoods, message, setMessageContext, setHoldingSeat }}>{children}</MovieContext.Provider>
+    );
 };
 
 export const useMovieContext = () => {
