@@ -70,8 +70,11 @@ function MovieTicket() {
         }, 2000);
     }, [loadShow]);
 
-    const handleSelectShow = (showId) => {
-        updateSelectShow(showId);
+    const handleSelectShow = (showId, showCode) => {
+        updateSelectShow({
+            id: showId,
+            showCode: showCode,
+        });
     };
 
     const handleSelectDate = async (selectedOption) => {
@@ -261,7 +264,7 @@ function MovieTicket() {
                                                             <div
                                                                 className="item"
                                                                 onClick={() => {
-                                                                    handleSelectShow(item.id);
+                                                                    handleSelectShow(item.id, item.showCode);
                                                                     handleShowTimeClick(item.showCode, format(showStartDate, "HH:mm:ss dd/MM/yyyy"));
                                                                 }}
                                                             >

@@ -34,6 +34,7 @@ const url = {
     SEAT: {
         BY_ROOMID: "seat/get-by-roomId",
         BY_SHOW: "seat/get-by-showCode",
+        SEAT_RESERVATION: "/order/SeatReservation",
     },
 
     FOOD: {

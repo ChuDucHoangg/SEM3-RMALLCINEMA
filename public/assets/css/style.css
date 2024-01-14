@@ -9207,31 +9207,45 @@ aside {
 .single-seat__custom::before {
     content: url(../img/movie/seat-1.png);
 }
+
 .single-seat__custom:checked::before {
     content: url(../img/movie/seat-1-free.png);
+}
+
+.single-seat__custom.booked[disabled]:checked {
+    content: url(../img/movie/seat-1-booked.png);
+}
+
+.single-seat__custom.holding[disabled]:checked {
+    content: url(../img/movie/seat-1-holding.png);
 }
 
 .two-seat__custom::before {
     content: url(../img/movie/seat-2.png);
 }
+
 .two-seat__custom:checked::before {
     content: url(../img/movie/seat-2-free.png);
 }
 
-.single-seat__custom[disabled]:checked {
-    content: url(../img/movie/seat-1-booked.png);
+.two-seat__custom.booked[disabled]:checked {
+    content: url(../img/movie/seat-2-booked.png);
 }
 
-.two-seat__custom[disabled]:checked {
-    content: url(../img/movie/seat-2-booked.png);
+.two-seat__custom.holding[disabled]:checked {
+    content: url(../img/movie/seat-2-holding.png);
 }
 
 .two-seat__custom:checked + .sit-num {
     background: #31d7a9;
 }
 
-.two-seat__custom[disabled]:checked + .sit-num {
+.two-seat__custom.booked[disabled]:checked + .sit-num {
     background: #ff0000;
+}
+
+.two-seat__custom.holding[disabled]:checked + .sit-num {
+    background: #aaa;
 }
 
 /* Profile */

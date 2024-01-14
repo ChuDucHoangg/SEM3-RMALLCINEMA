@@ -64,6 +64,9 @@ function MovieDetails() {
         setModalOpen(false);
     };
 
+    const genres = movies.genres || [];
+    const languages = movies.languages || [];
+
     return (
         <>
             <Helmet>
@@ -93,7 +96,16 @@ function MovieDetails() {
                                 </div>
                                 <div className="details-banner-content offset-lg-4">
                                     <h3 className="title">{movies.title}</h3>
-                                    <div className="tags">{movies && movies.genres && movies.genres.map((genre, genreIndex) => <p key={genreIndex}>{genre.name}</p>)}</div>
+                                    <div className="tags">
+                                        {genres.map((genre, genreIndex) => (
+                                            <p key={genreIndex}>{genre.name}</p>
+                                        ))}
+                                    </div>
+                                    {languages.map((language, languageIndex) => (
+                                        <p className="button" style={{ display: "inline-block" }} key={languageIndex}>
+                                            {language.name}
+                                        </p>
+                                    ))}
                                     <div className="social-and-duration">
                                         <div className="duration-area">
                                             <div className="item">
@@ -240,9 +252,6 @@ function MovieDetails() {
                                         <div className="tab summery-review">
                                             <ul className="tab-menu">
                                                 <li className="active">description</li>
-                                                <li>
-                                                    review <span>10</span>
-                                                </li>
                                             </ul>
                                             <div className="tab-area">
                                                 <div className="tab-item active">
@@ -419,173 +428,6 @@ function MovieDetails() {
                                                             </div>
                                                         </div>
                                                     </div> */}
-                                                </div>
-                                                <div className="tab-item">
-                                                    <div className="movie-review-item">
-                                                        <div className="author">
-                                                            <div className="thumb">
-                                                                <Link to="">
-                                                                    <img src="assets/img/cast/cast-2.jpg" alt="cast" />
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="movie-review-content">
-                                                            <div className="movie-review-info">
-                                                                <h6 className="subtitle">
-                                                                    <Link to="">Thomas E Criswell</Link>
-                                                                </h6>
-                                                                <span className="reply-date">
-                                                                    <i className="fal fa-clock"></i> 1 hour ago
-                                                                </span>
-                                                                <div className="review">
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                </div>
-                                                            </div>
-                                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                            <div className="review-meta">
-                                                                <Link to="">
-                                                                    <i className="fal fa-thumbs-up"></i>
-                                                                    <span>10</span>
-                                                                </Link>
-                                                                <Link to="" className="dislike">
-                                                                    <i className="fal fa-thumbs-down"></i>
-                                                                    <span>02</span>
-                                                                </Link>
-                                                                <Link to="">
-                                                                    <i className="fal fa-flag"></i> <span>Report Review</span>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="movie-review-item">
-                                                        <div className="author">
-                                                            <div className="thumb">
-                                                                <Link to="">
-                                                                    <img src="assets/img/cast/cast-1.jpg" alt="cast" />
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="movie-review-content">
-                                                            <div className="movie-review-info">
-                                                                <h6 className="subtitle">
-                                                                    <Link to="">Thomas E Criswell</Link>
-                                                                </h6>
-                                                                <span className="reply-date">
-                                                                    <i className="fal fa-clock"></i> 1 hour ago
-                                                                </span>
-                                                                <div className="review">
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                </div>
-                                                            </div>
-                                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                            <div className="review-meta">
-                                                                <Link to="">
-                                                                    <i className="fal fa-thumbs-up"></i>
-                                                                    <span>10</span>
-                                                                </Link>
-                                                                <Link to="" className="dislike">
-                                                                    <i className="fal fa-thumbs-down"></i>
-                                                                    <span>02</span>
-                                                                </Link>
-                                                                <Link to="">
-                                                                    <i className="fal fa-flag"></i> <span>Report Review</span>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="movie-review-item">
-                                                        <div className="author">
-                                                            <div className="thumb">
-                                                                <Link to="">
-                                                                    <img src="assets/img/cast/cast-2.jpg" alt="cast" />
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="movie-review-content">
-                                                            <div className="movie-review-info">
-                                                                <h6 className="subtitle">
-                                                                    <Link to="">Thomas E Criswell</Link>
-                                                                </h6>
-                                                                <span className="reply-date">
-                                                                    <i className="fal fa-clock"></i> 1 hour ago
-                                                                </span>
-                                                                <div className="review">
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                </div>
-                                                            </div>
-                                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                            <div className="review-meta">
-                                                                <Link to="">
-                                                                    <i className="fal fa-thumbs-up"></i>
-                                                                    <span>10</span>
-                                                                </Link>
-                                                                <Link to="" className="dislike">
-                                                                    <i className="fal fa-thumbs-down"></i>
-                                                                    <span>02</span>
-                                                                </Link>
-                                                                <Link to="">
-                                                                    <i className="fal fa-flag"></i> <span>Report Review</span>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="movie-review-item">
-                                                        <div className="author">
-                                                            <div className="thumb">
-                                                                <Link to="">
-                                                                    <img src="assets/img/cast/cast-3.jpg" alt="cast" />
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="movie-review-content">
-                                                            <div className="movie-review-info">
-                                                                <h6 className="subtitle">
-                                                                    <Link to="">Thomas E Criswell</Link>
-                                                                </h6>
-                                                                <span className="reply-date">
-                                                                    <i className="fal fa-clock"></i> 1 hour ago
-                                                                </span>
-                                                                <div className="review">
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                    <i className="fal fa-star"></i>
-                                                                </div>
-                                                            </div>
-                                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                            <div className="review-meta">
-                                                                <Link to="">
-                                                                    <i className="fal fa-thumbs-up"></i>
-                                                                    <span>10</span>
-                                                                </Link>
-                                                                <Link to="" className="dislike">
-                                                                    <i className="fal fa-thumbs-down"></i>
-                                                                    <span>02</span>
-                                                                </Link>
-                                                                <Link to="">
-                                                                    <i className="fal fa-flag"></i> <span>Report Review</span>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="load-more text-center">
-                                                        <Link to="" className="custom-button transparent">
-                                                            load more
-                                                        </Link>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
