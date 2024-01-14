@@ -102,15 +102,14 @@ function MovieCheckout() {
                 const finalTotal = calculateFinalTotal(total, 0);
 
                 const orderData = {
-                    orderCode: Math.random().toString(36).substring(2, 10).toUpperCase(),
-                    showId: movieData.selectShow,
+                    showId: selectShow.id,
                     userId: userInfo.userId,
                     total: total,
                     discountAmount: total - discountRate.data || 0,
                     discountCode: formData.promotionCode || "",
                     finalTotal: discountRate.data ? discountRate.data : finalTotal,
                     paymentMethod: selectedPaymentMethod,
-                    tickets: movieData.selectedSeats.map((seat) => ({ seatId: seat.id, price: seat.price, quantity: 1 })),
+                    tickets: movieData.selectedSeats.map((seat) => ({ seatId: seat.id })),
                     foods: movieData.addFoods && movieData.addFoods.length > 0 ? movieData.addFoods.map((food) => ({ id: food.id, quantity: food.quantity, price: food.price })) : [],
                 };
 
