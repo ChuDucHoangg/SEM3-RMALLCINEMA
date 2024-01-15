@@ -77,7 +77,7 @@ function Favorite() {
                             <div className="movie-list mb-0" key={index}>
                                 <div className="movie-thumb c-thumb">
                                     <Link to={`/movie-details/${item.movieId}`} className="w-100 h-100">
-                                        <img src={item.movieImage} alt="movie" />
+                                        <img src={item.movieImage} alt="movie" className="movie-thumb__custom" />
                                     </Link>
                                 </div>
                                 <div className="movie-content bg-one">

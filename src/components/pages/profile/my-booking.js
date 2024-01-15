@@ -57,7 +57,7 @@ function MyBooking() {
                             <div className="movie-list mb-0" key={index}>
                                 <div className="movie-thumb c-thumb">
                                     <Link to={`/my-booking/detail/${item.orderCode}`} className="w-100 h-100">
-                                        <img src={item.imageMovie} alt="movie" />
+                                        <img src={item.imageMovie} alt="movie" className="movie-thumb__custom" />
                                     </Link>
                                 </div>
                                 <div className="movie-content bg-one">
