@@ -140,7 +140,7 @@ function MovieSeat() {
     return (
         <>
             <Helmet>
-                <title>Seat | R Mall Cinema</title>
+                <title>Seat | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
 

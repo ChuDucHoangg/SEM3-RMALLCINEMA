@@ -112,7 +112,7 @@ function ResetPassword() {
     return (
         <>
             <Helmet>
-                <title>Reset Password | R Mall Cinema</title>
+                <title>Reset Password | R Ticket</title>
             </Helmet>
 
             {loading ? <Loading /> : ""}

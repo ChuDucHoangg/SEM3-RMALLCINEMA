@@ -13,7 +13,7 @@ function AboutUs() {
     return (
         <>
             <Helmet>
-                <title>About Us | R Mall Cinema</title>
+                <title>About Us | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>

@@ -347,7 +347,7 @@ function MovieCheckout() {
     return (
         <>
             <Helmet>
-                <title>Checkout | R Mall Cinema</title>
+                <title>Checkout | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
 

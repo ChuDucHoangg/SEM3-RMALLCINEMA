@@ -58,7 +58,15 @@ function ForgotPassword() {
                     }, 2000);
                 }
             } catch (error) {
-                setFormErrors({ email: "Email address does not exist." });
+                setSubmitting(true);
+                setTimeout(() => setCountdown((prevCountdown) => prevCountdown - 1), 1000);
+                setTimeout(() => {
+                    Swal.fire({
+                        title: "Successfully!",
+                        text: "Reset password successfully!",
+                        icon: "success",
+                    });
+                }, 2000);
             }
         }
     };
@@ -79,7 +87,7 @@ function ForgotPassword() {
     return (
         <>
             <Helmet>
-                <title>Forgot Password | R Mall Cinema</title>
+                <title>Forgot Password | R Ticket</title>
             </Helmet>
             <section className="account-section center-item">
                 <div className="container">

@@ -131,7 +131,7 @@ function Profile() {
     return (
         <>
             <Helmet>
-                <title>Profile | R Mall</title>
+                <title>Profile | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <LayoutProfile>

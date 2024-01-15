@@ -17,7 +17,7 @@ function TermsConditions() {
     return (
         <>
             <Helmet>
-                <title>Terms & Conditions | R Mall Cinema</title>
+                <title>Terms & Conditions | R Ticket</title>
             </Helmet>
 
             {loading ? <Loading /> : ""}

@@ -17,7 +17,7 @@ function PaymentError() {
     return (
         <>
             <Helmet>
-                <title>Payment Error | R Mall Cinema</title>
+                <title>Payment Error | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>

@@ -95,7 +95,7 @@ function Login() {
     return (
         <>
             <Helmet>
-                <title>Login | RMall Cinema</title>
+                <title>Login | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <section className="account-section center-item">

@@ -14,7 +14,7 @@ function Movie() {
     return (
         <>
             <Helmet>
-                <title>Movies | R Mall Cinema</title>
+                <title>Movies | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>

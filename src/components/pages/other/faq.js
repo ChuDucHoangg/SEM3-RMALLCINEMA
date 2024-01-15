@@ -16,7 +16,7 @@ function FAQ() {
     return (
         <>
             <Helmet>
-                <title>FAQ | R Mall Cinema</title>
+                <title>FAQ | R Ticket</title>
             </Helmet>
 
             {loading ? <Loading /> : ""}

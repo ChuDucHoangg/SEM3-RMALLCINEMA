@@ -14,7 +14,7 @@ function Blog() {
     return (
         <>
             <Helmet>
-                <title>Blog | R Mall Cinema</title>
+                <title>Blog | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>

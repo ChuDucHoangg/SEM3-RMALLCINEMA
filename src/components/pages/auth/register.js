@@ -91,7 +91,7 @@ function Register() {
     return (
         <>
             <Helmet>
-                <title>Register | RMall</title>
+                <title>Register | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <section className="account-section bg_img center-item" data-background="assets/images/account/account-bg.html">

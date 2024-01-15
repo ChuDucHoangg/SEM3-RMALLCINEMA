@@ -39,7 +39,7 @@ function Contact() {
     return (
         <>
             <Helmet>
-                <title>Contact Us | R Mall Cinema</title>
+                <title>Contact Us | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>
