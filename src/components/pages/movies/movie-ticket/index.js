@@ -8,6 +8,7 @@ import url from "../../../../services/url";
 import { format, addDays, isBefore, subMinutes } from "date-fns";
 import { useMovieContext } from "../../../../context/MovieContext";
 import Select from "react-select";
+import { getAccessToken } from "../../../../utils/auth";
 
 function MovieTicket() {
     const { id } = useParams();
@@ -42,6 +43,36 @@ function MovieTicket() {
         setSelectedShowStartTime(startTime);
     };
 
+    // const loadShow = useCallback(async () => {
+    //     const config = {
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             Authorization: `Bearer ${getAccessToken()}`,
+    //         },
+    //     };
+    //     try {
+    //         let apiUrl = `${url.SHOW.BY_MOVIE}/${id}`;
+    //         if (from) {
+    //             apiUrl += `?from=${from}`;
+    //         }
+    //         if (languageParam) {
+    //             apiUrl += `${from ? "&" : "?"}language=${languageParam}`;
+    //         }
+
+    //         const [showResponse, languageResponse] = await Promise.all([api.get(apiUrl), api.get(url.LANGUAGE.LIST)]);
+
+    //         setShow(showResponse.data);
+    //         setLanguage(languageResponse.data);
+    //     } catch (error) {
+    //         console.error("Error loading shows:", error);
+    //     }
+    // }, [id, from, languageParam, config]);
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getAccessToken()}`,
+        },
+    };
     const loadShow = useCallback(async () => {
         try {
             let apiUrl = `${url.SHOW.BY_MOVIE}/${id}`;
@@ -52,7 +83,10 @@ function MovieTicket() {
                 apiUrl += `${from ? "&" : "?"}language=${languageParam}`;
             }
 
-            const [showResponse, languageResponse] = await Promise.all([api.get(apiUrl), api.get(url.LANGUAGE.LIST)]);
+            const [showResponse, languageResponse] = await Promise.all([
+                api.get(apiUrl, config), // Pass the config object here
+                api.get(url.LANGUAGE.LIST, config), // Pass the config object here
+            ]);
 
             setShow(showResponse.data);
             setLanguage(languageResponse.data);
