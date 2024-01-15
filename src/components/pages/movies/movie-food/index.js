@@ -206,7 +206,7 @@ function MovieFood() {
         return (
             <>
                 <Helmet>
-                    <title>Checkout | R Mall Cinema</title>
+                    <title>Food | R Ticket</title>
                 </Helmet>
                 <Layout>
                     <div className="movie-facility padding-bottom padding-top">

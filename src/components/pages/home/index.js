@@ -188,7 +188,7 @@ function Home() {
     return (
         <>
             <Helmet>
-                <title>Home | R Mall Cinema</title>
+                <title>Home | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>

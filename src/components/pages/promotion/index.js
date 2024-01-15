@@ -72,7 +72,7 @@ function Promotion() {
     return (
         <>
             <Helmet>
-                <title>Promotion | R Mall Cinema</title>
+                <title>Promotion | R Ticket</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <Layout>

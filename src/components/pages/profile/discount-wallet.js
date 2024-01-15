@@ -52,7 +52,7 @@ function DiscountWallet() {
     return (
         <>
             <Helmet>
-                <title>Discount Code | R Mall Cinema</title>
+                <title>Discount Code | R Ticket</title>
             </Helmet>
             <LayoutProfile>
                 <div className="col-12">

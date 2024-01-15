@@ -66,7 +66,7 @@ function Favorite() {
     return (
         <>
             <Helmet>
-                <title>Favorite | R Mall</title>
+                <title>Favorite | R Ticket</title>
             </Helmet>
             <LayoutProfile>
                 {loading ? <Loading /> : ""}

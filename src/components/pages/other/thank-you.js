@@ -67,7 +67,7 @@ function ThankYou() {
     return (
         <>
             <Helmet>
-                <title>Thank You | R Mall Cinema</title>
+                <title>Thank You | R Ticket</title>
             </Helmet>
 
             {loading ? <Loading /> : ""}

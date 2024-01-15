@@ -47,7 +47,7 @@ function MyBooking() {
     return (
         <>
             <Helmet>
-                <title>My Booking | R Mall</title>
+                <title>My Booking | R Ticket</title>
             </Helmet>
             <LayoutProfile>
                 <div className="col-12">
